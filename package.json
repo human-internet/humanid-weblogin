@@ -1,0 +1,15 @@
+{
+  "name": "humanid-web-sdk",
+  "version": "1.0.0",
+  "description": "Website SDK for humanID",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@code.nbs.co.id:enda/humanid-web-sdk.git"
+  },
+  "author": "Suhainda Librado",
+  "license": "ISC"
+}
