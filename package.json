@@ -4,12 +4,18 @@
   "description": "Website SDK for humanID",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-css": "node-sass --include-path scss scss/style.scss public/css/style.css",
+    "watch-css": "nodemon -e scss -x 'npm run build-css'",
+    "prod": "node-sass -include-path scss/style.scss public/css/style.css --output-style compressed"
   },
   "repository": {
     "type": "git",
     "url": "git@code.nbs.co.id:enda/humanid-web-sdk.git"
   },
   "author": "Suhainda Librado",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "node-sass": "^4.14.1",
+    "nodemon": "^2.0.4"
+  }
 }
