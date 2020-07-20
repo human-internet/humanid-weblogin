@@ -1,0 +1,64 @@
+.btn-humanid {
+    width: 100%;
+    text-align: center;
+    font-family: $font-lato;
+    font-size: rem(17px);
+    font-weight: 400;
+    @include border-radius(rem(4px));
+    padding: rem(16px);
+    border: none;
+    cursor: pointer;
+
+
+    &.btn-humanid-primary {
+        background: $humanid-primary;
+        color: $white;
+        text-transform: uppercase;
+
+        &:hover {
+            background: $humanid-primary-hover;
+        }
+    }
+
+    &.btn-humanid-yellow {
+        background: $yellow;
+        color: $humanid-primary;
+        text-transform: uppercase;
+
+        &:hover {
+            background: $yellow-hover;
+        }
+    }
+
+    &.btn-humanid-white {
+        background: $white;
+        color: $humanid-primary;
+        text-transform: uppercase;
+         border: 1px solid $border-color;
+
+        &:hover {
+            background: #FAFAFA;
+        }
+    }
+
+    &.btn-humanid-secondary {
+        background: none;
+        color: $humanid-primary;
+        font-size: rem(14px);
+        font-weight: 700;
+        width: auto;
+        padding: 0;
+
+        &:hover {
+            color: $humanid-primary-hover;
+        }
+
+        &.danger {
+            color: $red;
+
+            &:hover {
+                color: $red-hover;
+            }
+        }
+    }
+}

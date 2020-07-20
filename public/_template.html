@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>humanID Web SDK</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/favicon.png">
+</head>
+<body>
+    <div class="humanid-header">
+        <img src="images/anonymous-login.svg" alt="Anonymous Login with humanID">
+    </div>
+    <div class="humanid-container">
+        <!-- LOGO & TITLE -->
+        <div class="humanid-logo">
+            <div class="humanid-logo__placement">
+                <img src="images/client/greenzone.png" alt="Green Zone">
+            </div>
+        </div>
+        <div class="humanid-page-title danger">GreenZone will not receive any of your personal information.</div>
+        <!-- #/ LOGO & TITLE -->
+        <!-- CONTENT TEXT-->
+        <div class="humanid-content-text">
+            <div class="humanid-text-info humanid-text-info-danger">
+                <p>Sorry, the number you entered is already active on another humanID account.<br>Please use a different number.</p>
+            </div>
+            <div class="humanid-text-info humanid-text-info-default">
+                <p>Please enter the 4 digit code you received as SMS to <strong>+1 617 999 9999</strong>.</p>
+                <p>After successful verification, your number will be deleted permanently and only a random identifier will be stored. </p>
+            </div>
+        </div>
+        <!-- #/ CONTENT TEXT -->
+
+        <!-- FORM INPUT -->
+        <div class="humanid-form-placement">
+            <div class="humanid-form-placement__default">
+                <div class="humanid-form-placement__default-main">
+                    <div class="humanid-form-group">
+                        <input type="tel" id="phone" class="humanid-input-default">
+                    </div>
+                    <div class="humanid-form-group">
+                        <input type="email" id="email" class="humanid-input-default" placeholder="Input your email here">
+                    </div>
+                </div>
+            </div>
+            <div class="humanid-form-placement__secure-text">Your phone number is deleted after verification</div>
+        </div>
+        <!-- #/ FORM INPUT -->
+
+        <!-- FORM OTP -->
+        <div class="humanid-form-placement">
+            <div class="humanid-form-placement__otp-verification">
+                <div class="humanid-form-group">
+                    <input type="text" class="humanid-input-otp" value="1">
+                </div>
+                <div class="humanid-form-group">
+                    <input type="text" class="humanid-input-otp" value="2">
+                </div>
+                <div class="humanid-form-group">
+                    <input type="text" class="humanid-input-otp" value="3">
+                </div>
+                <div class="humanid-form-group">
+                    <input type="text" class="humanid-input-otp">
+                </div>
+            </div>
+            <div class="humanid-form-placement__secure-text">Your phone number is deleted after verification</div>
+        </div>
+        <!-- #/ FORM OTP -->
+
+        <!-- CONTENT TEXT-->
+        <div class="humanid-content-text">
+            <p><a href="">Learn more</a> about our mission to restore privacy.</p>
+        </div>
+        <!-- #/ CONTENT TEXT -->
+
+        <!-- BUTTON ACTION -->
+        <div class="humanid-button humanid-button-horizontal">
+            <button class="btn-humanid btn-humanid-yellow" type="button">Back</button>
+            <button class="btn-humanid btn-humanid-white" type="submit">Skip</button>
+        </div>
+        <div class="humanid-button humanid-button-vertical">
+            <button class="btn-humanid btn-humanid-primary" type="submit">Login</button>
+            <button class="btn-humanid btn-humanid-secondary" type="button">New Number? Recover Account</button>
+        </div>
+        <!-- #/ BUTTON ACTION -->
+    </div>
+
+    <script src="js/intlTelInput.min.js"></script>
+    <script src="js/humanID.js"></script>
+    <script>
+        humanid.checkFormTel();
+    </script>
+</body>
+</html>

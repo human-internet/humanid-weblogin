@@ -1,0 +1,16 @@
+.humanid-content-text {
+    margin-bottom: rem(24px);
+
+    &__alert {
+        color: $red;
+    }
+
+    a {
+        color: $blue-light;
+    }
+
+    b, strong {
+        color: $humanid-primary;
+        font-weight: 600;
+    }
+}

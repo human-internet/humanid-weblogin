@@ -1,0 +1,58 @@
+.humanid-form-placement {
+    margin-bottom: rem(32px);
+
+    &__secure-text {
+        margin-top: rem(24px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:before {
+            content: '';
+            background: url('../images/ic_lock.svg') no-repeat;
+            width: rem(15px);
+            height: rem(15px);
+            margin-right: 5px;
+            display: inline-block;
+        }
+    }
+
+    &__otp-verification {
+        padding: rem(30px 0);
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+
+        .humanid-form-group {
+            margin-bottom: 0;
+            margin-left: rem(16px);
+            margin-right: rem(16px);
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &__default {
+        display: flex;
+        justify-content: center;
+
+        &-main {
+            max-width: rem(392px);
+            width: 100%;
+        }
+    }
+
+    .iti {
+        display: inherit;
+
+        .iti__selected-flag {
+            background-color: rgba(0, 0, 0, 0);
+        }
+    }
+}

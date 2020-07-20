@@ -1,0 +1,56 @@
+@function str-replace($string, $search, $replace: "") {
+    $index: str-index($string, $search);
+
+    @if $index {
+        @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    }
+
+    @return $string;
+}
+
+@function font-weight($key) {
+    $font-weight: (
+        light: 300,
+        regular: 400,
+        bold: 700
+    );
+
+    @if not map-has-key($font-weight, $key) {
+        @error "Unsupported `font-weight` keyword `#{$key}`";
+        @return null;
+    }
+
+    @return map-get($font-weight, $key);
+}
+
+@function font-style($key) {
+    $font-style: (
+        italic: italic,
+        normal: normal
+    );
+
+    @if not map-has-key($font-style, $key) {
+        @error "Unsupported `font-style` keyword `#{$key}`";
+        @return null;
+    }
+
+    @return map-get($font-style, $key);
+}
+
+@function font-family($key) {
+    $font-family: (
+        m: $font-family-montserrat,
+        p: $font-family-public-sans
+    );
+
+    @if not map-has-key($font-family, $key) {
+        @error "Unsupported `font-family` keyword `#{$key}`";
+        @return null;
+    }
+
+    @return map-get($font-family, $key);
+}
+
+@function property-value($property, $selector: null) {
+    @return $magic;
+}

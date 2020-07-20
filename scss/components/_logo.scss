@@ -1,0 +1,15 @@
+.humanid-logo {
+    display: flex;
+    justify-content: center;
+
+    &__placement {
+        max-width: rem(120px);
+        margin-bottom: rem(48px);
+
+
+        img {
+            width: auto;
+            max-width: 100%;
+        }
+    }
+}

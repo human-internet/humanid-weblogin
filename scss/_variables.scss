@@ -1,0 +1,27 @@
+// Color
+$humanid-primary       : #023B60;
+$humanid-primary-hover : darken($humanid-primary, 10%);
+$red                : #FF4B55;
+$red-hover          : darken($red, 10%);
+$black-0            : #000000;
+$black-3            : #333333;
+$white              : #FFFFFF;
+$blue-light         : #007AFF;
+$yellow             : #F4C464;
+$yellow-hover       : darken($yellow, 10%);
+$border-color       : #A2A2A2;
+
+// Fonts
+$font-lato          : 'Lato';
+$font-montserrat    : 'Montserrat';
+
+// Responsive Utilities
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px
+) !default;
+
+$flagsImagePath            : '../images/' !default;;

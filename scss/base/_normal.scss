@@ -1,0 +1,61 @@
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+    font-size: $rem-baseline;
+}
+
+body {
+    background-color: $white;
+    background-image: url('../images/bg-finger-print.svg');
+    background-repeat: no-repeat;
+    background-size: rem(296px 388px);
+    background-position: right top;
+    color: $black-0;
+    font-family: $font-montserrat;
+    font-size: rem(13px);
+    line-height: 1.5;
+    margin: 0;
+    padding: rem(0 0 64px 0);
+}
+
+a {
+    color: $humanid-primary;
+    text-decoration: none;
+    @include transition(all ease .4s);
+    outline: none;
+
+    &:hover {
+        color: $humanid-primary-hover;
+        text-decoration: none;
+    }
+
+    &:focus {
+        outline: none !important;
+    }
+}
+
+button, .btn {
+    @include transition(all ease .4s);
+    outline: none;
+
+    &:focus {
+        outline: none;
+        @include box-shadow(none !important);
+    }
+    
+    &:disabled {
+        background: #EEE !important;
+        color: #999 !important;
+    }
+}
+
+img {
+    max-width: 100%;
+}

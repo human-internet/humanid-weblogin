@@ -1,0 +1,35 @@
+.humanid-button {
+    display: flex;
+    margin: rem(18px 0);
+
+    &.humanid-button-horizontal {
+        flex-direction: row;
+        flex: 1;
+        align-items: center;
+
+        button {
+            margin: rem(0 8px);
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &.humanid-button-vertical {
+        flex-direction: column;
+        flex: 1;
+
+        button {
+            margin-bottom: rem(24px);
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

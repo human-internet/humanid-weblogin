@@ -1,0 +1,23 @@
+.humanid-page-title {
+    font-family: $font-lato;
+    font-weight: 700;
+    font-size: rem(20px);
+    margin-bottom: rem(24px);
+    color: $black-3;
+
+    &.danger {
+        color: $red;
+    }
+}
+
+.humanid-text-info {
+    font-size: rem(14px);
+
+    &.humanid-text-info-default {
+        color: $black-3;
+    }
+
+    &.humanid-text-info-danger {
+        color: $red;
+    }
+}
