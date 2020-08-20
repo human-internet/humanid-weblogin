@@ -8,6 +8,7 @@
 
     <div class="humanid-content-text">
         <div class="humanid-text-info humanid-text-info-danger">
+            <?php if(isset($error_message)):?><p><?php echo $error_message;?></p><?php endif;?>
             <?php echo form_error('phone', '<p>', '</p>');?>
             <?php echo form_error('dialcode', '<p>', '</p>');?>
         </div>

@@ -11,3 +11,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |	https://codeigniter.com/user_guide/general/hooks.html
 |
 */
+$hook['pre_system'] = function(){
+    //Lokasi folder untuk file .env
+    $path = str_replace('system','',BASEPATH);
+    $dotenv = new Dotenv\Dotenv($path,'.env');
+    $dotenv->load();
+};

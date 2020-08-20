@@ -40,7 +40,7 @@ const humanid = function () {
                 }
                 location.href = $('.directed-link').val();
             }
-            var setTime = (success==1) ? 5 : 120;
+            var setTime = parseInt(failAttemptLimit);
             timer(setTime);
 
             $('.humanid-input-otp').keyup(function(){

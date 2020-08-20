@@ -23,6 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		display: inline-block;
 		padding: 10px 20px 5px;
 		border-radius: 10px;
+		color:#ffffff;
+		text-decoration:none;
 	}
 	</style>
 </head>
@@ -30,7 +32,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<h1>Welcome to Green Zone!</h1>
 	<img src="<?php echo base_url('assets/images/client/greenzone.png');?>" alt="Green Zone">
 	<br><br><br>
-	<p><strong>UserID:</strong> <?php echo time()?></p>
-	<p><strong>Token:</strong> <?php echo sha1(time())?></p>
+	<?php if(!empty($error_message)):?>
+	<p style="color:red;"><?php echo $error_message?></p>
+	<?php endif?>	
+	<p><strong>UserID:</strong> <?php echo $appUserId?></p>
+	<p><strong>ExchangeToken:</strong> <?php echo $exchangeToken;?></p>
+	<a href="<?php echo site_url('client');?>">HOME</a>
 </body>
 </html>
