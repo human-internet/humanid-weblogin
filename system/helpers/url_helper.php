@@ -354,8 +354,8 @@ if ( ! function_exists('safe_mailto'))
 		$x = array_reverse($x);
 
 		$output = "<script type=\"text/javascript\">\n"
-			."\t//<![CDATA[\n"
-			."\tvar l=new Array();\n";
+            . "\t//<![CDATA[\n"
+            . "\tvar l=[];\n";
 
 		for ($i = 0, $c = count($x); $i < $c; $i++)
 		{
