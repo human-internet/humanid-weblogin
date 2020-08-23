@@ -109,9 +109,10 @@ class Login extends MY_Controller {
 				$this->data['error_message'] = 'An error occurred while sending data, please repeat';
 			}
 		}
-		$failAttemptLimit = ($success) ? 5 :  ($login['result']['data']['config']['failAttemptLimit'] * 60);
+		$failAttemptLimit = ($success) ? 5 :  60;
 		$this->data['row'] = $login;
 		$this->data['success'] = $success;
+		$this->data['display_phone'] = $this->_display_phone($login['phone']);
 		$this->scripts('var success = '.$success.'; var failAttemptLimit = '.$failAttemptLimit.'; humanid.formLoginVeriy();','embed');
 		$this->render();
 	}
@@ -160,5 +161,24 @@ class Login extends MY_Controller {
 	private function _token($string)
 	{
 		return md5($string.'@#!$%&*@');
+	}
+
+	private function _display_phone($phone)
+	{
+		$length = strlen($phone);
+		if($length==6)
+		{
+			$phone = preg_replace("/^(\d{3})(\d{3})$/", "$1 $2", $phone);
+		}
+		else if($length > 6 && $length <= 9){
+			$last = $length - 6;
+			$phone = preg_replace("/^(\d{3})(\d{3})(\d{".$last."})$/", "$1 $2 $3", $phone);
+		}
+		else if($length > 9){
+			$last = $length - 9;
+			$phone = preg_replace("/^(\d{3})(\d{3})(\d{3})(\d{".$last."})$/", "$1 $2 $3 $4", $phone);
+		}
+
+		return $phone;
 	}
 }

@@ -19,6 +19,11 @@
         .humanid-form-placement__otp-resend a{
             font-weight: 600;
         }
+        @media only screen and (max-width: 768px) {
+            .humanid-form-placement__otp-resend span{
+                margin-right:2rem;
+            }
+        }
     </style>
     <?php echo $styles; ?>
 </head>

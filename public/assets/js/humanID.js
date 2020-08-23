@@ -3,15 +3,27 @@ const humanid = function () {
     return {
 
         formLogin: function () {
-            let input = document.querySelector("#phone");
+            let input = document.querySelector("#phoneDisplay");
             var iti = window.intlTelInput(input, {
                 preferredCountries: ["us", "id"],
                 separateDialCode: true,
                 initialCountry: ""
             });
-            document.getElementById('dialcode').value = iti.getSelectedCountryData().dialCode;
+            var countryCode = $('#dialcode');
+            var phone = $('#phone');
+            countryCode.val(iti.getSelectedCountryData().dialCode);
             input.addEventListener("countrychange", function() {
-                document.getElementById('dialcode').value = iti.getSelectedCountryData().dialCode;
+                countryCode.val(iti.getSelectedCountryData().dialCode);
+            });
+
+            $('#phoneDisplay').keyup(function(e) {
+                if ((e.keyCode > 47 && e.keyCode < 58) || (e.keyCode < 106 && e.keyCode > 95)) {
+                    this.value = this.value.replace(/(\d{3})\-?/g, '$1-');
+                    phone.val(this.value.replace(/[^0-9]/g, ''));
+                    return true;
+                }
+                this.value = this.value.replace(/[^\-0-9]/g, '');
+                phone.val(this.value.replace(/[^0-9]/g, ''));
             });
         },
 
@@ -38,7 +50,13 @@ const humanid = function () {
                 if(!timerOn) {
                     return;
                 }
-                location.href = $('.directed-link').val();
+                if(success==1){
+                    location.href = $('.directed-link').val();
+                }
+                else{
+                    $('.verify-area').hide();
+                    $('.resend-area').show();
+                }
             }
             var setTime = parseInt(failAttemptLimit);
             timer(setTime);
@@ -58,6 +76,10 @@ const humanid = function () {
             });
 
             $('.directed-now').click(function(){
+                location.href = $('.directed-link').val();
+            });
+            
+            $('.resend-otp').click(function(){
                 location.href = $('.directed-link').val();
             });
         }

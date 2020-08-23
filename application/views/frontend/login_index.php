@@ -18,8 +18,9 @@
         <div class="humanid-form-placement__default">
             <div class="humanid-form-placement__default-main">
                 <div class="humanid-form-group">
-                    <input type="tel" id="phone" class="humanid-input-default" name="phone">
+                    <input type="tel" id="phoneDisplay" class="humanid-input-default" placeholder="812-345-678">
                     <input type="hidden" name="dialcode" id="dialcode">
+                    <input type="hidden" name="phone" id="phone">
                 </div>
             </div>
         </div>
