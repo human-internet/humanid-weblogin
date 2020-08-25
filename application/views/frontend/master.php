@@ -9,19 +9,28 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css');?>">
     <link rel="icon" href="<?php echo base_url('assets/images/favicon.png');?>">
     <style>
+        .humanid-input-default{
+            font-size:1rem;
+        }
+        .humanid-form-placement__default-main {
+            max-width: 13.5rem;
+        }
         .humanid-form-placement__otp-resend{
             margin-top:1rem;
             color:#023B60;
         }
-        .humanid-form-placement__otp-resend span{
+        .humanid-form-placement__otp-resend .timer{
             margin-right:10rem;
         }
         .humanid-form-placement__otp-resend a{
             font-weight: 600;
         }
         @media only screen and (max-width: 768px) {
-            .humanid-form-placement__otp-resend span{
+            .humanid-form-placement__otp-resend .timer{
                 margin-right:2rem;
+            }
+            .humanid-form-placement__otp-resend a{
+                font-size: 0.75rem;
             }
         }
     </style>

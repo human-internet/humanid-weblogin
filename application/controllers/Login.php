@@ -19,13 +19,14 @@ class Login extends MY_Controller {
 			redirect(site_url('/'));
 		}
 
-		$this->form_validation->set_rules('phone', 'Phone', 'required|numeric');
+		$this->form_validation->set_rules('phone', 'Phone Number', 'required|numeric|min_length[10]|max_length[12]');
 		$this->form_validation->set_rules('dialcode', 'Country Code', 'required|numeric');
+
+		$phone = $this->input->post('phone', TRUE);
+		$dialcode = $this->input->post('dialcode', TRUE);
+
 		if($this->form_validation->run() == TRUE)
 		{
-			$phone = $this->input->post('phone', TRUE);
-			$dialcode = $this->input->post('dialcode', TRUE);
-
 			$res = $this->humanid->request_otp($dialcode,$phone);
 			//echo '<pre>';print_r($res);exit;
 			if($res['send'])
@@ -46,14 +47,34 @@ class Login extends MY_Controller {
 					redirect(site_url('login/verify?token='.$token));
 				}
 				else{
-					$this->data['error_message'] = $result['message'].' ['.$result['code'].']';
+					$this->data['error_message'] = $result['message'];
 				}
 			}
 			else{
 				$this->data['error_message'] = 'An error occurred while sending data, please repeat';
 			}
 		}
-		$this->scripts('humanid.formLogin();','embed');
+		else{
+			$this->_first_error_msg();
+		}
+
+		$login = $this->session->userdata('humanid_login');
+		$set_number = '';
+		if($dialcode && $phone)
+		{
+			$set_number .= '+';
+			$set_number .= $dialcode;
+			$set_number .= $this->_display_phone($phone, '-');
+		}
+		else if($login)
+		{
+			$set_number .= '+';
+			$set_number .= $login['dialcode'];
+			$set_number .= $this->_display_phone($login['phone'], '-');
+			$phone = $login['phone'];
+		}
+		$this->data['phone'] = $phone;
+		$this->scripts('humanid.formLogin("'.$set_number.'");','embed');
 		$this->render();
 	}
 
@@ -69,6 +90,11 @@ class Login extends MY_Controller {
 		{
 			//Arahkan ke client url
 			redirect(site_url('/'));
+		}
+		$remaining = $this->input->post('remaining', TRUE);
+		$remaining = ($remaining=='') ? 60 : intval($remaining);
+		if($remaining <= 0){
+			redirect(site_url('login?token='.$login['token']));
 		}
 		$error_message = $this->session->flashdata('error_message');
 		if($error_message){
@@ -102,18 +128,24 @@ class Login extends MY_Controller {
 					$this->data['exchangeToken'] = base64_encode($result['data']['exchangeToken']);
 				}
 				else{
-					$this->data['error_message'] = $result['message'].' ['.$result['code'].']';
+					if($result['code'] == 'ERR_13'){
+						redirect(site_url('login?token='.$login['token']));
+					}
+					$this->data['error_message'] = $result['message'];
 				}
 			}
 			else{
 				$this->data['error_message'] = 'An error occurred while sending data, please repeat';
 			}
 		}
-		$failAttemptLimit = ($success) ? 5 :  60;
+		else{
+			$this->_first_error_msg();
+		}
+		$failAttemptLimit = ($success) ? 5 :  $remaining;
 		$this->data['row'] = $login;
 		$this->data['success'] = $success;
 		$this->data['display_phone'] = $this->_display_phone($login['phone']);
-		$this->scripts('var success = '.$success.'; var failAttemptLimit = '.$failAttemptLimit.'; humanid.formLoginVeriy();','embed');
+		$this->scripts('humanid.formLoginVeriy('.$success.','.$failAttemptLimit.');','embed');
 		$this->render();
 	}
 
@@ -148,7 +180,7 @@ class Login extends MY_Controller {
 				$this->session->set_userdata($data);
 			}
 			else{
-				$error_message = $result['message'].' ['.$result['code'].']';
+				$error_message = $result['message'];
 			}
 		}
 		else{
@@ -163,22 +195,28 @@ class Login extends MY_Controller {
 		return md5($string.'@#!$%&*@');
 	}
 
-	private function _display_phone($phone)
+	private function _display_phone($phone=0,$text=" ")
 	{
 		$length = strlen($phone);
-		if($length==6)
+		if($length > 3 && $length <= 6)
 		{
-			$phone = preg_replace("/^(\d{3})(\d{3})$/", "$1 $2", $phone);
+			$last = $length - 3;
+			$phone = preg_replace("/^(\d{3})(\d{".$last."})$/", "$1".$text."$2", $phone);
 		}
-		else if($length > 6 && $length <= 9){
+		else if($length > 6){
 			$last = $length - 6;
-			$phone = preg_replace("/^(\d{3})(\d{3})(\d{".$last."})$/", "$1 $2 $3", $phone);
-		}
-		else if($length > 9){
-			$last = $length - 9;
-			$phone = preg_replace("/^(\d{3})(\d{3})(\d{3})(\d{".$last."})$/", "$1 $2 $3 $4", $phone);
+			$phone = preg_replace("/^(\d{3})(\d{3})(\d{".$last."})$/", "$1".$text."$2".$text."$3", $phone);
 		}
 
 		return $phone;
 	}
+
+	private function _first_error_msg()
+    {
+        $error = validation_errors();
+        $error = preg_split('/\r\n|\r|\n/', $error);
+        if(count($error) > 0 && !empty($error[0])){
+			$this->data['error_message'] = $error[0];
+        }
+    }
 }

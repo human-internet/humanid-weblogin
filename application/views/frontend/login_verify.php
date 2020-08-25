@@ -25,19 +25,10 @@
                 <p>After successful verification, your number will be deleted permanently and only a random identifier will be stored. </p>
             </div>
             <div class="humanid-text-info humanid-text-info-danger">
-                <?php if(isset($error_message)):?><p><?php echo $error_message;?></p><?php endif;?>
-                <?php echo form_error('code_1', '<p>', '</p>');?>
-                <?php echo form_error('code_2', '<p>', '</p>');?>
-                <?php echo form_error('code_3', '<p>', '</p>');?>
-                <?php echo form_error('code_4', '<p>', '</p>');?>
+                <?php if(isset($error_message) && !empty($error_message)):?><p><?php echo $error_message;?></p><?php endif;?>
             </div>
         </div>
-        <div class="humanid-button humanid-button-vertical resend-area" style="display:none;">
-            <button class="btn-humanid btn-humanid-primary resend-otp" type="button">Resend Verification Code</button>
-            <input type="hidden" class="directed-link" value="<?php echo site_url('login/resend?token='.$row['token']);?>">
-        </div>
-
-        <div class="humanid-form-placement verify-area">
+        <div class="humanid-form-placement">
             <div class="humanid-form-placement__otp-verification">
                 <div class="humanid-form-group">
                     <input type="text" class="humanid-input-otp" data-id="1" maxlength="1" name="code_1" autofocus>
@@ -53,7 +44,9 @@
                 </div>
             </div>
             <div class="humanid-form-placement__otp-resend">
-                <span class="timer-text">Resend code in <strong>00:60</strong></span>
+                <span class="timer-text verify-area timer">Resend code in <strong>00:60</strong></span>
+                <input type="hidden" name="remaining" id="remaining">
+                <a href="<?php echo site_url('login/resend?token='.$row['token']);?>" class="resend-area timer" style="display:none;">Resend Verification Code</a>
                 <a href="<?php echo site_url('login?token='.$row['token']);?>">Try Different Number</a>
             </div>
         </div>
