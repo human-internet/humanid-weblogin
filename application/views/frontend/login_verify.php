@@ -1,11 +1,11 @@
 <form method="post">
     <div class="humanid-logo">
         <div class="humanid-logo__placement">
-            <img src="<?php echo base_url('assets/images/client/greenzone.png');?>" alt="Green Zone">
+        <img src="<?php echo $session['app']['logoUrls']['thumbnail'];?>" alt="<?php echo $session['app']['name'];?>">
         </div>
     </div>
     <?php if($success):?>
-        <div class="humanid-page-title">GreenZone will not receive any of your personal information.</div>
+        <div class="humanid-page-title"><?php echo $session['app']['name'];?> will not receive any of your personal information.</div>
         <div class="humanid-content-text">
             <div class="humanid-text-info humanid-text-info-default">
                 <p>Welcome, you have successfully logged in.</p>
@@ -15,7 +15,7 @@
         <div class="humanid-button humanid-button-vertical">
             <button class="btn-humanid btn-humanid-primary directed-now" type="button">Redirect Now</button>
             <button class="btn-humanid btn-humanid-secondary" type="button">You will be directed to a page in <span class="timer-text"></span> seconds</button>
-            <input type="hidden" class="directed-link" value="<?php echo site_url('client/success?token='.$exchangeToken);?>">
+            <input type="hidden" class="directed-link" value="<?php echo $redirectUrl;?>">
         </div>
     <?php else:?>
         <div class="humanid-page-title">Verify Your Phone Number</div>

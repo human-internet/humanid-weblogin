@@ -1,7 +1,7 @@
 <form method="post">
     <div class="humanid-logo">
         <div class="humanid-logo__placement">
-            <img src="<?php echo base_url('assets/images/client/greenzone.png');?>" alt="Green Zone">
+            <img src="<?php echo $session['app']['logoUrls']['thumbnail'];?>" alt="<?php echo $session['app']['name'];?>">
         </div>
     </div>
     <div class="humanid-page-title">Websites and Apps will not receive any of your personal information.</div>
@@ -16,7 +16,7 @@
         <div class="humanid-form-placement__default">
             <div class="humanid-form-placement__default-main">
                 <div class="humanid-form-group">
-                    <input type="tel" id="phoneDisplay" class="humanid-input-default" placeholder="812-345-678" maxlength="14">
+                    <input type="tel" id="phoneDisplay" class="humanid-input-default" placeholder="812-345-6780" maxlength="17">
                     <input type="hidden" name="dialcode" id="dialcode">
                     <input type="hidden" name="phone" id="phone" value="<?php echo set_value('phone', $phone);?>">
                 </div>
@@ -25,7 +25,7 @@
         <div class="humanid-form-placement__secure-text">Your phone number is deleted after verification</div>
     </div>
     <div class="humanid-content-text">
-        <p><a href="">Learn more</a> about our mission to restore privacy.</p>
+        <p><a href="https://www.human-id.org/privacypolicy" target="_blank">Learn more</a> about our mission to restore privacy.</p>
     </div>
     <div class="humanid-button humanid-button-vertical">
         <button class="btn-humanid btn-humanid-primary" type="submit">Send SMS With Verification Code</button>

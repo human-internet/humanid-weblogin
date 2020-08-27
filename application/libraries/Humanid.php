@@ -20,7 +20,45 @@ class Humanid
 
     }
 
-    public function request_otp($countryCode,$phone,$debug=false) 
+    public function session($clientId,$clientSecret,$debug=false)
+    {
+        $res = array(
+            'send' => FALSE,
+            'result' => 'No response!'
+        );
+
+        $fields = array(
+            'partnerClientId' => $clientId,
+            'partnerClientSecret' => $clientSecret
+        );
+        $data_json = json_encode($fields);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->url .'web-login/sessions');
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Content-Length: ' . strlen($data_json),'client-id:'. $this->client_id,'client-secret:'.$this->client_secret));
+        if($debug){
+            $res['fields'] = json_encode($fields);
+        }
+        $result = curl_exec($ch);
+        if($result===false){
+            $res['result'] = 'Curl failed: ' . curl_error($ch);
+        }
+        else {
+            $res['send'] = TRUE;
+            $res['result'] = json_decode($result, true);
+        }
+        curl_close($ch);
+
+        return $res;
+    }
+
+    public function request_otp($countryCode,$phone,$token,$debug=false) 
     {
         $res = array(
             'send' => FALSE,
@@ -30,11 +68,10 @@ class Humanid
         $fields = array(
             'countryCode='. $countryCode,
             'phone='. $phone,
-            'appId='. $this->client_id,
-            'appSecret='. $this->client_secret
+            'token='. $token
         );
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->url .'mobile/users/login/request-otp');
+        curl_setopt($ch, CURLOPT_URL, $this->url .'web-login/users/request-otp?lang=en');
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -59,7 +96,7 @@ class Humanid
         return $res;
     }
 
-    public function verify_otp($countryCode,$phone,$verificationCode,$debug=false) 
+    public function verify_otp($countryCode,$phone,$verificationCode,$token,$debug=false) 
     {
         $res = array(
             'send' => FALSE,
@@ -71,10 +108,11 @@ class Humanid
             'phone='. $phone,
             'deviceId=device-id',
             'verificationCode='. $verificationCode,
-            'notifId=NONE'
+            'notifId=NONE',
+            'token='.$token
         );
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->url .'mobile/users/login');
+        curl_setopt($ch, CURLOPT_URL, $this->url .'web-login/users/login');
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);

@@ -24,7 +24,12 @@ const humanid = function () {
                 if ((e.keyCode > 47 && e.keyCode < 58) || (e.keyCode < 106 && e.keyCode > 95)) {
                     var length = this.value.length;
                     if(length > 7){
-                        this.value = this.value.replace(/(\d{7})\-?/g, '$1-');
+                        if(length > 12){
+                            this.value = this.value.replace(/(\d{4})\-?/g, '$1-');
+                        }
+                        else{
+                            this.value = this.value.replace(/(\d{4})\-?/g, '$1-');
+                        }
                     }
                     else{
                         this.value = this.value.replace(/(\d{3})\-?/g, '$1-');
