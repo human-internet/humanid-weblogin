@@ -18,8 +18,8 @@ class Login extends MY_Controller {
 	{
 		$clientId = $this->input->post('clientId', true);
 		$clientSecret = $this->input->post('clientSecret', true);
-		$clientId = getenv('HUMANID_SERVER_ID');
-		$clientSecret = getenv('HUMANID_SERVER_SECRET');
+		//$clientId = getenv('HUMANID_SERVER_ID');
+		//$clientSecret = getenv('HUMANID_SERVER_SECRET');
 		if($clientId && $clientSecret)
 		{
 			$res = $this->humanid->session($clientId,$clientSecret);
