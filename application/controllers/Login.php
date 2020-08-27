@@ -177,6 +177,8 @@ class Login extends MY_Controller {
 					);
 					$this->session->set_userdata($data);
 
+					@unlink($this->path.$login['token'].'.txt');
+
 					$success = 1;
 					$this->data['redirectUrl'] = $result['data']['redirectUrl'];
 				}
