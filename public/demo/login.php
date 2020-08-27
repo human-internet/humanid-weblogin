@@ -1,6 +1,6 @@
 <?php
 
-$base_url = 'http://almaariflab.local/humanid-web-sdk/public/request-token';
+$base_url = 'https://web-login.human-id.org/request-token';
 $clientId = '***REMOVED***';
 $clientSecret = '***REMOVED***';
 
