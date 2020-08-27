@@ -13,7 +13,7 @@
             font-size:1rem;
         }
         .humanid-form-placement__default-main {
-            max-width: 13.5rem;
+            max-width: 15.5rem;
         }
         .humanid-form-placement__otp-resend{
             margin-top:1rem;
