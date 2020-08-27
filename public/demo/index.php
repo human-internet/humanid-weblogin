@@ -25,10 +25,10 @@
 	</style>
 </head>
 <body>
-	<h1>Welcome to Green Zone!</h1>
-	<img src="greenzone.png" alt="Green Zone">
+	<h1>Welcome to humanID Web Login Demo</h1>
+	<img src="greenzone.png" alt="Demo App" height="90">
 	<br><br><br>
-	<p>Untuk mengkases halaman ini, silahkan login dengan humanID</p>
+	<p>This page is consumer or partner demo web app, to proceed please click the button below to login</p>
 	<a href="login.php"><img src="anonymous-login.svg" alt="Anonymous Login with humanID" height="27"></a>
 </body>
 </html>
