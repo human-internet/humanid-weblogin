@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Green Zone</title>
+	<title>humanID Web Login Demo</title>
 
 	<style type="text/css">
 
