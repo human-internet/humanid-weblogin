@@ -22,7 +22,7 @@
         <div class="humanid-content-text">
             <div class="humanid-text-info humanid-text-info-default">
                 <p>Please enter the 4 digit code you received as SMS to <strong>+<?php echo $row['dialcode']?> <?php echo $display_phone;?></strong>.</p>
-                <p>After successful verification, your number will be deleted permanently and only a random identifier will be stored. </p>
+                <p>After successful verification, your number will be deleted permanently. Only a random identifier will be stored.</p>
             </div>
             <div class="humanid-text-info humanid-text-info-danger">
                 <?php if(isset($error_message) && !empty($error_message)):?><p><?php echo $error_message;?></p><?php endif;?>

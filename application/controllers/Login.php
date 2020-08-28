@@ -78,7 +78,7 @@ class Login extends MY_Controller {
 		$session = $this->_row_token();
 		$token = $session['token'];
 
-		$this->form_validation->set_rules('phone', 'Phone Number', 'required|numeric|min_length[10]|max_length[14]');
+		$this->form_validation->set_rules('phone', 'Phone Number', 'required|numeric|min_length[4]|max_length[14]');
 		$this->form_validation->set_rules('dialcode', 'Country Code', 'required|numeric');
 
 		$phone = $this->input->post('phone', TRUE);
