@@ -3,80 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends MY_Controller {
 
-	var $path;
     function __construct()
     {
 		parent::__construct();
 		$this->load->library('session');
 		$this->load->library('humanid');
 		$this->load->library('form_validation');
-		$this->path = getenv('SESSION_PATH');
-		$this->path = (empty($this->path)) ? str_replace('system','sessions',BASEPATH) : $this->path;
-	}
-
-	public function request_token()
-	{
-		$clientId = $this->input->post('clientId', true);
-		$clientSecret = $this->input->post('clientSecret', true);
-		//$clientId = getenv('HUMANID_SERVER_ID');
-		//$clientSecret = getenv('HUMANID_SERVER_SECRET');
-		if($clientId && $clientSecret)
-		{
-			$res = $this->humanid->session($clientId,$clientSecret);
-			if($res['send'])
-			{
-				$result = $res['result'];
-				if($result['success'])
-				{
-					$data = json_encode($result['data']);
-					$token = $this->_token($result['data']['session']['token']);
-					$path = $this->path;
-					$session = fopen($path.$token.".txt", "w") or die("Unable to open file!");
-					fwrite($session, $data);
-					fclose($session);
-					$json = array(
-						'success' => 1,
-						'code' => $result['code'],
-						'message' => $result['message'],
-						'login' => array(
-							'url' => site_url('login?token='.$token),
-							'token' => $token
-						)
-					);
-				}
-				else{
-					$json = array(
-						'success' => 0,
-						'code' => $result['code'],
-						'message' => $result['message']
-					);
-				}
-			}
-			else{
-				$json = array(
-					'success' => 0,
-					'code' => '0',
-					'message' => 'Error not found'
-				);
-			}
-		}
-		else{
-			$json = array(
-				'success' => 0,
-				'code' => '1',
-				'message' => 'Client Id and Secret are mandatory'
-			);
-		}
-		
-		header('Content-Type: application/json');
-		echo json_encode($json);
-		exit;
 	}
 
 	public function index()
 	{
-		$session = $this->_row_token();
-		$token = $session['token'];
+		$token = $this->_token();
+		$app = $this->_app_info();
 
 		$this->form_validation->set_rules('phone', 'Phone Number', 'required|numeric|min_length[4]|max_length[14]');
 		$this->form_validation->set_rules('dialcode', 'Country Code', 'required|numeric');
@@ -86,8 +24,7 @@ class Login extends MY_Controller {
 
 		if($this->form_validation->run() == TRUE)
 		{
-			$res = $this->humanid->request_otp($dialcode,$phone,$session['session']['token']);
-			//echo '<pre>';print_r($res);exit;
+			$res = $this->humanid->request_otp($dialcode,$phone,$token);
 			if($res['send'])
 			{
 				$result = $res['result'];
@@ -103,9 +40,12 @@ class Login extends MY_Controller {
 					);
 					$this->session->set_userdata($data);
 
-					redirect(site_url('login/verify?token='.$token));
+					redirect(site_url('login/verify?a='.$app['id'].'&t='.$token));
 				}
 				else{
+					if($result['code'] == '500'){
+						redirect($app['redirectUrlFail'] .'?code=500&err='.urlencode('The token has expired'));
+					}
 					$this->data['error_message'] = $result['message'];
 				}
 			}
@@ -133,20 +73,21 @@ class Login extends MY_Controller {
 			$phone = $login['phone'];
 		}
 		$this->data['phone'] = $phone;
-		$this->data['session'] = $session;
+		$this->data['app'] = $app;
 		$this->scripts('humanid.formLogin("'.$set_number.'");','embed');
 		$this->render();
 	}
 
 	public function verify()
 	{
-		$session = $this->_row_token(FALSE);
-		$login = $this->_row_login($session);
+		$app = $this->_app_info();
+		$login = $this->_login();
+		$token = $this->_token($login['token']);
 
 		$remaining = $this->input->post('remaining', TRUE);
 		$remaining = ($remaining=='') ? 60 : intval($remaining);
 		if($remaining <= 0){
-			redirect(site_url('login?token='.$login['token']));
+			redirect(site_url('login?a='.$app['id'].'&t='.$token));
 		}
 		$error_message = $this->session->flashdata('error_message');
 		if($error_message){
@@ -166,25 +107,19 @@ class Login extends MY_Controller {
 			$otp_code = $code_1 . $code_2 . $code_3 . $code_4;
 
 			$res = $this->humanid->verify_otp($login['dialcode'],$login['phone'],$otp_code,$login['result']['data']['session']['token']);
-			//echo '<pre>';print_r($res);exit;
 			if($res['send'])
 			{
 				$result = $res['result'];
 				if($result['success'])
 				{
-					$data = array(
-						'humanid_login' => NULL
-					);
-					$this->session->set_userdata($data);
-
-					@unlink($this->path.$login['token'].'.txt');
+					$this->session->sess_destroy();
 
 					$success = 1;
 					$this->data['redirectUrl'] = $result['data']['redirectUrl'];
 				}
 				else{
 					if($result['code'] == 'ERR_13'){
-						redirect(site_url('login?token='.$login['token']));
+						redirect(site_url('login?a='.$app['id'].'&t='.$token));
 					}
 					$this->data['error_message'] = $result['message'];
 				}
@@ -200,18 +135,19 @@ class Login extends MY_Controller {
 		$this->data['row'] = $login;
 		$this->data['success'] = $success;
 		$this->data['display_phone'] = $this->_display_phone($login['phone']);
-		$this->data['session'] = $session;
+		$this->data['app'] = $app;
 		$this->scripts('humanid.formLoginVeriy('.$success.','.$failAttemptLimit.');','embed');
 		$this->render();
 	}
 
 	public function resend()
 	{
-		$session = $this->_row_token(FALSE);
-		$login = $this->_row_login($session);
+		$app = $this->_app_info();
+		$login = $this->_login();
+		$token = $this->_token($login['token']);
 
 		$error_message = '';
-		$res = $this->humanid->request_otp($login['dialcode'],$login['phone'],$session['session']['token']);
+		$res = $this->humanid->request_otp($login['dialcode'],$login['phone'],$token);
 		if($res['send'])
 		{
 			$result = $res['result'];
@@ -221,13 +157,16 @@ class Login extends MY_Controller {
 					'humanid_login' => array(
 						'phone' => $login['phone'],
 						'dialcode' => $login['dialcode'],
-						'token' => $login['token'],
+						'token' => $token,
 						'result' => $result
 					)
 				);
 				$this->session->set_userdata($data);
 			}
 			else{
+				if($result['code'] == '500'){
+					redirect($app['redirectUrlFail'] .'?code=500&err='.urlencode('The token has expired'));
+				}
 				$error_message = $result['message'];
 			}
 		}
@@ -235,12 +174,7 @@ class Login extends MY_Controller {
 			$error_message = 'An error occurred while sending data, please repeat';
 		}
 		$this->session->set_flashdata('error_message', $error_message);
-		redirect(site_url('login/verify?token='.$login['token']));
-	}
-
-	private function _token($string)
-	{
-		return md5($string.'@#!$%&*@');
+		redirect(site_url('login/verify?a='.$app['id'].'&t='.$token));
 	}
 
 	private function _display_phone($phone=0,$text=" ")
@@ -272,71 +206,67 @@ class Login extends MY_Controller {
         }
 	}
 	
-	private function _row_token($expired = TRUE)
+	private function _login()
 	{
-		$token = $this->input->get('token', TRUE);
-		if($token)
+		$login = $this->session->userdata('humanid_login');
+		if($login && !empty($login))
 		{
-			$path = $this->path;
-			$file = $token.".txt";
-			if(file_exists($path.$file))
-			{
-				$file_name = $path.$file;
-				$myfile = fopen($file_name, "r") or die("Unable to open file!");
-				$data = fread($myfile,filesize($file_name));
-				fclose($myfile);
-				$row = json_decode($data, TRUE);
-				if(!empty($row))
-				{
-					if($expired)
-					{
-						$expiredAt = date('Y-m-d H:i:s', $row['session']['expiredAt']);
-						$now = date('Y-m-d H:i:s');
-						if($expiredAt >= $now)
-						{
-							$row['token'] = $token;
-							return $row;
-						}
-						else{
-							$this->session->set_flashdata('error_message', 'The token has expired');
-							redirect(site_url('error'));
-						}
-					}
-					else{
-						$row['token'] = $token;
-						return $row;
-					}
-				}
-				else{
-					$this->session->set_flashdata('error_message', 'The token has expired');
-					redirect(site_url('error'));
-				}
-			}
-			else{
-				$this->session->set_flashdata('error_message', 'The token has expired');
-				redirect(site_url('error'));
-			}
+			return $login;
 		}
 		else{
-			$this->session->set_flashdata('error_message', 'The token has expired');
+			$this->session->set_flashdata('error_message', 'The session has expired');
 			redirect(site_url('error'));
 		}
 	}
 
-	private function _row_login($session)
+	private function _app_info()
 	{
-		$login = $this->session->userdata('humanid_login');
-		//echo '<pre>';print_r($login);print_r($session);exit;
-		if($login && !empty($login))
+		$app = $this->session->userdata('humanid_app');
+		if($app && !empty($app))
 		{
-			if($session['token'] == $login['token'])
+			return $app;
+		}
+		else{
+			$appId = $this->input->get('a', TRUE);
+			if($appId)
 			{
-				$expiredAt = date('Y-m-d H:i:s', $login['result']['data']['session']['expiredAt']);
-				$now = date('Y-m-d H:i:s');
-				//echo $expiredAt .' - '.$now;exit;
-				if($expiredAt >= $now)
+				$res = $this->humanid->app_info($appId);
+				if($res['send'])
 				{
-					return $login;
+					$result = $res['result'];
+					if($result['success'])
+					{
+						$app = $res['result']['data']['app'];
+						$app['id'] = $appId;
+						$this->session->set_userdata(array('humanid_app' => $app));
+						return $app;
+					}
+					else{
+						$this->session->set_flashdata('error_message', $result['message']);
+						redirect(site_url('error'));
+					}
+				}
+				else{
+					$this->session->set_flashdata('error_message', 'An error occurred while sending data, please repeat');
+					redirect(site_url('error'));
+				}
+			}
+			else{
+				$this->session->set_flashdata('error_message', 'The AppId not found');
+				redirect(site_url('error'));
+			}
+		}
+	}
+
+	private function _token($session_token=FALSE)
+	{
+		$token = $this->input->get('t', TRUE);
+		if($token){
+			if($session_token)
+			{
+				if($session_token == $token)
+				{
+					return $token;
 				}
 				else{
 					$this->session->set_flashdata('error_message', 'The token has expired');
@@ -344,12 +274,11 @@ class Login extends MY_Controller {
 				}
 			}
 			else{
-				$this->session->set_flashdata('error_message', 'The token has expired');
-				redirect(site_url('error'));
+				return $token;
 			}
 		}
 		else{
-			$this->session->set_flashdata('error_message', 'The session has expired');
+			$this->session->set_flashdata('error_message', 'The token has expired');
 			redirect(site_url('error'));
 		}
 	}

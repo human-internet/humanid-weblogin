@@ -54,4 +54,3 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['error'] = 'home/error';
-$route['request-token'] = 'login/request_token';

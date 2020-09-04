@@ -1,11 +1,11 @@
 <form method="post">
     <div class="humanid-logo">
         <div class="humanid-logo__placement">
-        <img src="<?php echo $session['app']['logoUrls']['thumbnail'];?>" alt="<?php echo $session['app']['name'];?>">
+        <img src="<?php echo $app['logoUrls']['thumbnail'];?>" alt="<?php echo $app['name'];?>">
         </div>
     </div>
     <?php if($success):?>
-        <div class="humanid-page-title"><?php echo $session['app']['name'];?> will not receive any of your personal information.</div>
+        <div class="humanid-page-title"><?php echo $app['name'];?> will not receive any of your personal information.</div>
         <div class="humanid-content-text">
             <div class="humanid-text-info humanid-text-info-default">
                 <p>Welcome, you have successfully logged in.</p>
@@ -46,8 +46,8 @@
             <div class="humanid-form-placement__otp-resend">
                 <span class="timer-text verify-area timer">Resend code in <strong>00:60</strong></span>
                 <input type="hidden" name="remaining" id="remaining">
-                <a href="<?php echo site_url('login/resend?token='.$row['token']);?>" class="resend-area timer" style="display:none;">Resend Verification Code</a>
-                <a href="<?php echo site_url('login?token='.$row['token']);?>">Try Different Number</a>
+                <a href="<?php echo site_url('login/resend?a='.$app['id'].'&t='.$row['token']);?>" class="resend-area timer" style="display:none;">Resend Verification Code</a>
+                <a href="<?php echo site_url('login?a='.$app['id'].'&t='.$row['token']);?>">Try Different Number</a>
             </div>
         </div>
     <?php endif;?>

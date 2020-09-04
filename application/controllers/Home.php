@@ -11,7 +11,6 @@ class Home extends MY_Controller {
 
 	public function index()
 	{
-		//redirect(site_url('demo'));
 		$this->render();
 	}
 

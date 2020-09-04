@@ -20,6 +20,32 @@ class Humanid
 
     }
 
+    public function app_info($appId)
+    {
+        $res = array(
+            'send' => FALSE,
+            'result' => 'No response!'
+        );
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->url .'web-login/apps/'.$appId);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','client-id:'. $this->client_id,'client-secret:'.$this->client_secret));
+        $result = curl_exec($ch);
+        if($result===false){
+            $res['result'] = 'Curl failed: ' . curl_error($ch);
+        }
+        else {
+            $res['send'] = TRUE;
+            $res['result'] = json_decode($result, true);
+        }
+        curl_close($ch);
+
+        return $res;
+    }
+
     public function session($clientId,$clientSecret,$debug=false)
     {
         $res = array(
