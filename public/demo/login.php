@@ -1,8 +1,16 @@
 <?php
-
-$base_url = 'https://core.human-id.org/v0.0.3/server/users/web-login';
-$clientId = '***REMOVED***';
-$clientSecret = '***REMOVED***';
+$path = str_replace("public\demo", "", dirname(__FILE__));
+$string = file_get_contents($path.".env");
+$data = explode(PHP_EOL, $string);
+$env = array();
+foreach($data as $r)
+{
+    $row = explode("=",$r);
+    $env[$row[0]] = str_replace('"',"",$row[1]);
+}
+$base_url = $env['HUMANID_URL'].'server/users/web-login';
+$clientId = $env['HUMANID_SERVER_ID'];
+$clientSecret = $env['HUMANID_SERVER_SECRET'];
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $base_url);

@@ -1,0 +1,41 @@
+{
+    "phone": "Nomor Handphone",
+    "countryCode": "Kode Negara",
+    "code": "Kode",
+    "sendCode": "Kirim SMS Dengan Kode Verifikasi",
+    "newAccount": "Nomor Baru? Pulihkan Akun",
+    "redirect": "Alihkan Sekarang",
+    "verify": "Verifikasi Nomor Handphone Anda",
+    "resend": "Kirim Ulang Kode Verifikasi",
+    "try": "Coba Nomor Berbeda",
+    "errorPage": "Halaman Error",
+    "form": {
+        "phoneRequired": "Bidang Nomor Handphone harus diisi.",
+        "phoneNumeric": "Bidang Nomor Handphone hanya boleh berisi angka.",
+        "phoneMin": "Bidang Nomor Handphone minimal harus 4 karakter.",
+        "phoneMax": "Bidang Nomor Handphone tidak boleh lebih dari 14 karakter.",
+        "countryCodeRequired": "Bidang Kode Negara harus diisi.",
+        "countryCodeNumeric": "Bidang Kode Negara hanya boleh berisi angka.",
+        "codeRequired": "Bidang Kode harus diisi.",
+        "codeNumeric": "Bidang Kode hanya boleh berisi angka."
+    },
+    "error": {
+        "found": "Kesalahan tidak Ditemukan.",
+        "try": "Terjadi kesalahan saat mengirim data, Silakan coba lagi.",
+        "tokenExpired": "Token telah kedaluwarsa.",
+        "sessionExpired": "Session telah berakhir.",
+        "appId": "AppId tidak ditemukan"
+    },
+    "text": {
+        "pageTitle": "Situs web dan Aplikasi tidak akan menerima informasi pribadi Anda.",
+        "pageTitleApp": "{APPNAME} tidak akan menerima informasi pribadi Anda.",
+        "phone": "Nomor Handphone Anda dihapus setelah verifikasi",
+        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Pelajari lebih lanjut</a> tentang misi kami untuk memulihkan privasi.",
+        "welcome": "Selamat datang, Anda telah berhasil masuk.",
+        "continue": "Anda akan diarahkan ke halaman web sebelumnya untuk melanjutkan",
+        "timer": "Anda akan diarahkan ke halaman dalam {TIMER} detik",
+        "verifyCode": "Masukkan 4 digit kode yang Anda terima sebagai SMS ke <strong>+{COUNTRYCODE} {PHONE}</strong>.",
+        "afterSuccessful": "Setelah verifikasi berhasil, nomor Anda akan dihapus secara permanen. Hanya pengenal acak yang akan disimpan.",
+        "resend": "Kirim ulang kode dalam {TIME}"
+    }
+}

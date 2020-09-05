@@ -4,7 +4,7 @@
             <img src="<?php echo $app['logoUrls']['thumbnail'];?>" alt="<?php echo $app['name'];?>">
         </div>
     </div>
-    <div class="humanid-page-title">Websites and Apps will not receive any of your personal information.</div>
+    <div class="humanid-page-title"><?php echo $lang->text->pageTitle;?></div>
 
     <div class="humanid-content-text">
         <div class="humanid-text-info humanid-text-info-danger">
@@ -22,13 +22,13 @@
                 </div>
             </div>
         </div>
-        <div class="humanid-form-placement__secure-text">Your phone number is deleted after verification</div>
+        <div class="humanid-form-placement__secure-text"><?php echo $lang->text->phone;?></div>
     </div>
     <div class="humanid-content-text">
-        <p><a href="https://www.human-id.org/privacypolicy" target="_blank">Learn more</a> about our mission to restore privacy.</p>
+        <p><?php echo str_replace("{LINK}","https://www.human-id.org/privacypolicy",$lang->text->privacy);?></p>
     </div>
     <div class="humanid-button humanid-button-vertical">
-        <button class="btn-humanid btn-humanid-primary" type="submit">Send SMS With Verification Code</button>
-        <!--<button class="btn-humanid btn-humanid-secondary" type="button">New Number? Recover Account</button>-->
+        <button class="btn-humanid btn-humanid-primary" type="submit"><?php echo $lang->sendCode;?></button>
+        <!--<button class="btn-humanid btn-humanid-secondary" type="button"><?php echo $lang->newAccount;?></button>-->
     </div>
 </form>

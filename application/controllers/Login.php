@@ -6,7 +6,6 @@ class Login extends MY_Controller {
     function __construct()
     {
 		parent::__construct();
-		$this->load->library('session');
 		$this->load->library('humanid');
 		$this->load->library('form_validation');
 	}
@@ -16,8 +15,16 @@ class Login extends MY_Controller {
 		$token = $this->_token();
 		$app = $this->_app_info();
 
-		$this->form_validation->set_rules('phone', 'Phone Number', 'required|numeric|min_length[4]|max_length[14]');
-		$this->form_validation->set_rules('dialcode', 'Country Code', 'required|numeric');
+		$this->form_validation->set_rules('phone', $this->lg->phone, 'required|numeric|min_length[4]|max_length[14]', array(
+			'required' => $this->lg->form->phoneRequired,
+			'numeric' => $this->lg->form->phoneNumeric,
+			'min_length' => $this->lg->form->phoneMin,
+			'max_length' => $this->lg->form->phoneMax
+		));
+		$this->form_validation->set_rules('dialcode', $this->lg->countryCode, 'required|numeric', array(
+			'required' => $this->lg->form->countryCodeRequired,
+			'numeric' => $this->lg->form->countryCodeNumeric
+		));
 
 		$phone = $this->input->post('phone', TRUE);
 		$dialcode = $this->input->post('dialcode', TRUE);
@@ -40,17 +47,17 @@ class Login extends MY_Controller {
 					);
 					$this->session->set_userdata($data);
 
-					redirect(site_url('login/verify?a='.$app['id'].'&t='.$token));
+					redirect(site_url('login/verify?a='.$app['id'].'&t='.$token.'&lang='.$this->lg->id));
 				}
 				else{
 					if($result['code'] == '500'){
-						redirect($app['redirectUrlFail'] .'?code=500&err='.urlencode('The token has expired'));
+						redirect($app['redirectUrlFail'] .'?code=500&err='.urlencode($this->lg->error->tokenExpired));
 					}
 					$this->data['error_message'] = $result['message'];
 				}
 			}
 			else{
-				$this->data['error_message'] = 'An error occurred while sending data, please repeat';
+				$this->data['error_message'] = $this->lg->error->try;
 			}
 		}
 		else{
@@ -87,17 +94,17 @@ class Login extends MY_Controller {
 		$remaining = $this->input->post('remaining', TRUE);
 		$remaining = ($remaining=='') ? 60 : intval($remaining);
 		if($remaining <= 0){
-			redirect(site_url('login?a='.$app['id'].'&t='.$token));
+			redirect(site_url('login?a='.$app['id'].'&t='.$token.'&lang='.$this->lg->id));
 		}
 		$error_message = $this->session->flashdata('error_message');
 		if($error_message){
 			$this->data['error_message'] = $error_message;
 		}
 		$success = 0;
-		$this->form_validation->set_rules('code_1', 'Code', 'required|numeric');
-		$this->form_validation->set_rules('code_2', 'Code', 'required|numeric');
-		$this->form_validation->set_rules('code_3', 'Code', 'required|numeric');
-		$this->form_validation->set_rules('code_4', 'Code', 'required|numeric');
+		$this->form_validation->set_rules('code_1', 'Code', 'required|numeric', array('required' => $this->lg->form->codeRequired, 'numeric' => $this->lg->form->codeNumeric));
+		$this->form_validation->set_rules('code_2', 'Code', 'required|numeric', array('required' => $this->lg->form->codeRequired, 'numeric' => $this->lg->form->codeNumeric));
+		$this->form_validation->set_rules('code_3', 'Code', 'required|numeric', array('required' => $this->lg->form->codeRequired, 'numeric' => $this->lg->form->codeNumeric));
+		$this->form_validation->set_rules('code_4', 'Code', 'required|numeric', array('required' => $this->lg->form->codeRequired, 'numeric' => $this->lg->form->codeNumeric));
 		if($this->form_validation->run() == TRUE)
 		{
 			$code_1 = $this->input->post('code_1', TRUE);
@@ -119,13 +126,13 @@ class Login extends MY_Controller {
 				}
 				else{
 					if($result['code'] == 'ERR_13'){
-						redirect(site_url('login?a='.$app['id'].'&t='.$token));
+						redirect(site_url('login?a='.$app['id'].'&t='.$token.'&lang='.$this->lg->id));
 					}
 					$this->data['error_message'] = $result['message'];
 				}
 			}
 			else{
-				$this->data['error_message'] = 'An error occurred while sending data, please repeat';
+				$this->data['error_message'] = $this->lg->error->try;
 			}
 		}
 		else{
@@ -165,16 +172,16 @@ class Login extends MY_Controller {
 			}
 			else{
 				if($result['code'] == '500'){
-					redirect($app['redirectUrlFail'] .'?code=500&err='.urlencode('The token has expired'));
+					redirect($app['redirectUrlFail'] .'?code=500&err='.urlencode($this->lg->error->tokenExpired));
 				}
 				$error_message = $result['message'];
 			}
 		}
 		else{
-			$error_message = 'An error occurred while sending data, please repeat';
+			$error_message = $this->lg->error->try;
 		}
 		$this->session->set_flashdata('error_message', $error_message);
-		redirect(site_url('login/verify?a='.$app['id'].'&t='.$token));
+		redirect(site_url('login/verify?a='.$app['id'].'&t='.$token.'&lang='.$this->lg->id));
 	}
 
 	private function _display_phone($phone=0,$text=" ")
@@ -214,7 +221,7 @@ class Login extends MY_Controller {
 			return $login;
 		}
 		else{
-			$this->session->set_flashdata('error_message', 'The session has expired');
+			$this->session->set_flashdata('error_message', $this->lg->error->sessionExpired);
 			redirect(site_url('error'));
 		}
 	}
@@ -247,12 +254,12 @@ class Login extends MY_Controller {
 					}
 				}
 				else{
-					$this->session->set_flashdata('error_message', 'An error occurred while sending data, please repeat');
+					$this->session->set_flashdata('error_message', $this->lg->error->try);
 					redirect(site_url('error'));
 				}
 			}
 			else{
-				$this->session->set_flashdata('error_message', 'The AppId not found');
+				$this->session->set_flashdata('error_message', $this->lg->error->appId);
 				redirect(site_url('error'));
 			}
 		}
@@ -269,7 +276,7 @@ class Login extends MY_Controller {
 					return $token;
 				}
 				else{
-					$this->session->set_flashdata('error_message', 'The token has expired');
+					$this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
 					redirect(site_url('error'));
 				}
 			}
@@ -278,7 +285,7 @@ class Login extends MY_Controller {
 			}
 		}
 		else{
-			$this->session->set_flashdata('error_message', 'The token has expired');
+			$this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
 			redirect(site_url('error'));
 		}
 	}
