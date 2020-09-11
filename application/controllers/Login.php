@@ -13,7 +13,7 @@ class Login extends MY_Controller {
 	public function index()
 	{
 		$token = $this->_token();
-		$app = $this->_app_info();
+		$app = $this->_app_info(TRUE);
 
 		$this->form_validation->set_rules('phone', $this->lg->phone, 'required|numeric|min_length[4]|max_length[14]', array(
 			'required' => $this->lg->form->phoneRequired,
@@ -226,10 +226,10 @@ class Login extends MY_Controller {
 		}
 	}
 
-	private function _app_info()
+	private function _app_info($new_session=FALSE)
 	{
 		$app = $this->session->userdata('humanid_app');
-		if($app && !empty($app))
+		if(!$new_session && $app && !empty($app))
 		{
 			return $app;
 		}
