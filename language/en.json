@@ -24,7 +24,8 @@
         "try": "An error occurred while sending data, Please try again.",
         "tokenExpired": "The token has expired.",
         "sessionExpired": "The session has expired.",
-        "appId": "The AppId not found"
+        "appId": "The AppId not found",
+        "verify": "Phone number verification ends"
     },
     "text": {
         "pageTitle": "Websites and Apps will not receive any of your personal information.",

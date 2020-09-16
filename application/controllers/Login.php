@@ -51,6 +51,7 @@ class Login extends MY_Controller {
 				}
 				else{
 					if($result['code'] == '500'){
+						$this->init_logs(array('url' => $app['redirectUrlFail'], 'error' => $this->lg->error->tokenExpired));
 						redirect($app['redirectUrlFail'] .'?code=500&err='.urlencode($this->lg->error->tokenExpired));
 					}
 					$this->data['error_message'] = $result['message'];
@@ -63,7 +64,9 @@ class Login extends MY_Controller {
 		else{
 			$this->_first_error_msg();
 		}
-
+		if(isset($this->data['error_message'])){
+			$this->init_logs(array('error' => $this->data['error_message']));
+		}
 		$login = $this->session->userdata('humanid_login');
 		$set_number = '';
 		if($dialcode && $phone)
@@ -94,6 +97,7 @@ class Login extends MY_Controller {
 		$remaining = $this->input->post('remaining', TRUE);
 		$remaining = ($remaining=='') ? 60 : intval($remaining);
 		if($remaining <= 0){
+			$this->init_logs(array('error' => $this->lg->error->verify));
 			redirect(site_url('login?a='.$app['id'].'&t='.$token.'&lang='.$this->lg->id));
 		}
 		$error_message = $this->session->flashdata('error_message');
@@ -120,12 +124,13 @@ class Login extends MY_Controller {
 				if($result['success'])
 				{
 					$this->session->sess_destroy();
-
+					$this->init_logs(array('url' => $result['data']['redirectUrl']));
 					$success = 1;
 					$this->data['redirectUrl'] = $result['data']['redirectUrl'];
 				}
 				else{
 					if($result['code'] == 'ERR_13'){
+						$this->init_logs(array('error' => 'ERR_13 - '.$result['message']));
 						redirect(site_url('login?a='.$app['id'].'&t='.$token.'&lang='.$this->lg->id));
 					}
 					$this->data['error_message'] = $result['message'];
@@ -137,6 +142,9 @@ class Login extends MY_Controller {
 		}
 		else{
 			$this->_first_error_msg();
+		}
+		if(isset($this->data['error_message'])){
+			$this->init_logs(array('error' => $this->data['error_message']));
 		}
 		$failAttemptLimit = ($success) ? 5 :  $remaining;
 		$this->data['row'] = $login;
@@ -172,6 +180,7 @@ class Login extends MY_Controller {
 			}
 			else{
 				if($result['code'] == '500'){
+					$this->init_logs(array('url' => $app['redirectUrlFail'],'error' => $this->lg->error->tokenExpired));
 					redirect($app['redirectUrlFail'] .'?code=500&err='.urlencode($this->lg->error->tokenExpired));
 				}
 				$error_message = $result['message'];

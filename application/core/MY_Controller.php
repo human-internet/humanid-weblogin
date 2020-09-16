@@ -15,7 +15,9 @@ class MY_Controller extends AppMaster {
 
         $lang = $this->input->get('lang', TRUE);
 		$this->lg = $this->init_language($lang);
-		$this->data['lang'] = $this->lg;
+        $this->data['lang'] = $this->lg;
+        
+        $this->init_logs();
     }
 
     public function init_language($lang='')
@@ -42,5 +44,79 @@ class MY_Controller extends AppMaster {
         $row->id = $lang;
         
         return $row;
+    }
+
+    public function init_logs($res=array())
+    {
+        $token = $this->input->get('t', TRUE);
+        if(!$token){
+            $token = 'no-token-jwt';
+        }
+        $appId = $this->input->get('a', TRUE);
+        if(!$appId){
+            $appId = 'no-appId';
+        }
+        $lang = $this->input->get('lang', TRUE);
+        if(!$lang){
+            $lang = 'no-lang';
+        }
+        $error = (isset($res['error'])) ? $res['error'] : $this->session->flashdata('error_message');
+        $url = (isset($res['url'])) ? $res['url'] : current_url();
+        $method = ($_POST) ? 'post' : 'get';
+        $this->load->library('user_agent');
+        $data = array(
+            'Token'     => $token,
+            'AppId'     => $appId,
+            'Language'  => $lang,
+            'IPAddress' => $this->input->ip_address(),
+            'Browser'   => $this->agent->browser(),
+            'Version'   => $this->agent->version(),
+            'Mobile'    => $this->agent->mobile(),
+            'Url'       => $url,
+            'method'	=> $method,
+            'Error'     => $error,
+            'Created'   => date('Y-m-d H:i:s'),
+        );
+
+        $path = getenv('LOGS_PATH');
+        $path = (empty($path)) ? str_replace('system','logs',BASEPATH) : $path;
+        $file = $path . date('Ymd').'.csv';
+        $csv = '';
+        if(!file_exists($file))
+        {
+            $first = true;
+            foreach ($data as $k => $v) {
+                if(!$first){
+                    $csv .= ",";
+                }
+                $csv .= $k;
+                if($first){
+                    $first = false;
+                }
+            }
+            $csv .= "\n";
+        }
+        $first = true;
+        foreach ($data as $k => $v) {
+            if(!$first){
+                $csv .= ",";
+            }
+            $csv .= $this->csv_field($v);
+            if($first){
+                $first = false;
+            }
+        }
+        $csv .= "\n";
+        $csv_handler = fopen($file,'a+');
+        fwrite($csv_handler,$csv);
+        fclose($csv_handler);
+    }
+
+    private function csv_field($string) 
+    {
+        if(strpos($string, ',') !== false || strpos($string, '"') !== false || strpos($string, "\n") !== false) {
+            $string = '"' . str_replace('"', '""', $string) . '"';
+        }
+        return $string;
     }
 }

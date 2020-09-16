@@ -24,7 +24,8 @@
         "try": "Terjadi kesalahan saat mengirim data, Silakan coba lagi.",
         "tokenExpired": "Token telah kedaluwarsa.",
         "sessionExpired": "Session telah berakhir.",
-        "appId": "AppId tidak ditemukan"
+        "appId": "AppId tidak ditemukan",
+        "verify": "Verifikasi nomor handphone berakhir"
     },
     "text": {
         "pageTitle": "Situs web dan Aplikasi tidak akan menerima informasi pribadi Anda.",
