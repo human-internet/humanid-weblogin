@@ -48,68 +48,71 @@ class MY_Controller extends AppMaster {
 
     public function init_logs($res=array())
     {
-        $token = $this->input->get('t', TRUE);
-        if(!$token){
-            $token = 'no-token-jwt';
-        }
-        $appId = $this->input->get('a', TRUE);
-        if(!$appId){
-            $appId = 'no-appId';
-        }
-        $lang = $this->input->get('lang', TRUE);
-        if(!$lang){
-            $lang = 'no-lang';
-        }
-        $error = (isset($res['error'])) ? $res['error'] : $this->session->flashdata('error_message');
-        $url = (isset($res['url'])) ? $res['url'] : current_url();
-        $method = ($_POST) ? 'post' : 'get';
-        $this->load->library('user_agent');
-        $data = array(
-            'Token'     => $token,
-            'AppId'     => $appId,
-            'Language'  => $lang,
-            'IPAddress' => $this->input->ip_address(),
-            'Browser'   => $this->agent->browser(),
-            'Version'   => $this->agent->version(),
-            'Mobile'    => $this->agent->mobile(),
-            'Url'       => $url,
-            'method'	=> $method,
-            'Error'     => $error,
-            'Created'   => date('Y-m-d H:i:s'),
-        );
-
-        $path = getenv('LOGS_PATH');
-        $path = (empty($path)) ? str_replace('system','logs',BASEPATH) : $path;
-        $file = $path . date('Ymd').'.csv';
-        $csv = '';
-        if(!file_exists($file))
+        if(getenv('LOG_ACTIVITY'))
         {
+            $token = $this->input->get('t', TRUE);
+            if(!$token){
+                $token = 'no-token-jwt';
+            }
+            $appId = $this->input->get('a', TRUE);
+            if(!$appId){
+                $appId = 'no-appId';
+            }
+            $lang = $this->input->get('lang', TRUE);
+            if(!$lang){
+                $lang = 'no-lang';
+            }
+            $error = (isset($res['error'])) ? $res['error'] : $this->session->flashdata('error_message');
+            $url = (isset($res['url'])) ? $res['url'] : current_url();
+            $method = ($_POST) ? 'post' : 'get';
+            $this->load->library('user_agent');
+            $data = array(
+                'Token'     => $token,
+                'AppId'     => $appId,
+                'Language'  => $lang,
+                'IPAddress' => $this->input->ip_address(),
+                'Browser'   => $this->agent->browser(),
+                'Version'   => $this->agent->version(),
+                'Mobile'    => $this->agent->mobile(),
+                'Url'       => $url,
+                'method'	=> $method,
+                'Error'     => $error,
+                'Created'   => date('Y-m-d H:i:s'),
+            );
+
+            $path = getenv('LOG_PATH');
+            $path = (empty($path)) ? str_replace('system','logs',BASEPATH) : $path;
+            $file = $path . date('Ymd').'.csv';
+            $csv = '';
+            if(!file_exists($file))
+            {
+                $first = true;
+                foreach ($data as $k => $v) {
+                    if(!$first){
+                        $csv .= ",";
+                    }
+                    $csv .= $k;
+                    if($first){
+                        $first = false;
+                    }
+                }
+                $csv .= "\n";
+            }
             $first = true;
             foreach ($data as $k => $v) {
                 if(!$first){
                     $csv .= ",";
                 }
-                $csv .= $k;
+                $csv .= $this->csv_field($v);
                 if($first){
                     $first = false;
                 }
             }
             $csv .= "\n";
+            $csv_handler = fopen($file,'a+');
+            fwrite($csv_handler,$csv);
+            fclose($csv_handler);
         }
-        $first = true;
-        foreach ($data as $k => $v) {
-            if(!$first){
-                $csv .= ",";
-            }
-            $csv .= $this->csv_field($v);
-            if($first){
-                $first = false;
-            }
-        }
-        $csv .= "\n";
-        $csv_handler = fopen($file,'a+');
-        fwrite($csv_handler,$csv);
-        fclose($csv_handler);
     }
 
     private function csv_field($string) 
