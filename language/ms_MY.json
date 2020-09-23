@@ -1,0 +1,42 @@
+{
+    "phone": "Nombor telefon",
+    "countryCode": "Country Code",
+    "code": "Code",
+    "sendCode": "Send SMS With Verification Code",
+    "newAccount": "Nombor baharu?",
+    "redirect": "Redirect Now",
+    "verify": "Sila sahkan nombor telefon anda",
+    "resend": "Hantar semula kod",
+    "try": "Try Different Number",
+    "errorPage": "Error Page",
+    "form": {
+        "phoneRequired": "The Phone Number field is required.",
+        "phoneNumeric": "The Phone Number field must contain only numbers.",
+        "phoneMin": "The Phone Number field must be at least 4 characters in length.",
+        "phoneMax": "The Phone Number field cannot exceed 14 characters in length.",
+        "countryCodeRequired": "The Country Code field is required.",
+        "countryCodeNumeric": "The Country Code field must contain only numbers.",
+        "codeRequired": "The Code field is required.",
+        "codeNumeric": "The Code field must contain only numbers."
+    },
+    "error": {
+        "found": "Error not found.",
+        "try": "An error occurred while sending data, Please try again.",
+        "tokenExpired": "The token has expired.",
+        "sessionExpired": "The session has expired.",
+        "appId": "The AppId not found",
+        "verify": "Phone number verification ends"
+    },
+    "text": {
+        "pageTitle": "Websites and Apps tidak akan menerima maklumat peribadi anda.",
+        "pageTitleApp": "{APPNAME} tidak akan menerima maklumat peribadi anda.",
+        "phone": "Nombor telefon anda akan dipadam selepas pengesahan",
+        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Ketahui lebih lanjut</a> mengenai misi penyimpanan privasi kami.",
+        "welcome": "Log masuk berjaya.",
+        "continue": "You will be directed to the previous webpage to continue",
+        "timer": "You will be directed to a page in {TIMER} seconds",
+        "verifyCode": "Masukkan kod 4 digit yang dihantar melalui sms ke <strong>+{COUNTRYCODE} {PHONE}</strong>.",
+        "afterSuccessful": "Selepas pengesahan sudah berjaya, nombor anda akan dipadam dan disimpan menggunakan pengecam rawak",
+        "resend": "Hantar semula kod dalam {TIME}"
+    }
+}

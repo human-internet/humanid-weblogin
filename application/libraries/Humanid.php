@@ -84,7 +84,7 @@ class Humanid
         return $res;
     }
 
-    public function request_otp($countryCode,$phone,$token,$debug=false) 
+    public function request_otp($countryCode,$phone,$token,$lang='en_US',$debug=false) 
     {
         $res = array(
             'send' => FALSE,
@@ -97,7 +97,7 @@ class Humanid
             'token='. $token
         );
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->url .'web-login/users/request-otp?lang=en');
+        curl_setopt($ch, CURLOPT_URL, $this->url .'web-login/users/request-otp?lang='.$lang);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);

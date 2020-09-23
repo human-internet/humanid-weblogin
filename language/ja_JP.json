@@ -1,0 +1,42 @@
+{
+    "phone": "電話番号",
+    "countryCode": "Country Code",
+    "code": "Code",
+    "sendCode": "Send SMS With Verification Code",
+    "newAccount": "新しい電話番号",
+    "redirect": "Redirect Now",
+    "verify": "電話番号を認証する",
+    "resend": "コードを再送信する",
+    "try": "Try Different Number",
+    "errorPage": "Error Page",
+    "form": {
+        "phoneRequired": "The Phone Number field is required.",
+        "phoneNumeric": "The Phone Number field must contain only numbers.",
+        "phoneMin": "The Phone Number field must be at least 4 characters in length.",
+        "phoneMax": "The Phone Number field cannot exceed 14 characters in length.",
+        "countryCodeRequired": "The Country Code field is required.",
+        "countryCodeNumeric": "The Country Code field must contain only numbers.",
+        "codeRequired": "The Code field is required.",
+        "codeNumeric": "The Code field must contain only numbers."
+    },
+    "error": {
+        "found": "Error not found.",
+        "try": "An error occurred while sending data, Please try again.",
+        "tokenExpired": "The token has expired.",
+        "sessionExpired": "The session has expired.",
+        "appId": "The AppId not found",
+        "verify": "Phone number verification ends"
+    },
+    "text": {
+        "pageTitle": "Websites and Apps があなたの個人情報を収集することはありません。",
+        "pageTitleApp": "{APPNAME} があなたの個人情報を収集することはありません。",
+        "phone": "電話番号は、認証後に削除されます。",
+        "privacy": "<a href=\"{LINK}\" target=\"_blank\">プライバシーを回復する私たちのミッションの詳細はこちら</a>",
+        "welcome": "ログインに成功しました。",
+        "continue": "You will be directed to the previous webpage to continue",
+        "timer": "You will be directed to a page in {TIMER} seconds",
+        "verifyCode": "SMS経由で<strong>+{COUNTRYCODE} {PHONE}</strong>に送信された4桁の認証コードを入力してください。",
+        "afterSuccessful": "認証成功後、電話番号は完全に消去され、ランダムな識別子のみが保存されます。",
+        "resend": "{TIME}後に、コードを再送信します。"
+    }
+}

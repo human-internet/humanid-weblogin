@@ -1,0 +1,42 @@
+{
+    "phone": "Număr de Telefon",
+    "countryCode": "Country Code",
+    "code": "Code",
+    "sendCode": "Send SMS With Verification Code",
+    "newAccount": "Număr de Telefon nou?",
+    "redirect": "Redirect Now",
+    "verify": "Verifică-ți Numărul de Telefon",
+    "resend": "Retrimiteți codul",
+    "try": "Try Different Number",
+    "errorPage": "Error Page",
+    "form": {
+        "phoneRequired": "The Phone Number field is required.",
+        "phoneNumeric": "The Phone Number field must contain only numbers.",
+        "phoneMin": "The Phone Number field must be at least 4 characters in length.",
+        "phoneMax": "The Phone Number field cannot exceed 14 characters in length.",
+        "countryCodeRequired": "The Country Code field is required.",
+        "countryCodeNumeric": "The Country Code field must contain only numbers.",
+        "codeRequired": "The Code field is required.",
+        "codeNumeric": "The Code field must contain only numbers."
+    },
+    "error": {
+        "found": "Error not found.",
+        "try": "An error occurred while sending data, Please try again.",
+        "tokenExpired": "The token has expired.",
+        "sessionExpired": "The session has expired.",
+        "appId": "The AppId not found",
+        "verify": "Phone number verification ends"
+    },
+    "text": {
+        "pageTitle": "Websites and Apps nu va primi nici una dintre informațiile dvs. personale.",
+        "pageTitleApp": "{APPNAME} nu va primi nici una dintre informațiile dvs. personale.",
+        "phone": "Numărul dvs. de telefon este șters după verificare",
+        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Aflați mai multe despre misiunea noastră de a restabili confidențialitatea.</a>",
+        "welcome": "V-ați conectat cu succes.",
+        "continue": "You will be directed to the previous webpage to continue",
+        "timer": "You will be directed to a page in {TIMER} seconds",
+        "verifyCode": "Vă rugăm să introduceți codul din 4 cifre trimis prin SMS către <strong>+{COUNTRYCODE} {PHONE}</strong>.",
+        "afterSuccessful": "După verificarea cu succes, numărul dvs. va fi șters definitiv și va fi păstrat doar un identificator aleatoriu.",
+        "resend": "Retrimiteți codul în {TIME}"
+    }
+}

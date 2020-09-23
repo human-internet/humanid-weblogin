@@ -1,0 +1,42 @@
+{
+    "phone": "Номер телефона",
+    "countryCode": "Country Code",
+    "code": "Code",
+    "sendCode": "Send SMS With Verification Code",
+    "newAccount": "Новый Номер?",
+    "redirect": "Redirect Now",
+    "verify": "Подтвердите ваш номер телефона.",
+    "resend": "Отправить Повторно Код",
+    "try": "Try Different Number",
+    "errorPage": "Error Page",
+    "form": {
+        "phoneRequired": "The Phone Number field is required.",
+        "phoneNumeric": "The Phone Number field must contain only numbers.",
+        "phoneMin": "The Phone Number field must be at least 4 characters in length.",
+        "phoneMax": "The Phone Number field cannot exceed 14 characters in length.",
+        "countryCodeRequired": "The Country Code field is required.",
+        "countryCodeNumeric": "The Country Code field must contain only numbers.",
+        "codeRequired": "The Code field is required.",
+        "codeNumeric": "The Code field must contain only numbers."
+    },
+    "error": {
+        "found": "Error not found.",
+        "try": "An error occurred while sending data, Please try again.",
+        "tokenExpired": "The token has expired.",
+        "sessionExpired": "The session has expired.",
+        "appId": "The AppId not found",
+        "verify": "Phone number verification ends"
+    },
+    "text": {
+        "pageTitle": "Websites and Apps не получит доступ к вашей личной информации",
+        "pageTitleApp": "{APPNAME} не получит доступ к вашей личной информации",
+        "phone": "Ваш номер телефона будет удалён после подтверждения",
+        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Узнайте больше о нашей миссии по защите конфиденциальной информации</a>",
+        "welcome": "Вы успешно вошли в систему",
+        "continue": "You will be directed to the previous webpage to continue",
+        "timer": "You will be directed to a page in {TIMER} seconds",
+        "verifyCode": "Пожалуйста введите 4-х значный код отправленный вам по СМС на <strong>+{COUNTRYCODE} {PHONE}</strong>.",
+        "afterSuccessful": "После успешного подтверждения, ваш номер будет удалён навсегда. В нашей системе будет сохранен случайный идентификатор который привязан к вашему аккаунту.",
+        "resend": "Отправить повторно код через {TIME}"
+    }
+}

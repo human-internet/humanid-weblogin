@@ -31,7 +31,7 @@ class Login extends MY_Controller {
 
 		if($this->form_validation->run() == TRUE)
 		{
-			$res = $this->humanid->request_otp($dialcode,$phone,$token);
+			$res = $this->humanid->request_otp($dialcode,$phone,$token,$this->lg->id);
 			if($res['send'])
 			{
 				$result = $res['result'];

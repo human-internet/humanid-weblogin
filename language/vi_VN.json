@@ -1,0 +1,42 @@
+{
+    "phone": "Số điện thoại",
+    "countryCode": "Country Code",
+    "code": "Code",
+    "sendCode": "Send SMS With Verification Code",
+    "newAccount": "Thay số điện thoại mới?",
+    "redirect": "Redirect Now",
+    "verify": "Xin vui lòng xác minh số điện thoại của bạn.",
+    "resend": "Gửi lại mã số.",
+    "try": "Try Different Number",
+    "errorPage": "Error Page",
+    "form": {
+        "phoneRequired": "The Phone Number field is required.",
+        "phoneNumeric": "The Phone Number field must contain only numbers.",
+        "phoneMin": "The Phone Number field must be at least 4 characters in length.",
+        "phoneMax": "The Phone Number field cannot exceed 14 characters in length.",
+        "countryCodeRequired": "The Country Code field is required.",
+        "countryCodeNumeric": "The Country Code field must contain only numbers.",
+        "codeRequired": "The Code field is required.",
+        "codeNumeric": "The Code field must contain only numbers."
+    },
+    "error": {
+        "found": "Error not found.",
+        "try": "An error occurred while sending data, Please try again.",
+        "tokenExpired": "The token has expired.",
+        "sessionExpired": "The session has expired.",
+        "appId": "The AppId not found",
+        "verify": "Phone number verification ends"
+    },
+    "text": {
+        "pageTitle": "Websites and Apps sẽ không lưu lại bất kỳ thông tin cá nhân nào của bạn.",
+        "pageTitleApp": "{APPNAME} sẽ không lưu lại bất kỳ thông tin cá nhân nào của bạn.",
+        "phone": "Số điện thoại của bạn sẽ được xóa sau khi xác minh.",
+        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Tìm hiểu thêm về sứ mệnh bảo vệ quyền riêng tư.</a>",
+        "welcome": "Thành công.",
+        "continue": "You will be directed to the previous webpage to continue",
+        "timer": "You will be directed to a page in {TIMER} seconds",
+        "verifyCode": "Xin vui lòng nhập mã 4 chữ số được gửi qua tin nhắn (SMS) tới <strong>+{COUNTRYCODE} {PHONE}</strong>.",
+        "afterSuccessful": "Sau khi thông tin được xác minh, số điện thoại của bạn sẽ được xóa đi vĩnh viễn và chúng tôi chỉ lưu lại mã số chọn lựa ngẫu nhiên.",
+        "resend": "Gửi lại mã số sau trong vòng {TIME}"
+    }
+}

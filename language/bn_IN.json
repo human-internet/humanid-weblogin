@@ -1,0 +1,42 @@
+{
+    "phone": "ফোন নম্বর",
+    "countryCode": "Country Code",
+    "code": "Code",
+    "sendCode": "Send SMS With Verification Code",
+    "newAccount": "নতুন ফোন নম্বর?",
+    "redirect": "Redirect Now",
+    "verify": "আপনার ফোন নম্বর যাচাই করুন",
+    "resend": "পুনরায় পাঠানো কোড",
+    "try": "Try Different Number",
+    "errorPage": "Error Page",
+    "form": {
+        "phoneRequired": "The Phone Number field is required.",
+        "phoneNumeric": "The Phone Number field must contain only numbers.",
+        "phoneMin": "The Phone Number field must be at least 4 characters in length.",
+        "phoneMax": "The Phone Number field cannot exceed 14 characters in length.",
+        "countryCodeRequired": "The Country Code field is required.",
+        "countryCodeNumeric": "The Country Code field must contain only numbers.",
+        "codeRequired": "The Code field is required.",
+        "codeNumeric": "The Code field must contain only numbers."
+    },
+    "error": {
+        "found": "Error not found.",
+        "try": "An error occurred while sending data, Please try again.",
+        "tokenExpired": "The token has expired.",
+        "sessionExpired": "The session has expired.",
+        "appId": "The AppId not found",
+        "verify": "Phone number verification ends"
+    },
+    "text": {
+        "pageTitle": "অ্যাপ_নেইম Websites and Apps আপনার কোনও ব্যক্তিগত তথ্য গ্রহণ / সংগ্রহ করবে না।",
+        "pageTitleApp": "অ্যাপ_নেইম {APPNAME} আপনার কোনও ব্যক্তিগত তথ্য গ্রহণ / সংগ্রহ করবে না।",
+        "phone": "আপনার ফোন নম্বর যাচাইকরণের পরে মুছে ফেলা হবে",
+        "privacy": "<a href=\"{LINK}\" target=\"_blank\">গোপনীয়তা পুনরুদ্ধার সম্পর্কিত আমাদের উদ্দেশ্য সম্পর্কে বিশদ জানুন।</a>",
+        "welcome": "আপনি সফলভাবে লগ ইন করেছেন।",
+        "continue": "You will be directed to the previous webpage to continue",
+        "timer": "You will be directed to a page in {TIMER} seconds",
+        "verifyCode": "<strong>+{COUNTRYCODE} {PHONE}</strong> নম্বরে এসএমএসের মাধ্যমে পাঠান  4 ডিজিটের পাঠান কোডটি   ব্যবহার করুন",
+        "afterSuccessful": "সফল যাচাইকরণের পরে, আপনার নম্বর স্থায়ীভাবে মুছে ফেলা হবে এবং কেবল একটি যদৃচ্ছ শনাক্তকারী নম্বর সংরক্ষণ করা হবে।",
+        "resend": "{TIME} সময়ের পর কোড পুনরায় পাঠান"
+    }
+}

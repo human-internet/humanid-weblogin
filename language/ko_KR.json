@@ -1,0 +1,42 @@
+{
+    "phone": "전화번호",
+    "countryCode": "Country Code",
+    "code": "Code",
+    "sendCode": "Send SMS With Verification Code",
+    "newAccount": "새로운 전화번호?",
+    "redirect": "Redirect Now",
+    "verify": "전화번호 인증",
+    "resend": "코드 재전송",
+    "try": "Try Different Number",
+    "errorPage": "Error Page",
+    "form": {
+        "phoneRequired": "The Phone Number field is required.",
+        "phoneNumeric": "The Phone Number field must contain only numbers.",
+        "phoneMin": "The Phone Number field must be at least 4 characters in length.",
+        "phoneMax": "The Phone Number field cannot exceed 14 characters in length.",
+        "countryCodeRequired": "The Country Code field is required.",
+        "countryCodeNumeric": "The Country Code field must contain only numbers.",
+        "codeRequired": "The Code field is required.",
+        "codeNumeric": "The Code field must contain only numbers."
+    },
+    "error": {
+        "found": "Error not found.",
+        "try": "An error occurred while sending data, Please try again.",
+        "tokenExpired": "The token has expired.",
+        "sessionExpired": "The session has expired.",
+        "appId": "The AppId not found",
+        "verify": "Phone number verification ends"
+    },
+    "text": {
+        "pageTitle": "Websites and Apps 은 귀하의 전하번호를 수신하지 않습니다.",
+        "pageTitleApp": "{APPNAME} 은 귀하의 전하번호를 수신하지 않습니다.",
+        "phone": "귀하의 전화번호는 인증 후 삭제됩니다",
+        "privacy": "<a href=\"{LINK}\" target=\"_blank\">개인 정보를 복원하려는 우리의 역활에 대해 자세히 알아보십시오.</a>",
+        "welcome": "성공적으로 로그인되었습니다",
+        "continue": "You will be directed to the previous webpage to continue",
+        "timer": "You will be directed to a page in {TIMER} seconds",
+        "verifyCode": "SMS를 통해 <strong>+{COUNTRYCODE} {PHONE}</strong>로 전송된 4자리 코드를 입력하세요.",
+        "afterSuccessful": "인증에 성공하면 번호가 영구적으로 삭제되고 임의의 식별자만 저장됩니다.",
+        "resend": "{TIME} 후 코드 재전송"
+    }
+}

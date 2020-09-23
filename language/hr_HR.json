@@ -1,0 +1,42 @@
+{
+    "phone": "Telefonski broj",
+    "countryCode": "Country Code",
+    "code": "Code",
+    "sendCode": "Send SMS With Verification Code",
+    "newAccount": "Novi broj?",
+    "redirect": "Redirect Now",
+    "verify": "Potvrdite Vaš telefonski broj",
+    "resend": "Iznova pošalji kôd",
+    "try": "Try Different Number",
+    "errorPage": "Error Page",
+    "form": {
+        "phoneRequired": "The Phone Number field is required.",
+        "phoneNumeric": "The Phone Number field must contain only numbers.",
+        "phoneMin": "The Phone Number field must be at least 4 characters in length.",
+        "phoneMax": "The Phone Number field cannot exceed 14 characters in length.",
+        "countryCodeRequired": "The Country Code field is required.",
+        "countryCodeNumeric": "The Country Code field must contain only numbers.",
+        "codeRequired": "The Code field is required.",
+        "codeNumeric": "The Code field must contain only numbers."
+    },
+    "error": {
+        "found": "Error not found.",
+        "try": "An error occurred while sending data, Please try again.",
+        "tokenExpired": "The token has expired.",
+        "sessionExpired": "The session has expired.",
+        "appId": "The AppId not found",
+        "verify": "Phone number verification ends"
+    },
+    "text": {
+        "pageTitle": "Websites and Apps neće ni primiti ni spremiti nijedan Vaš osobni podatak",
+        "pageTitleApp": "{APPNAME} neće ni primiti ni spremiti nijedan Vaš osobni podatak",
+        "phone": "Vaš telefonski broj bit će izbrisan neposredno nakon verifikacije",
+        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Naučite više o našoj misiji vraćanja privatnosti</a>",
+        "welcome": "Login uspješan",
+        "continue": "You will be directed to the previous webpage to continue",
+        "timer": "You will be directed to a page in {TIMER} seconds",
+        "verifyCode": "Unesite četveroznamenksti kôd koji Vam bijaše  poslan SMS-om a <strong>+{COUNTRYCODE} {PHONE}</strong>",
+        "afterSuccessful": "Nakon uspješne verifikacije, Vaš broj će biti trajno izbrisan i samo slučajni identifikator će biti pohranjen.",
+        "resend": "Iznova pošalji kôd za {TIME}"
+    }
+}

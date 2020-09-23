@@ -31,10 +31,10 @@ class MY_Controller extends AppMaster {
             $this->session->set_userdata(array('humanid_language' => $lang));
         }
 
-        $path = str_replace('system','language',BASEPATH);
+        $path = empty(getenv('LANG_PATH')) ? str_replace('system','language',BASEPATH) : getenv('LANG_PATH');
         $filename = $path.$lang.'.json';
         if(!file_exists($filename)){
-            $lang = 'en';
+            $lang = getenv('LANG_CODE');
             $filename = $path.$lang.'.json';
             $this->session->set_userdata(array('humanid_language' => $lang));
         }

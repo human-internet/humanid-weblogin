@@ -3,10 +3,10 @@
     "countryCode": "Kode Negara",
     "code": "Kode",
     "sendCode": "Kirim SMS Dengan Kode Verifikasi",
-    "newAccount": "Nomor Baru? Pulihkan Akun",
+    "newAccount": "Nomor Baru?",
     "redirect": "Alihkan Sekarang",
     "verify": "Verifikasi Nomor Handphone Anda",
-    "resend": "Kirim Ulang Kode Verifikasi",
+    "resend": "Kirim Ulang Kode",
     "try": "Coba Nomor Berbeda",
     "errorPage": "Halaman Error",
     "form": {
@@ -32,11 +32,11 @@
         "pageTitleApp": "{APPNAME} tidak akan menerima informasi pribadi Anda.",
         "phone": "Nomor Handphone Anda dihapus setelah verifikasi",
         "privacy": "<a href=\"{LINK}\" target=\"_blank\">Pelajari lebih lanjut</a> tentang misi kami untuk memulihkan privasi.",
-        "welcome": "Selamat datang, Anda telah berhasil masuk.",
+        "welcome": "Anda berhasil masuk.",
         "continue": "Anda akan diarahkan ke halaman web sebelumnya untuk melanjutkan",
         "timer": "Anda akan diarahkan ke halaman dalam {TIMER} detik",
         "verifyCode": "Masukkan 4 digit kode yang Anda terima sebagai SMS ke <strong>+{COUNTRYCODE} {PHONE}</strong>.",
-        "afterSuccessful": "Setelah verifikasi berhasil, nomor Anda akan dihapus secara permanen. Hanya pengenal acak yang akan disimpan.",
+        "afterSuccessful": "Setelah verifikasi berhasil, nomor Anda akan dihapus sepenuhnya dan hanya kode acak yang disimpan.",
         "resend": "Kirim ulang kode dalam {TIME}"
     }
 }

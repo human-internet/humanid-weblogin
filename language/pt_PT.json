@@ -1,0 +1,42 @@
+{
+    "phone": "Número de telefone",
+    "countryCode": "Country Code",
+    "code": "Code",
+    "sendCode": "Send SMS With Verification Code",
+    "newAccount": "Novo número de telefone?",
+    "redirect": "Redirect Now",
+    "verify": "Verifique o seu Número de Telefone",
+    "resend": "Reenviar Código",
+    "try": "Try Different Number",
+    "errorPage": "Error Page",
+    "form": {
+        "phoneRequired": "The Phone Number field is required.",
+        "phoneNumeric": "The Phone Number field must contain only numbers.",
+        "phoneMin": "The Phone Number field must be at least 4 characters in length.",
+        "phoneMax": "The Phone Number field cannot exceed 14 characters in length.",
+        "countryCodeRequired": "The Country Code field is required.",
+        "countryCodeNumeric": "The Country Code field must contain only numbers.",
+        "codeRequired": "The Code field is required.",
+        "codeNumeric": "The Code field must contain only numbers."
+    },
+    "error": {
+        "found": "Error not found.",
+        "try": "An error occurred while sending data, Please try again.",
+        "tokenExpired": "The token has expired.",
+        "sessionExpired": "The session has expired.",
+        "appId": "The AppId not found",
+        "verify": "Phone number verification ends"
+    },
+    "text": {
+        "pageTitle": "Websites and Apps não irá receber nenhuma da sua informacão pessoal",
+        "pageTitleApp": "{APPNAME} não irá receber nenhuma da sua informacão pessoal",
+        "phone": "O seu número de telefone será apagado após verficacão",
+        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Leia sobre a nossa missão para restaurar a privacidade.</a>",
+        "welcome": "Acedeu à sua conta com sucesso.",
+        "continue": "You will be directed to the previous webpage to continue",
+        "timer": "You will be directed to a page in {TIMER} seconds",
+        "verifyCode": "Por favor insira o código de 4 digitos enviados por mensagem para <strong>+{COUNTRYCODE} {PHONE}</strong>.",
+        "afterSuccessful": "Após a verificacão, o seu número será apagado permanentemente e apenas um identificador aleatório será guardado.",
+        "resend": "Reenviar código em {TIME}"
+    }
+}

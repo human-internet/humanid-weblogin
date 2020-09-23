@@ -1,0 +1,42 @@
+{
+    "phone": "电话号码",
+    "countryCode": "Country Code",
+    "code": "Code",
+    "sendCode": "Send SMS With Verification Code",
+    "newAccount": "新号码？",
+    "redirect": "Redirect Now",
+    "verify": "验证您的电话号码",
+    "resend": "重新发送验证码",
+    "try": "Try Different Number",
+    "errorPage": "Error Page",
+    "form": {
+        "phoneRequired": "The Phone Number field is required.",
+        "phoneNumeric": "The Phone Number field must contain only numbers.",
+        "phoneMin": "The Phone Number field must be at least 4 characters in length.",
+        "phoneMax": "The Phone Number field cannot exceed 14 characters in length.",
+        "countryCodeRequired": "The Country Code field is required.",
+        "countryCodeNumeric": "The Country Code field must contain only numbers.",
+        "codeRequired": "The Code field is required.",
+        "codeNumeric": "The Code field must contain only numbers."
+    },
+    "error": {
+        "found": "Error not found.",
+        "try": "An error occurred while sending data, Please try again.",
+        "tokenExpired": "The token has expired.",
+        "sessionExpired": "The session has expired.",
+        "appId": "The AppId not found",
+        "verify": "Phone number verification ends"
+    },
+    "text": {
+        "pageTitle": "Websites and Apps 不会收到任何您的个人信息。",
+        "pageTitleApp": "{APPNAME} 不会收到任何您的个人信息。",
+        "phone": "验证后，您的电话号码将被删除",
+        "privacy": "<a href=\"{LINK}\" target=\"_blank\">了解更多我们维护隐私的使命。</a>",
+        "welcome": "您已成功登录。",
+        "continue": "You will be directed to the previous webpage to continue",
+        "timer": "You will be directed to a page in {TIMER} seconds",
+        "verifyCode": "请输入4位数验证码，短信已发送到：<strong>+{COUNTRYCODE} {PHONE}</strong>",
+        "afterSuccessful": "通过验证后，您的号码将被永久删除，并且只有一串随机标识符会被存储。",
+        "resend": "{TIME} 后可重发验证码"
+    }
+}
