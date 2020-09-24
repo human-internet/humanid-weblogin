@@ -22,7 +22,6 @@ class MY_Controller extends AppMaster {
 
     public function init_language($lang='')
     {
-        $lang = strtolower($lang);
         $lang_session = $this->session->userdata('humanid_language');
         if($lang_session && empty($lang)){
             $lang = $lang_session;
