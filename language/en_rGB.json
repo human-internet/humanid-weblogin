@@ -1,4 +1,5 @@
 {
+    "language": "British English",
     "phone": "Phone Number",
     "countryCode": "Country Code",
     "code": "Code",
@@ -22,8 +23,8 @@
     "error": {
         "found": "Error not found.",
         "try": "An error occurred while sending data, Please try again.",
-        "tokenExpired": "The token has expired.",
-        "sessionExpired": "The session has expired.",
+        "tokenExpired": "Time expired - Please restart verification process",
+        "sessionExpired": "The session has expired, please start again",
         "appId": "The AppId not found",
         "verify": "Phone number verification ends"
     },
@@ -33,8 +34,8 @@
         "phone": "Your phone number is deleted after verification",
         "privacy": "<a href=\"{LINK}\" target=\"_blank\">Learn more</a> about our mission to restore privacy.",
         "welcome": "You're successfully logged in.",
-        "continue": "You will be directed to the previous webpage to continue",
-        "timer": "You will be directed to a page in {TIMER} seconds",
+        "continue": "You will now be redirected completely anonymously to {APPNAME}.",
+        "timer": "You will be brought back to {APPNAME} in {TIMER} seconds",
         "verifyCode": "Please enter the 4 digit code sent via SMS to <strong>+{COUNTRYCODE} {PHONE}</strong>.",
         "afterSuccessful": "After successful verification, your number will be deleted permanently and only a random identifier will be stored.",
         "resend": "Resend code in {TIME}"

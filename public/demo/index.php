@@ -57,7 +57,7 @@
 			<option value="ms_MY">Malay</option>
 			<option value="pl_PL">Polish</option>
 			<option value="pt_PT">Portuguese</option>
-			<option value="ru_RO">Russian</option>
+			<option value="ru_RU">Russian</option>
 			<option value="ro_RO">Romanian, Romania</option>
 			<option value="sv_SE">Swedish, Sweden</option>
 			<option value="es_ES">Spanish</option>
