@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends MY_Controller {
 
+	var $_app;
+
     function __construct()
     {
 		parent::__construct();
@@ -13,7 +15,7 @@ class Login extends MY_Controller {
 	public function index()
 	{
 		$token = $this->_token();
-		$app = $this->_app_info(TRUE);
+		$this->_app = $this->_app_info(TRUE);
 
 		$this->form_validation->set_rules('phone', $this->lg->phone, 'required|numeric|min_length[4]|max_length[14]', array(
 			'required' => $this->lg->form->phoneRequired,
@@ -47,13 +49,16 @@ class Login extends MY_Controller {
 					);
 					$this->session->set_userdata($data);
 
-					redirect(site_url('login/verify?a='.$app['id'].'&t='.$token.'&lang='.$this->lg->id));
+					redirect(site_url('login/verify?a='.$this->_app['id'].'&t='.$token.'&lang='.$this->lg->id));
 				}
 				else{
-					if($result['code'] == '500'){
-						$this->init_logs(array('url' => $app['redirectUrlFail'], 'error' => $this->lg->error->tokenExpired));
-						redirect($app['redirectUrlFail'] .'?code=500&err='.urlencode($this->lg->error->tokenExpired));
-					}
+					$error_url = $this->_app['redirectUrlFail'] .'?code='.$result['code'].'&message='.urlencode($result['message']);
+					$this->data['modal'] = (object) array(
+						'title' => $this->lg->errorPage,
+						'code' => $result['code'],
+						'message' => $result['message'],
+						'url' => $error_url
+					);
 					$this->data['error_message'] = $result['message'];
 				}
 			}
@@ -83,14 +88,14 @@ class Login extends MY_Controller {
 			$phone = $login['phone'];
 		}
 		$this->data['phone'] = $phone;
-		$this->data['app'] = $app;
+		$this->data['app'] = $this->_app;
 		$this->scripts('humanid.formLogin("'.$set_number.'");','embed');
 		$this->render();
 	}
 
 	public function verify()
 	{
-		$app = $this->_app_info();
+		$this->_app = $this->_app_info();
 		$login = $this->_login();
 		$token = $this->_token($login['token']);
 
@@ -98,7 +103,11 @@ class Login extends MY_Controller {
 		$remaining = ($remaining=='') ? 60 : intval($remaining);
 		if($remaining <= 0){
 			$this->init_logs(array('error' => $this->lg->error->verify));
-			redirect(site_url('login?a='.$app['id'].'&t='.$token.'&lang='.$this->lg->id));
+			redirect(site_url('login?a='.$this->_app['id'].'&t='.$token.'&lang='.$this->lg->id));
+		}
+		$modal = $this->session->flashdata('modal');
+		if($modal){
+			$this->data['modal'] = $modal;
 		}
 		$error_message = $this->session->flashdata('error_message');
 		if($error_message){
@@ -131,7 +140,7 @@ class Login extends MY_Controller {
 				else{
 					if($result['code'] == 'ERR_13'){
 						$this->init_logs(array('error' => 'ERR_13 - '.$result['message']));
-						redirect(site_url('login?a='.$app['id'].'&t='.$token.'&lang='.$this->lg->id));
+						redirect(site_url('login?a='.$this->_app['id'].'&t='.$token.'&lang='.$this->lg->id));
 					}
 					$this->data['error_message'] = $result['message'];
 				}
@@ -150,14 +159,14 @@ class Login extends MY_Controller {
 		$this->data['row'] = $login;
 		$this->data['success'] = $success;
 		$this->data['display_phone'] = $this->_display_phone($login['phone']);
-		$this->data['app'] = $app;
+		$this->data['app'] = $this->_app;
 		$this->scripts('humanid.formLoginVeriy('.$success.','.$failAttemptLimit.');','embed');
 		$this->render();
 	}
 
 	public function resend()
 	{
-		$app = $this->_app_info();
+		$this->_app = $this->_app_info();
 		$login = $this->_login();
 		$token = $this->_token($login['token']);
 
@@ -179,10 +188,14 @@ class Login extends MY_Controller {
 				$this->session->set_userdata($data);
 			}
 			else{
-				if($result['code'] == '500'){
-					$this->init_logs(array('url' => $app['redirectUrlFail'],'error' => $this->lg->error->tokenExpired));
-					redirect($app['redirectUrlFail'] .'?code=500&err='.urlencode($this->lg->error->tokenExpired));
-				}
+				$error_url = $this->_app['redirectUrlFail'] .'?code='.$result['code'].'&message='.urlencode($result['message']);
+				$modal = (object) array(
+					'title' => $this->lg->errorPage,
+					'code' => $result['code'],
+					'message' => $result['message'],
+					'url' => $error_url
+				);
+				$this->session->set_flashdata('modal', $modal);
 				$error_message = $result['message'];
 			}
 		}
@@ -190,7 +203,7 @@ class Login extends MY_Controller {
 			$error_message = $this->lg->error->try;
 		}
 		$this->session->set_flashdata('error_message', $error_message);
-		redirect(site_url('login/verify?a='.$app['id'].'&t='.$token.'&lang='.$this->lg->id));
+		redirect(site_url('login/verify?a='.$this->_app['id'].'&t='.$token.'&lang='.$this->lg->id));
 	}
 
 	private function _display_phone($phone=0,$text=" ")
@@ -230,7 +243,17 @@ class Login extends MY_Controller {
 			return $login;
 		}
 		else{
-			$this->session->set_flashdata('error_message', $this->lg->error->sessionExpired);
+			$code = 'WSDK_01';
+			$message = $this->lg->error->sessionExpired;
+			$error_url = $this->_app['redirectUrlFail'] .'?code='.$code.'&message='.urlencode($message);
+			$modal = (object) array(
+				'title' => $this->lg->errorPage,
+				'code' => $code,
+				'message' => $message,
+				'url' => $error_url
+			);
+			$this->session->set_flashdata('modal', $modal);
+			$this->session->set_flashdata('error_message', $message);
 			redirect(site_url('error'));
 		}
 	}
@@ -285,6 +308,16 @@ class Login extends MY_Controller {
 					return $token;
 				}
 				else{
+					$code = 'WSDK_02';
+					$message = $this->lg->error->tokenExpired;
+					$error_url = $this->_app['redirectUrlFail'] .'?code='.$code.'&message='.urlencode($message);
+					$modal = (object) array(
+						'title' => $this->lg->errorPage,
+						'code' => $code,
+						'message' => $message,
+						'url' => $error_url
+					);
+					$this->session->set_flashdata('modal', $modal);
 					$this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
 					redirect(site_url('error'));
 				}

@@ -10,6 +10,7 @@
     "resend": "Skicka koden igen",
     "try": "Prova olika nummer",
     "errorPage": "Fel",
+    "ok": "Okej",
     "form": {
         "phoneRequired": "Fältet Telefonnummer krävs",
         "phoneNumeric": "Fältet Telefonnummer får endast innehålla nummer",

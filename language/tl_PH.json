@@ -10,6 +10,7 @@
     "resend": "I-send ulit ang Code",
     "try": "Subukan ang  Ibang Numero",
     "errorPage": "Error",
+    "ok": "Sige",
     "form": {
         "phoneRequired": "Kinakailangan ang patlang ng Numero ng Telepono",
         "phoneNumeric": "Ang patlang ng Numero ng Telepono ay dapat maglaman lamang ng mga numero",

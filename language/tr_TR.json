@@ -10,6 +10,7 @@
     "resend": "Kodu tekrar gönder",
     "try": "Farklı bir numara deneyin",
     "errorPage": "Hata",
+    "ok": "Tamam",
     "form": {
         "phoneRequired": "Telefon Numarası alanını doldurmanız gerekmektedir",
         "phoneNumeric": "Telefon Numarası alanına yalnızca sayı girilebilir",

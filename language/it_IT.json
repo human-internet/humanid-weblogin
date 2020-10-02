@@ -10,6 +10,7 @@
     "resend": "Invia nuovamente il codice",
     "try": "Prova un numero diverso",
     "errorPage": "Errore",
+    "ok": "Va bene",
     "form": {
         "phoneRequired": "Il campo Numero di telefono è obbligatorio",
         "phoneNumeric": "Il campo Numero di telefono deve contenere solo numeri",

@@ -10,6 +10,7 @@
     "resend": "重新傳送認證碼",
     "try": "嘗試其他號碼",
     "errorPage": "錯誤",
+    "ok": "好的",
     "form": {
         "phoneRequired": "電話號碼字段為必填項",
         "phoneNumeric": "電話號碼字段必須僅包含數字",

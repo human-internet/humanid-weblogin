@@ -15,6 +15,10 @@ class Home extends MY_Controller {
 
 	public function error()
 	{
+		$modal = $this->session->flashdata('modal');
+		if($modal){
+			$this->data['modal'] = $modal;
+		}
 		$error_message = $this->session->flashdata('error_message');
 		if($error_message){
 			$this->data['error_message'] = $error_message;

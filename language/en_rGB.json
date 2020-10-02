@@ -9,7 +9,8 @@
     "verify": "Verify Your Phone Number",
     "resend": "Resend Code",
     "try": "Try Different Number",
-    "errorPage": "Error Page",
+    "errorPage": "Error",
+    "ok": "Okay",
     "form": {
         "phoneRequired": "The Phone Number field is required.",
         "phoneNumeric": "The Phone Number field must contain only numbers.",

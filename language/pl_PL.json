@@ -10,6 +10,7 @@
     "resend": "Wyślij kod ponownie",
     "try": "Wypróbuj inny numer",
     "errorPage": "Błąd",
+    "ok": "W Porządku",
     "form": {
         "phoneRequired": "Numer telefonu jest wymagany",
         "phoneNumeric": "Numeru telefonu może zawierać tylko cyfry",

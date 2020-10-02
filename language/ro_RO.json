@@ -10,6 +10,7 @@
     "resend": "Retrimiteți codul",
     "try": "Încercați Număr diferit",
     "errorPage": "Eroare",
+    "ok": "Bine",
     "form": {
         "phoneRequired": "Câmpul Număr de telefon este obligatoriu",
         "phoneNumeric": "Câmpul Număr de telefon trebuie să conțină numai numere",

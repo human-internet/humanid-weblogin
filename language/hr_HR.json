@@ -10,6 +10,7 @@
     "resend": "Iznova pošalji kôd",
     "try": "Pokušajte s drugim brojem",
     "errorPage": "Pogreška",
+    "ok": "U redu",
     "form": {
         "phoneRequired": "Polje Telefonski broj je obavezno",
         "phoneNumeric": "Polje Telefonski broj mora sadržavati samo brojeve",

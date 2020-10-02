@@ -10,6 +10,7 @@
     "resend": "Code erneut senden",
     "try": "Versuchen Sie eine andere Nummer",
     "errorPage": "Fehler",
+    "ok": "OK",
     "form": {
         "phoneRequired": "Die Telefonnummer wird erfordert",
         "phoneNumeric": "Das Feld Telefonnummer darf nur Nummern enthalten",

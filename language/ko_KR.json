@@ -10,6 +10,7 @@
     "resend": "코드 재전송",
     "try": "다른 번호 시도",
     "errorPage": "오류",
+    "ok": "확인",
     "form": {
         "phoneRequired": "전화 번호 필드는 필수입니다.",
         "phoneNumeric": "전화 번호 필드는 숫자 만 포함해야합니다.",

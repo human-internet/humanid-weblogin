@@ -10,6 +10,7 @@
     "resend": "Renvoyer le code",
     "try": "Essayez un numéro différent",
     "errorPage": "Erreur",
+    "ok": "D'accord",
     "form": {
         "phoneRequired": "Le champ Numéro de téléphone est obligatoire",
         "phoneNumeric": "Le champ Numéro de Téléphone est limité à des chifres",

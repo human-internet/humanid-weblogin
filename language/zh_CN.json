@@ -10,6 +10,7 @@
     "resend": "重新发送验证码",
     "try": "尝试其他号码",
     "errorPage": "错误",
+    "ok": "好的",
     "form": {
         "phoneRequired": "电话号码为必填项",
         "phoneNumeric": "电话号码只能包含数字",

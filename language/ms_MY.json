@@ -10,6 +10,7 @@
     "resend": "Hantar semula kod",
     "try": "Cuba Nombor Berbeza",
     "errorPage": "Ralat",
+    "ok": "Baik",
     "form": {
         "phoneRequired": "Medan Nombor Telefon diperlukan",
         "phoneNumeric": "Medan Nombor Telefon mesti mengandungi nombor sahaja",

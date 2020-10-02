@@ -10,6 +10,7 @@
     "resend": "Kirim Ulang Kode",
     "try": "Coba Nomor Lainnya",
     "errorPage": "Eror",
+    "ok": "OK",
     "form": {
         "phoneRequired": "Nomor Ponsel Wajib Diisi",
         "phoneNumeric": "Nomor Ponsel hanya berupa angka",
