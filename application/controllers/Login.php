@@ -160,6 +160,7 @@ class Login extends MY_Controller {
 		$this->data['success'] = $success;
 		$this->data['display_phone'] = $this->_display_phone($login['phone']);
 		$this->data['app'] = $this->_app;
+		$this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}','embed');
 		$this->scripts('humanid.formLoginVeriy('.$success.','.$failAttemptLimit.');','embed');
 		$this->render();
 	}

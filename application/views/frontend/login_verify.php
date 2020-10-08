@@ -31,16 +31,16 @@
         <div class="humanid-form-placement">
             <div class="humanid-form-placement__otp-verification">
                 <div class="humanid-form-group">
-                    <input type="text" class="humanid-input-otp" data-id="1" maxlength="1" name="code_1" autofocus>
+                    <input type="number" class="humanid-input-otp" data-id="1" maxlength="1" name="code_1" autofocus>
                 </div>
                 <div class="humanid-form-group">
-                    <input type="text" class="humanid-input-otp" data-id="2" maxlength="1" name="code_2">
+                    <input type="number" class="humanid-input-otp" data-id="2" maxlength="1" name="code_2">
                 </div>
                 <div class="humanid-form-group">
-                    <input type="text" class="humanid-input-otp" data-id="3" maxlength="1" name="code_3">
+                    <input type="number" class="humanid-input-otp" data-id="3" maxlength="1" name="code_3">
                 </div>
                 <div class="humanid-form-group">
-                    <input type="text" class="humanid-input-otp" data-id="4" maxlength="1" name="code_4">
+                    <input type="number" class="humanid-input-otp" data-id="4" maxlength="1" name="code_4">
                 </div>
             </div>
             <div class="humanid-form-placement__otp-resend">
