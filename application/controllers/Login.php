@@ -210,18 +210,23 @@ class Login extends MY_Controller {
 	private function _display_phone($phone=0,$text=" ")
 	{
 		$length = strlen($phone);
-		if($length > 3 && $length <= 6)
+		if($length > 3 && $length <= 7)
 		{
 			$last = $length - 3;
 			$phone = preg_replace("/^(\d{3})(\d{".$last."})$/", "$1".$text."$2", $phone);
 		}
-		else if($length > 6 && $length <= 10){
+		else if($length > 7 && $length <= 10){
 			$last = $length - 6;
 			$phone = preg_replace("/^(\d{3})(\d{3})(\d{".$last."})$/", "$1".$text."$2".$text."$3", $phone);
 		}
 		else if($length > 10 && $length <= 14){
-			$last = $length - 10;
-			$phone = preg_replace("/^(\d{3})(\d{3})(\d{4})(\d{".$last."})$/", "$1".$text."$2".$text."$3".$text."$4", $phone);
+			if($length==11){
+				$phone = preg_replace("/^(\d{3})(\d{4})(\d{4})$/", "$1".$text."$2".$text."$3", $phone);
+			}
+			else{
+				$last = $length - 11;
+				$phone = preg_replace("/^(\d{3})(\d{4})(\d{4})(\d{".$last."})$/", "$1".$text."$2".$text."$3".$text."$4", $phone);
+			}
 		}
 
 		return $phone;

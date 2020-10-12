@@ -20,25 +20,44 @@ const humanid = function () {
                 dialCode.val(iti.getSelectedCountryData().dialCode);
             });
             phoneDisplay.focus();
-            phoneDisplay.keyup(function(e) {
-                if ((e.keyCode > 47 && e.keyCode < 58) || (e.keyCode < 106 && e.keyCode > 95)) {
-                    var length = this.value.length;
-                    if(length > 7){
-                        if(length > 12){
-                            this.value = this.value.replace(/(\d{4})\-?/g, '$1-');
-                        }
-                        else{
-                            this.value = this.value.replace(/(\d{4})\-?/g, '$1-');
-                        }
-                    }
-                    else{
-                        this.value = this.value.replace(/(\d{3})\-?/g, '$1-');
-                    }
-                    phone.val(this.value.replace(/[^0-9]/g, ''));
-                    return true;
+            phoneDisplay.keyup(function(e) 
+            {
+                var valDisplay = this.value.replace(/[^\-0-9]/g, '');
+                var valPhone = valDisplay.replace(/[^0-9]/g, '');
+                var length = valPhone.length;
+                phone.val(valPhone);
+                if(length > 3 && length <= 7)
+                {
+                    if(length==4)
+                        valDisplay = valPhone.replace(/(\d{3})(\d{1})/, "$1-$2");
+                    else if(length==5)
+                        valDisplay = valPhone.replace(/(\d{3})(\d{2})/, "$1-$2");
+                    else if(length==6)
+                        valDisplay = valPhone.replace(/(\d{3})(\d{3})/, "$1-$2");
+                    else
+                        valDisplay = valPhone.replace(/(\d{3})(\d{4})/, "$1-$2");
                 }
-                this.value = this.value.replace(/[^\-0-9]/g, '');
-                phone.val(this.value.replace(/[^0-9]/g, ''));
+                else if(length > 7 && length <= 10)
+                {
+                    if(length==8)
+                        valDisplay = valPhone.replace(/(\d{3})(\d{3})(\d{2})/, "$1-$2-$3");
+                    else if(length==9)
+                        valDisplay = valPhone.replace(/(\d{3})(\d{3})(\d{3})/, "$1-$2-$3");
+                    else
+                        valDisplay = valPhone.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+                }
+                else if(length > 10)
+                {
+                    if(length==11)
+                        valDisplay = valPhone.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+                    else if(length==12)
+                        valDisplay = valPhone.replace(/(\d{3})(\d{4})(\d{4})(\d{1})/, "$1-$2-$3-$4");
+                    else if(length==13)
+                        valDisplay = valPhone.replace(/(\d{3})(\d{4})(\d{4})(\d{2})/, "$1-$2-$3-$4");
+                    else
+                        valDisplay = valPhone.replace(/(\d{3})(\d{4})(\d{4})(\d{3})/, "$1-$2-$3-$4");
+                }
+                this.value = valDisplay;
             });
             setTimeout(function() {
                 $('.humanid-text-info-danger').hide();
