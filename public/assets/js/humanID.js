@@ -2,10 +2,13 @@ const humanid = function () {
 
     return {
 
-        formLogin: function (phoneNumber) {
+        formLogin: function (phoneNumber,priorityCountry) {
             let input = document.querySelector("#phoneDisplay");
+            if(priorityCountry == null || priorityCountry==''){
+                priorityCountry = ["us"];
+            }
             var iti = window.intlTelInput(input, {
-                preferredCountries: ["us","id"],
+                preferredCountries: priorityCountry,
                 separateDialCode: true,
                 initialCountry: ""
             });
@@ -65,6 +68,7 @@ const humanid = function () {
         },
 
         formLoginVeriy: function (success, failAttemptLimit) {
+            var hasRedirected = false;
             setTimeout(function() {
                 $('.humanid-text-info-danger').hide();
             }, 5000);
@@ -95,7 +99,11 @@ const humanid = function () {
                     return;
                 }
                 if(success==1){
-                    location.href = $('.directed-link').val();
+                    if(hasRedirected == false){
+                        hasRedirected = true;
+                        $('.directed-now').prop("disabled", true);
+                        location.href = $('.directed-link').val();
+                    }
                 }
                 else{
                     $('.verify-area').hide();
@@ -136,12 +144,12 @@ const humanid = function () {
                 }
             });
 
-            $('.humanid-input-otp').keydown(function() {
-                //alert($(this).val());
-            });
-
             $('.directed-now').click(function(){
-                location.href = $('.directed-link').val();
+                if(hasRedirected==false){
+                    hasRedirected = true;
+                    $('.directed-now').prop("disabled", true);
+                    location.href = $('.directed-link').val();
+                }
             });
             
             $('.resend-otp').click(function(){

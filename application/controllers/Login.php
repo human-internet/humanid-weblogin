@@ -89,7 +89,7 @@ class Login extends MY_Controller {
 		}
 		$this->data['phone'] = $phone;
 		$this->data['app'] = $this->_app;
-		$this->scripts('humanid.formLogin("'.$set_number.'");','embed');
+		$this->scripts('humanid.formLogin("'.$set_number.'", '. $this->pc->code_js .');','embed');
 		$this->render();
 	}
 
@@ -103,7 +103,7 @@ class Login extends MY_Controller {
 		$remaining = ($remaining=='') ? 60 : intval($remaining);
 		if($remaining <= 0){
 			$this->init_logs(array('error' => $this->lg->error->verify));
-			redirect(site_url('login?a='.$this->_app['id'].'&t='.$token.'&lang='.$this->lg->id));
+			redirect(site_url('login?a='.$this->_app['id'].'&t='.$token.'&lang='.$this->lg->id.'&priority_country='.$this->pc->code));
 		}
 		$modal = $this->session->flashdata('modal');
 		if($modal){
@@ -204,7 +204,7 @@ class Login extends MY_Controller {
 			$error_message = $this->lg->error->try;
 		}
 		$this->session->set_flashdata('error_message', $error_message);
-		redirect(site_url('login/verify?a='.$this->_app['id'].'&t='.$token.'&lang='.$this->lg->id));
+		redirect(site_url('login/verify?a='.$this->_app['id'].'&t='.$token.'&lang='.$this->lg->id.'&priority_country='.$this->pc->code));
 	}
 
 	private function _display_phone($phone=0,$text=" ")

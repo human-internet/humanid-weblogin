@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once APPPATH.'core/AppMaster.php';
 class MY_Controller extends AppMaster {
 
-    var $lg;
+    var $lg, $pc;
     
     function __construct()
     {
@@ -16,6 +16,10 @@ class MY_Controller extends AppMaster {
         $lang = $this->input->get('lang', TRUE);
 		$this->lg = $this->init_language($lang);
         $this->data['lang'] = $this->lg;
+
+        $prio = $this->input->get('priority_country', TRUE);
+		$this->pc = $this->init_priority_country($prio);
+        $this->data['pc'] = $this->pc;
         
         $this->init_logs();
     }
@@ -43,6 +47,40 @@ class MY_Controller extends AppMaster {
         $row->id = $lang;
         
         return $row;
+    }
+
+    private function init_priority_country($code='')
+    {
+        $priority_country = $this->session->userdata('humanid_priority_country');
+        if($priority_country && empty($code)){
+            $code = $priority_country;
+        }
+        else{
+            $this->session->set_userdata(array('humanid_priority_country' => $code));
+        }
+        $_code = 'us';
+        $row = array(
+            'code' => $_code,
+            'code_js' => '["'.$_code.'"]'
+        );
+        if($code){
+            $_code = array();
+            $_code_js = array();
+            $codes = explode(',', $code);
+            foreach($codes as $c){
+                if($c){
+                    $c = strtolower($c);
+                    $_code[] = $c;
+                    $_code_js[] = '"'.$c.'"';
+                }
+            }
+            if(!empty($_code)){
+                $row['code'] = implode(',', $_code);
+                $row['code_js'] = '['.implode(',', $_code_js).']';
+            }
+        }
+
+        return (object) $row;
     }
 
     public function init_logs($res=array())
