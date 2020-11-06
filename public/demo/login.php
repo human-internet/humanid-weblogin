@@ -1,6 +1,7 @@
 <?php
 $lang = (isset($_GET['lang'])) ? $_GET['lang'] : 'en_US';
-$base_url = getenv('HUMANID_URL').'server/users/web-login?lang='.$lang.'&priority_country=id,us,jp';
+$priority_country = (isset($_GET['priority_country'])) ? $_GET['priority_country'] : 'us';
+$base_url = getenv('HUMANID_URL').'server/users/web-login?lang='.$lang.'&priority_country='.$priority_country;
 $clientId = getenv('HUMANID_SERVER_ID');
 $clientSecret = getenv('HUMANID_SERVER_SECRET');
 
