@@ -82,6 +82,34 @@
 <body>
     <div class="humanid-header">
         <img src="<?php echo base_url('assets/images/anonymous-login.svg');?>" alt="Anonymous Login with humanID">
+        <select id="changeLang">
+            <option value="ar_SA">Arabic</option>
+            <option value="bn_IN">Bengali</option>
+            <option value="en_rGB">British English</option>
+            <option value="zh_TW">Chinese, Taiwan</option>
+            <option value="zh_CN">Chinese, China</option>
+            <option value="hr_HR">Croatian</option>
+            <option value="en_US" selected>English US</option>
+            <option value="fr_FR">French</option>
+            <option value="de_DE">German</option>
+            <option value="el_GR">Greek</option>
+            <option value="hi_IN">Hindi</option>
+            <option value="in_ID">Indonesian</option>
+            <option value="it_IT">Italian</option>
+            <option value="ja_JP">Japanese</option>
+            <option value="ko_KR">Korean</option>
+            <option value="ms_MY">Malay</option>
+            <option value="pl_PL">Polish</option>
+            <option value="pt_PT">Portuguese</option>
+            <option value="ru_RU">Russian</option>
+            <option value="ro_RO">Romanian, Romania</option>
+            <option value="sv_SE">Swedish, Sweden</option>
+            <option value="es_ES">Spanish</option>
+            <option value="tr_TR">Turkish</option>
+            <option value="tl_PH">Tagalog</option>
+            <option value="th_TH">Thai</option>
+            <option value="vi_VN">Vietnamese</option>
+    </select>
     </div>
     <div class="humanid-container">
         <?php echo $view;?>
@@ -109,5 +137,16 @@
             });
         </script>
     <?php endif;?>
+    <script>
+        $(function(){
+            $("#changeLang").val('<?php echo $_GET['lang']? : 'en_US';?>');
+            $('#changeLang').change(function (){
+                var currentUrl = new URL(window.location.href);
+                currentUrl.searchParams.set('lang', $(this).val());
+                url = currentUrl.href;
+                window.location.href=url;
+            })
+        });
+    </script>
 </body>
 </html>

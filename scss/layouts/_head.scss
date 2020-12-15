@@ -20,4 +20,17 @@
         max-width: 296px;
         width: 100%;
     }
+    select {
+        position: absolute;
+        top: rem(10px);
+        right: 0;
+        padding: rem(10px) rem(10px);
+        @include border-radius(6px);
+        border: rem(1px) solid $black-0;
+    }
+}
+@media only screen and (max-width: 500px) {
+    .humanid-header {
+        text-align: unset;
+    }
 }
