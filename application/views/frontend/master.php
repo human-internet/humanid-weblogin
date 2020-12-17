@@ -139,7 +139,7 @@
     <?php endif;?>
     <script>
         $(function(){
-            $(".id_100 option[value='<?php echo $_GET['lang']? : 'en_US';?>']").attr('selected','selected');
+            $("#changeLang option[value='<?php echo $_GET['lang']? : 'en_US';?>']").attr('selected','selected');
             $('#changeLang').change(function (){
                 var currentUrl = new URL(window.location.href);
                 currentUrl.searchParams.set('lang', $(this).val());
