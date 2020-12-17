@@ -23,7 +23,7 @@
     select {
         position: absolute;
         top: rem(10px);
-        right: 0;
+        right: 30px;
         padding: rem(10px) rem(10px);
         @include border-radius(6px);
         border: rem(1px) solid $black-0;
