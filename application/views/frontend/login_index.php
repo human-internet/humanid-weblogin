@@ -25,7 +25,7 @@
         <div class="humanid-form-placement__secure-text"><?php echo $lang->text->phone;?></div>
     </div>
     <div class="humanid-content-text">
-        <p><?php echo str_replace("{LINK}","https://human-id.org/privacy-policy/",$lang->text->privacy);?></p>
+        <p><?php echo str_replace("{LINK}","https://human-id.org/#how-we-protect/",$lang->text->privacy);?></p>
     </div>
     <div class="humanid-button humanid-button-vertical">
         <button class="btn-humanid btn-humanid-primary" type="submit"><?php echo $lang->sendCode;?></button>
