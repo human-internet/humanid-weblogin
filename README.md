@@ -14,10 +14,6 @@
     - Server Client Secret
 - **App Back-end**, to receive authentication Callback from humanID 
 
-> Feature to obtain Server Credentials and to configure Callback URL is not yet available at [humanID Developer Console](https://developers.human-id.org). 
-> Please contact developers@human-id.org and ask for **Web Login Integration Set-up**
-
-
 The authentication process can be illustrated in the following diagram:
 
 ![alt text](https://ptuml.hackmd.io/svg/VLNVZzis37ws_WgYB-sC9KMxjw1BOJlENT0q2NhNhS1G1BAjn48ToRNbksL__KZvHwmiDp_upk57wYC_akAfqHLyhKK5l8Q0bRmoCfKbLmR-54bOwUVE5bxRWh8CUVf3g8pCaMFEcnDNgmMYrlee5G6Mjm2HhWGP5uxnuVF3hj9FCcjFZXbZh-7T5Ew4WJRUrozh_6bozJ0Mm6GEuGoYGgO_B3HiZD6ACQMDW48S3EW3vkBPb5E2mQj0QNK-wQQcwB1Iy2nDtbDy1KaRmjCATiXIeICc1fW_c9mRa3LaiYuBVXOP88YCNU4OLOUEPeodHZvn9867XqGpce7l__NkUvkIxpF0Pq15Z7bUHBZb3Bw8duseZGLIwcXoybdY3nq6JWs-4W6PLWBkTMqcHa_eBsACXh92nnHhBAedJ2IgH2QKaRoexVdq39pfmniOBU7MWr6z9IfXy-drVX1rBRMbskCoSGdKfTPAzOBF24-b28TAPB92_e_wXXyRaMKUHLdsfumhk7tSxVXHiF_GildGAxHkmMstaKlOzLKbZxaL8kWQwraM1ObGTNInCR3skJ5bFNlxzbaaau92JcsFJMGsrTKHsMFXhMSjS2gWnDF8JQgoCL3c9AXgJedJLZGQxwUmBONgPcFNkVKDWRnlpChavU5vQ9AJD9qxUh_PqT4RU_8lupuUo-BKoMtbjh3K9NE8CJoInmbteteNwM8sxg_OIh4aLccAKb_rtaYCYz-W-eegDvPxKFXQTy_LtN5q17VEHt9pYyTyc4C5A_xRj1NaKbZx-GR3lb35mTwLSvNz2XOzq1xtjyV6sIyk86_8lrjNmMxLpyru9Fz_0Fe5zVxxQEWimuWNHOAR7sDrMyk-BfDWFw-Xj2OvBMxgpGknTeLIrrilTsRumU0mDJHHTIl_eIcAC-3m7D6C0mJCkb7OVkOEkZfnW-upQ_gmtjwjDlieMA_38FgqH-Zyep2_Vy1_zl4csYxYnJx-5jq7cxju_xZz56_cRL3VZ_zESwwEub7ZDUVxRGg-N-UwCfD2FeaCVpHaR4lGNWSgaodMisw9vtY39G8Hl37e9_z1uicvkrqox65dtLvV0bPFUmqiPl27gEJXx91YWvfNdT3lvaM_csalhHQk-5SDSCCQTOrm9r0kn7JRrjdWz_eaxA2yiBZRaRgWd7dw5m00)
@@ -28,7 +24,7 @@ Create a Log-in page that contains this button.
 
 ![login-button](https://i.imgur.com/XFSVbnx.png)
 
-Get [Log-in button image](https://web-login.human-id.org/demo/anonymous-login.svg) or put this scripts below into your Web App:
+Get [Log-in button image](https://web-login.human-id.org/demo/anonymous-login.svg) and put this scripts below into your Web App:
 
 ```htmlmixed
 <a href="{{REPLACE_WITH_TARGET_URL}}"><img src="anonymous-login.svg" alt="Anonymous Login with humanID" height="27"></a>
