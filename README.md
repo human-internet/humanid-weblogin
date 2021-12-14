@@ -174,3 +174,7 @@ To check whether log-in failed or not, simply check if parameter `et` appended i
 | WSDK_02| 200         | Time expired - Please restart verification process|
 
 Example of error format : https://human-id.org/?code=ERR_11&message=Invalid%20OTP%20Session 
+
+## License
+Copyright 2019-2020 Bluenumber Foundation\
+Licensed under the GNU General Public License v3.0 [(LICENSE)](https://github.com/human-internet/humanid-weblogin/blob/master/LICENSE)
