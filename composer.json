@@ -2,7 +2,7 @@
     "version": "1.0.1",
     "require": {
         "php": ">=7.2",
-        "vlucas/phpdotenv": "^2.2",
+        "vlucas/phpdotenv": "^5.2",
         "ext-curl": "*",
         "ext-json": "*"
     }

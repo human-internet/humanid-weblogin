@@ -1,4 +1,12 @@
 <?php
+
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$env_path = $_SERVER['APP_DIR'] ?? __DIR__.'/..';
+
+$dotenv = Dotenv\Dotenv::createImmutable($env_path);
+$dotenv->load();
 /**
  * CodeIgniter
  *

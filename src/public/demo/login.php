@@ -1,5 +1,4 @@
 <?php
-
 require __DIR__ . '/../../vendor/autoload.php';
 
 $env_path = $_SERVER['APP_DIR'] ?? __DIR__ . '/../..';
@@ -21,19 +20,18 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 curl_setopt($ch, CURLOPT_POST, TRUE);
 curl_setopt($ch, CURLOPT_HEADER, FALSE);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','client-id:'. $clientId,'client-secret:'.$clientSecret));
+curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'client-id:' . $clientId, 'client-secret:' . $clientSecret));
 $result = curl_exec($ch);
-if($result===false){
+if ($result === false) {
     echo 'Curl failed: ' . curl_error($ch);
-}
-else {
+} else {
     $res = json_decode($result);
-    if($res->success){
-        header("Location:".$res->data->webLoginUrl);
-    }
-    else{
+    if ($res->success) {
+        header("Location:" . $res->data->webLoginUrl);
+    } else {
         echo $res->message;
     }
 }
 curl_close($ch);
 ?>
+
