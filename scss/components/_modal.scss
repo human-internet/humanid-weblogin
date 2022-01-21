@@ -1,0 +1,71 @@
+.humanid-modal {
+    &__overlay {
+        display: none;
+        background: black;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        opacity: 0.3;
+        z-index: 1000;
+
+        &.active {
+            display: unset;
+        }
+    }
+
+    &__modal {
+        display: none;
+        position: absolute;
+        top: 20%;
+        left: 0;
+        right: 0;
+        min-height: rem(171px);
+        max-width: rem(500px);
+        margin: 0 auto;
+        z-index: 1001;
+
+        &.active {
+            display: unset;
+        }
+
+        &__main {
+            position: relative;
+            color: #333;
+            @include border-radius(rem(8px));
+            background: #fff;
+            padding: rem(22px) rem(16px);
+
+            &.recovery-success {
+                padding-top: rem(30px);
+                padding-left: rem(50px);
+                padding-right: rem(50px);
+                padding-bottom: rem(20px);
+                font-weight: 700;
+                color: #000;
+            }
+        }
+
+        &__close {
+            position: absolute;
+            top: rem(20px);
+            right: rem(20px);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        &__title {
+            font-weight: 500;
+            font-size: rem(24px);
+            line-height: rem(18px);
+        }
+
+        &__footer {
+            .action-button {
+                @include space-child(y, rem(5px));
+            }
+        }
+    }
+}

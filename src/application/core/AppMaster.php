@@ -1,4 +1,4 @@
-<?php 
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class AppMaster extends CI_Controller {
@@ -11,7 +11,7 @@ class AppMaster extends CI_Controller {
     function __construct($param=array())
     {
         parent::__construct();
-        
+
         $this->content = (object) array(
                                 'styles' => '',
                                 'scripts' => '',
@@ -29,14 +29,13 @@ class AppMaster extends CI_Controller {
     {
         //Load content
         $this->content($view_name);
-        
+
         if($master)
         {
             $data = array();
             foreach($this->content as $label => $value){
                 $data[$label] = $value;
             }
-
             $this->load->view($this->folder . $this->master_name, $data);
         }
         else
@@ -60,18 +59,18 @@ class AppMaster extends CI_Controller {
 
     /*
      * styles (CSS)
-     * 
+     *
      * $data = Bisa berupa multi url (array) atau sigle url css. Ini berlaku jika type = inline
      * $type = inline (base url style) dan embed (manual style)
      * $assets = 1= Frontend, 2= Webtools
-     * 
+     *
      * Modified by haris 19-07-2016
      */
     public function styles($data=null, $type='inline', $assets = 0)
     {
         $styles = '';
     	if($type=='embed'){
-            $styles .= '<style type="text/css">'.$data.'</style>'; 
+            $styles .= '<style type="text/css">'.$data.'</style>';
     	}
         else{
             $base = base_url();
@@ -96,7 +95,7 @@ class AppMaster extends CI_Controller {
 
     /*
      * scripts (Javascript)
-     * 
+     *
      * $data = Bisa berupa multi url (array) atau sigle url js. Ini berlaku jika type = inline dan outer. Untuk type view $data adalah path view.
      * $type:
      *      inline  = base url javascript
@@ -104,7 +103,7 @@ class AppMaster extends CI_Controller {
      *      outer   = full url javascript
      *      view    = javascript ada didalam view html
      *$parse = untuk parsing data jika type adalah view
-     * 
+     *
      * Modified by haris 19-07-2016
      */
     public function scripts($data=null,$type='inline',$parse=array())
@@ -147,7 +146,7 @@ class AppMaster extends CI_Controller {
 
     	$this->content->scripts .= $scripts;
     }
-    
+
     protected function set_nocache_headers()
     {
         $this->output->set_header('HTTP/1.0 200 OK');

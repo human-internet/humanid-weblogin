@@ -14,13 +14,11 @@ class Humanid
     function __construct()
     {
         $this->ci =& get_instance();
-
-        $this->url = getenv('HUMANID_URL');
-        $this->client_id = getenv('HUMANID_CLIENT_ID');
-        $this->client_secret = getenv('HUMANID_CLIENT_SECRET');
-        $this->server_id = getenv('HUMANID_SERVER_ID');
-        $this->server_secret = getenv('HUMANID_SERVER_SECRET');
-
+        $this->url = $_ENV['HUMANID_URL'];
+        $this->client_id = $_ENV['HUMANID_CLIENT_ID'];
+        $this->client_secret = $_ENV['HUMANID_CLIENT_SECRET'];
+        $this->server_id = $_ENV['HUMANID_SERVER_ID'];
+        $this->server_secret = $_ENV['HUMANID_SERVER_SECRET'];
     }
 
     public function app_info($appId, $source = "w")

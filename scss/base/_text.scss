@@ -1,0 +1,30 @@
+@include text-color($text-color)
+$font-size: (
+    10:rem(10px),
+    12:rem(12px),
+    14:rem(14px),
+    16:rem(16px),
+    18:rem(18px),
+    20:rem(20px),
+    22:rem(22px),
+    24:rem(24px),
+);
+@include font-size($font-size);
+
+.humanid-fw {
+    &-normal {
+        font-weight: 400;
+    }
+
+    &-medium {
+        font-weight: 500;
+    }
+
+    &-semi-bold {
+        font-weight: 600;
+    }
+
+    &-bold {
+        font-weight: 700;
+    }
+}

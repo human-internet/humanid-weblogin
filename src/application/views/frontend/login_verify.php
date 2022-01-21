@@ -43,11 +43,16 @@
                     <input type="number" class="humanid-input-otp" data-id="4" maxlength="1" name="code_4">
                 </div>
             </div>
-            <div class="humanid-form-placement__otp-resend">
-                <span class="timer-text verify-area timer"><?php echo str_replace("{TIME}",'<strong>00:60</strong>',$lang->text->resend);?></span>
-                <input type="hidden" name="remaining" id="remaining">
-                <a href="<?php echo site_url('login/resend?a='.$app['id'].'&t='.$row['token'].'&lang='.$lang->id);?>" class="resend-area timer" style="display:none;"><?php echo $lang->resend;?></a>
-                <a href="<?php echo site_url('login?a='.$app['id'].'&t='.$row['token'].'&lang='.$lang->id.'&priority_country='.$pc->code);?>"><?php echo $lang->try;?></a>
+            <span class="timer-text verify-area timer" style="display: none;"><?php echo str_replace("{TIME}",'<strong>00:60</strong>',$lang->text->resend);?></span>
+            <input type="hidden" name="remaining" id="remaining">
+            <div class="humanid-form-placement__link">
+                <div class="humanid-form-placement__link__wrapper">
+                    <a href="<?php echo site_url('login?a='.$app['id'].'&t='.$row['token'].'&lang='.$lang->id.'&priority_country='.$pc->code);?>" class="humanid-link-blue-light">
+                        <?php echo $lang->try;?>
+                    </a>
+                    <a href="<?php echo site_url('login/resend?a='.$app['id'].'&t='.$row['token'].'&lang='.$lang->id);?>" class="humanid-link-blue-light"><?php echo $lang->resend;?></a>
+                    <a href="<?php echo base_url('recovery-exist/login') ?>" class="humanid-link-blue-light">Recover Existing Account</a>
+                </div>
             </div>
         </div>
     <?php endif;?>

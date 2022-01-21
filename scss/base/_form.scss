@@ -19,6 +19,19 @@
     font-family: $font-montserrat;
 }
 
+.humanid-input-email {
+    border: none;
+    border-bottom: 1px solid $border-color;
+    padding: rem(8px 0);
+    width: 100%;
+    font-size: rem(32px);
+    color: $black-3;
+    text-align: center;
+    max-width: rem(96px);
+    font-weight: 600;
+    font-family: $font-montserrat;
+}
+
 .humanid-input-default {
     border: none;
     border-bottom: 1px solid $border-color;
