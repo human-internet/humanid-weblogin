@@ -31,4 +31,8 @@
         <button class="btn-humanid btn-humanid-primary" type="submit"><?php echo $lang->sendCode;?></button>
         <!--<button class="btn-humanid btn-humanid-secondary" type="button"><?php echo $lang->newAccount;?></button>-->
     </div>
+    <div>
+        <!-- TODO Change TO Lang function-->
+        <a href="">Got a New Number? Recover Account</a>
+    </div>
 </form>

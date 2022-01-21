@@ -1,4 +1,5 @@
 .btn-humanid {
+    display: block;
     width: 100%;
     text-align: center;
     font-family: $font-lato;
@@ -17,6 +18,16 @@
 
         &:hover {
             background: $humanid-primary-hover;
+        }
+    }
+
+    &.btn-humanid-default {
+        background: #959595;
+        color: $white;
+        text-transform: uppercase;
+
+        &:hover {
+            background: lighten(#959595, 5%);
         }
     }
 

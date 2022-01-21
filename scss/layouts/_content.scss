@@ -1,16 +1,30 @@
-.humanid-content-text {
-    margin-bottom: rem(24px);
-
-    &__alert {
-        color: $red;
+.humanid-content {
+    &-link {
+        font-weight: 500;
+        display: flex;
+        justify-content: space-between;
+        a:first-child{
+            text-align: left;
+        }
+        a:last-child{
+            text-align: right;
+        }
     }
 
-    a {
-        color: $blue-light;
-    }
+    &-text {
+        margin-bottom: rem(24px);
 
-    b, strong {
-        color: $humanid-primary;
-        font-weight: 600;
+        &__alert {
+            color: $red;
+        }
+
+        a {
+            color: $blue-light;
+        }
+
+        b, strong {
+            color: $humanid-primary;
+            font-weight: 600;
+        }
     }
 }

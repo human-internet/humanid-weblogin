@@ -54,3 +54,15 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['error'] = 'home/error';
+$route['recovery-exist/login'] = 'recovery_exist/login';
+$route['recovery-exist/verification'] = 'recovery_exist/verification';
+$route['recovery-exist/confirmation-login'] = 'recovery_exist/confirmation_login';
+$route['recovery-exist/switch-number'] = 'recovery_exist/switch_number';
+$route['recovery-exist/verification-switch-number'] = 'recovery_exist/verification_switch_number';
+$route['recovery-exist/block'] = 'recovery_exist/block';
+$route['recovery-exist/disabled'] = 'recovery_exist/disabled';
+$route['recovery-exist/change-number-success'] = 'recovery_exist/change_number_success';
+$route['recovery-exist/identify-failure'] = 'recovery_exist/identify_failure';
+$route['recovery-exist/recovery'] = 'recovery_exist/recovery';
+$route['recovery-exist/instead-login'] = 'recovery_exist/instead_login';
+

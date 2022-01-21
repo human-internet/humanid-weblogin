@@ -7,9 +7,26 @@ $black-0            : #000000;
 $black-3            : #333333;
 $white              : #FFFFFF;
 $blue-light         : #007AFF;
+$blue-dark          : #527FD4;
+$cyan-dark          : #5DACC6;
 $yellow             : #F4C464;
 $yellow-hover       : darken($yellow, 10%);
 $border-color       : #A2A2A2;
+
+$text-color : (
+    'blue-light' : $blue-light,
+    'blue-dark' : $blue-dark,
+    'red' : $red,
+    'cyan-dark' : $cyan-dark,
+    'primary' : $humanid-primary,
+);
+
+$link-color : (
+    'blue-light' : $blue-light,
+    'blue-dark' : $blue-dark,
+    'red' : $red,
+    'primary' : $humanid-primary,
+);
 
 // Fonts
 $font-lato          : 'Lato';

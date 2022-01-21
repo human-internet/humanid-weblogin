@@ -19,7 +19,8 @@ class MY_Controller extends AppMaster
         ));
         $this->load->library('session');
 
-        $lang = $this->input->get('lang', TRUE);
+        $lang = $this->input->get('lang', TRUE) ?? 'en_US';
+        $lang = $lang=='en' ? 'en_US' : $lang;
         $this->lg = $this->init_language($lang);
         $this->data['lang'] = $this->lg;
 
@@ -48,11 +49,9 @@ class MY_Controller extends AppMaster
             $filename = $path . $lang . '.json';
             $this->session->set_userdata(array('humanid_language' => $lang));
         }
-
         $string = file_get_contents($filename);
         $row = json_decode($string, FALSE);
         $row->id = $lang;
-
         return $row;
     }
 

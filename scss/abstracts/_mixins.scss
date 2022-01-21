@@ -105,3 +105,42 @@
     font-weight: $weight;
     font-style: font-style($style);
 }
+
+@mixin font-size($size){
+    @each $name, $value in $size {
+        .humanid-fz-#{$name}{
+            font-size: $value;
+        }
+    }
+}
+
+@mixin text-color($colors) {
+    @each $name, $value in $colors {
+        .humanid-text-#{$name}{
+            color: $value !important;
+        }
+    }
+}
+
+@mixin link-color($colors) {
+    @each $name, $value in $colors {
+        .humanid-link-#{$name}, .link-#{$name}:hover {
+            color: $value;
+        }
+    }
+}
+
+@mixin space-child($type, $value) {
+    > {
+        :not([hidden]) ~ :not([hidden]) {
+            $space-reverse: 0;
+            @if $type == 'x' {
+                margin-right: calc(#{$value} * #{$space-reverse});
+                margin-left: calc(#{$value} * calc(1 - #{$space-reverse}));
+            } @else {
+                margin-top: calc(#{$value} * calc(1 - #{$space-reverse}));
+                margin-bottom: calc(#{$value} * #{$space-reverse});
+            }
+        }
+    }
+}
