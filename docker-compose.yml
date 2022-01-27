@@ -1,0 +1,14 @@
+# Docker Compose for Local development
+
+services:
+  app:
+    container_name: l-humanid-weblogin
+    build:
+      context: './deployments/php-local'
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 127.0.0.1:${LOCAL_PORT}:80
+    volumes:
+      - ./src:/var/www/app
+      - ./.volumes/apache-logs:/var/log/apache2
