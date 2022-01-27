@@ -1,7 +1,7 @@
 {
-  "name": "humanid-web-sdk",
+  "name": "humanid-weblogin",
   "version": "1.0.0",
-  "description": "Website SDK for humanID",
+  "description": "Web Log-in App for humanID",
   "main": "index.js",
   "scripts": {
     "build-css": "node-sass --include-path scss scss/style.scss public/css/style.css",
