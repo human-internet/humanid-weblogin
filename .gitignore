@@ -1,5 +1,38 @@
-node_modules/
-.idea/
-package-lock.json
-.DS_Store
+# ------
+# Common
+#
+# These are some examples of commonly ignored file patterns.
+# ------
+/.tmp/
+*.log
+
+# Configuration
 .env
+.env.*
+
+# Dependency directories (remove the comment below to include it)
+/vendor/
+
+# MacOS Metadata
+.DS_Store
+
+# -------
+# Node.js
+# -------
+
+/node_modules/
+
+# ----------------------------------------------------------------------------------------------------------------
+# JetBrains IntelliJ
+#
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+# ----------------------------------------------------------------------------------------------------------------
+
+/.idea/
+
+# -----------------------------------
+# Project
+#
+# Ignore generated files from project
+# -----------------------------------
