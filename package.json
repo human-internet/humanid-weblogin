@@ -1,7 +1,7 @@
 {
   "name": "humanid-weblogin",
   "version": "1.0.0",
-  "description": "Web Log-in App for humanID",
+  "description": "Web Log-in User Interface for humanID",
   "main": "index.js",
   "scripts": {
     "build-css": "node-sass --include-path scss scss/style.scss src/public/css/style.css",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@code.nbs.co.id:enda/humanid-web-sdk.git"
+    "url": "https://github.com/human-internet/humanid-weblogin"
   },
   "author": "Suhainda Librado",
   "license": "ISC",
