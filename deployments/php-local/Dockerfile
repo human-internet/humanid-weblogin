@@ -20,7 +20,6 @@ RUN apt-get remove --purge -y ${BUILD_PKG_BASE} ${BUILD_PKG_GD} ${BUILD_PKG_INTL
     && rm -rf /var/lib/apt/lists/*
 
 # Copy PHP config
-COPY mpm_prefork.conf /etc/apache2/mods-available/mpm_prefork.conf
 COPY 000-default.conf /etc/apache2/sites-available/
 
 # Enable modules
