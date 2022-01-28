@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build-css": "node-sass --include-path scss scss/style.scss src/public/css/style.css",
-    "watch-css": "nodemon -e src/scss -x 'npm run build-css'",
-    "prod": "node-sass -include-path scss/style.scss src/public/css/style.css --output-style compressed"
+    "watch-css": "nodemon -e scss -x 'npm run build-css'",
+    "prod": "node-sass --include-path scss scss/style.scss src/public/css/style.css --output-style compressed"
   },
   "repository": {
     "type": "git",
