@@ -30,9 +30,17 @@
     docker-compose up -d
     ```
 
-4. Install Dependencies
+4. Install Dependencies and Fix Permission
     ```
-    docker-compose exec app composer install
+    # Enter container shell
+    docker-compose exec app bash
+
+    # Install dependencies
+    composer install
+
+    # Set permissions
+    chmod -R 775 application/cache/ application/logs/ sessions/
+    chmod g+s application/cache/ application/logs/ sessions/
     ```
 
 5. Check App by open web page `http://localhost:8000/demo` in Web Browser
