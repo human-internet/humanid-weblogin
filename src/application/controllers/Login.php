@@ -126,10 +126,23 @@ class Login extends MY_Controller
             if ($res['send']) {
                 $result = $res['result'];
                 if ($result['success']) {
-                    $this->session->sess_destroy();
+                    $humanIdAppData['humanid_app'] = $this->session->userdata('humanid_app');
+                    $this->session->unset_userdata(['humanid_login']);
+
                     $this->init_logs(array('url' => $result['data']['redirectUrl']));
                     $success = 1;
                     $this->data['redirectUrl'] = $result['data']['redirectUrl'];
+
+                    $humanIdConfig = $this->config->item('humanid');
+                    $exchangeToken = str_replace("{$humanIdConfig['fe_url']}?et=", '', $result['data']['redirectUrl']);
+
+                    $redirectUrl = $result['data']['redirectUrl'];
+                    $humanIdAppData['humanid_app']['exchangeToken'] = $exchangeToken;
+                    $this->session->set_userdata($humanIdAppData);
+
+                    $this->data['redirectUrl'] = $redirectUrl;
+                    $this->data['hasSetupRecovery'] = $result['data']['hasSetupRecovery'];
+                    $this->data['redirectSetRecoveryEmail'] = base_url("recovery/create");
                 } else {
                     if ($result['code'] == 'ERR_13') {
                         $this->init_logs(array('error' => 'ERR_13 - ' . $result['message']));

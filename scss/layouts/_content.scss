@@ -3,6 +3,11 @@
         font-weight: 500;
         display: flex;
         justify-content: space-between;
+
+        &.center {
+            justify-content: center;
+        }
+
         a:first-child{
             text-align: left;
         }

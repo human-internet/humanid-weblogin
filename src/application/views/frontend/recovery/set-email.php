@@ -1,4 +1,4 @@
-<form method="post">
+<form method="post" action="<?php echo base_url("recovery/confirmation")?>">
     <div class="humanid-logo">
         <div class="humanid-logo__placement">
             <img src="<?php echo $app['logoUrls']['thumbnail']; ?>" alt="<?php echo $app['name']; ?>">
@@ -6,10 +6,11 @@
     </div>
 
     <div class="humanid-page-title">
-        Success
+        Welcome to humanID!
     </div>
 
     <div class="humanid-content-text">
+        <p> Please enter your email address to secure your account </p>
         <div class="humanid-text-info humanid-text-info-default">
             Email recovery can be used to regain access to your account if your phone <br>
             number is changed or lost. Just
