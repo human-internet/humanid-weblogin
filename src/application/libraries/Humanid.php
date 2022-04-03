@@ -3,22 +3,33 @@
 /**
  * @property CI_Controller $ci
  */
+
+use GuzzleHttp\Client;
+
 class Humanid
 {
-    var $url;
-    var $client_id;
-    var $client_secret;
-    var $server_id;
-    var $server_secret;
+    private $ci;
+    private $url;
+    private $client_id;
+    private $client_secret;
+    private $server_id;
+    private $server_secret;
+    private $client;
 
     function __construct()
     {
         $this->ci =& get_instance();
-        $this->url = $_ENV['HUMANID_URL'];
-        $this->client_id = $_ENV['HUMANID_CLIENT_ID'];
-        $this->client_secret = $_ENV['HUMANID_CLIENT_SECRET'];
-        $this->server_id = $_ENV['HUMANID_SERVER_ID'];
-        $this->server_secret = $_ENV['HUMANID_SERVER_SECRET'];
+        $humanIdConfig = $this->ci->config->item('humanid');
+        $this->url = $humanIdConfig['url'];
+        $this->client_id = $humanIdConfig['client_id'];
+        $this->client_secret = $humanIdConfig['client_secret'];
+        $this->server_id = $humanIdConfig['server_id'];
+        $this->server_secret = $humanIdConfig['server_secret'];
+
+        $this->client = new Client([
+            'base_uri' => $this->url,
+            'timeout' => 10
+        ]);
     }
 
     public function app_info($appId, $source = "w")
@@ -210,5 +221,20 @@ class Humanid
         }
 
         return $status;
+    }
+
+    public function setEmailRecovery($data)
+    {
+        try {
+            $response = $this->client->post('accounts/recovery', [
+                'auth' => [$this->client_id, $this->client_secret],
+                'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
+                'body' => json_encode($data),
+            ]);
+            $response = $response->getBody()->getContents();
+        }catch (\GuzzleHttp\Exception\RequestException $e){
+            $response = $e->getResponse()->getBody()->getContents();
+        }
+        return json_decode($response);
     }
 }
