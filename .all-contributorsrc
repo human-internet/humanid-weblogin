@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "timhradil",
+      "name": "Tim Hradil",
+      "avatar_url": "https://avatars.githubusercontent.com/u/44794345?v=4",
+      "profile": "http://timhradil.com",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "humanid-weblogin",
+  "projectOwner": "human-internet",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
