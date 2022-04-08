@@ -171,6 +171,9 @@ To check whether log-in failed or not, simply check if parameter `et` appended i
 
 Example of error format : https://human-id.org/?code=ERR_11&message=Invalid%20OTP%20Session 
 
+## Contribution Guide
+- Please reference this guide for additional details about contributing to a human internet: https://docs.google.com/document/d/1yYo7rb6CRMO14Bg9awxgh6YP--lIotrrC-r3hqAtNTY/edit?usp=sharing
+
 ## License
 Copyright 2019-2020 Bluenumber Foundation\
 Licensed under the GNU General Public License v3.0 [(LICENSE)](https://github.com/human-internet/humanid-weblogin/blob/master/LICENSE)
