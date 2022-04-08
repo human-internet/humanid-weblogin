@@ -10,7 +10,8 @@ const humanid = function () {
             var iti = window.intlTelInput(input, {
                 preferredCountries: priorityCountry,
                 separateDialCode: true,
-                initialCountry: ""
+                initialCountry: "",
+                excludeCountries: ["af"]
             });
             if (phoneNumber != null || phoneNumber != '') {
                 iti.setNumber(phoneNumber);
