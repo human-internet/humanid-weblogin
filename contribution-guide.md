@@ -17,9 +17,9 @@ We love your input! We want to make contributing to this project as easy and tra
   * Why has democracy worked so well in the real world but less so online?
   * The humanID answer comes from the fundamental rule of democracies: one human, one voice. humanID’s mission is to bring this principle to the online world. Democracy works in a way authoritarian alternatives never could. The solution to the 21st century internet’s problems is a centuries old theory of social organization.
 * Links to important resources
-    * GitHub
-    * Trello
-    * README
+    * [GitHub](https://github.com/human-internet/)
+    * [Trello](https://trello.com/b/hWkJbISF/tech-product-board)
+    * [README](https://github.com/human-internet/humanid-weblogin/blob/master/README.md)
 
 ## How to setup the development environment
 * Developer console setup guide
