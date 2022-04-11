@@ -22,7 +22,7 @@ We love your input! We want to make contributing to this project as easy and tra
     * [README](https://github.com/human-internet/humanid-weblogin/blob/master/README.md)
 
 ## How to setup the development environment
-* Developer console setup guide
+* [Developer console setup guide](https://docs.google.com/document/d/1SGv9dP-FeDGFRFfAEOY71F_eayFbKpzxEkt1g2Bi46Y/edit?usp=sharing)
 
 ## How to test the project
 * At this time, create a pull request with your code and it will be tested.
