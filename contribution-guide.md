@@ -26,7 +26,6 @@ We love your input! We want to make contributing to this project as easy and tra
 * At this time, create a pull request with your code and it will be tested.
 
 ## How to submit changes
-* Follow the following steps to submit changes:
 
  1. Fork the repository
  2. dd commits at whatever pace/detail necessary (these are mostly for your benefit)
@@ -34,7 +33,7 @@ We love your input! We want to make contributing to this project as easy and tra
  4. Add a short description of what the PR accomplishes
  5. If possible add screenshots
 
-* Also, please use GitHub's inline comment feature to leave notes for others to read and reply.
+* Please use GitHub's inline comment feature to leave notes for others to read and reply.
 
 ## Types of bugs to report
 * Critical - functional defects and security vulnerabilities
