@@ -1,4 +1,4 @@
-humanID Contribution Guide
+# humanID Contribution Guide
 
 ## Contributing to humanID:
 
@@ -9,8 +9,6 @@ We love your input! We want to make contributing to this project as easy and tra
 * Submitting a fix
 * Proposing new features
 * Becoming a maintainer
-
-(may need developers to contribute to the guide)
 
 ## What to know when contributing:
 * Intro to humanID
