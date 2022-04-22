@@ -133,8 +133,9 @@ class Login extends MY_Controller
                     $success = 1;
                     $this->data['redirectUrl'] = $result['data']['redirectUrl'];
 
-                    $humanIdConfig = $this->config->item('humanid');
-                    $exchangeToken = str_replace("{$humanIdConfig['fe_url']}?et=", '', $result['data']['redirectUrl']);
+                    $queryString = parse_url($result['data']['redirectUrl'])['query'];
+                    parse_str($queryString, $query);
+                    $exchangeToken = $query['et'];
 
                     $redirectUrl = $result['data']['redirectUrl'];
                     $humanIdAppData['humanid_app']['exchangeToken'] = $exchangeToken;
