@@ -38,7 +38,7 @@ WORKDIR /var/www/app
 FROM runtime-base as sources
 
 COPY src /var/www/app
-COPY --from=assets /usr/src/app/src/public/css/style.css  /var/www/app/public/css/style.css
+COPY --from=assets /usr/src/app/src/public/assets/css/style.css /var/www/app/public/assets/css/style.css
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 RUN composer install
