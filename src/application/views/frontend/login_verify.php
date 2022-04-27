@@ -56,7 +56,7 @@
                         <?php echo $lang->try;?>
                     </a>
                     <a href="<?php echo site_url('login/resend?a='.$app['id'].'&t='.$row['token'].'&lang='.$lang->id);?>" class="humanid-link-blue-light"><?php echo $lang->resend;?></a>
-                    <a href="<?php echo base_url('recovery-exist/login') ?>" class="humanid-link-blue-light">Recover Existing Account</a>
+                    <a href="<?php echo base_url('recovery/new_number') ?>" class="humanid-link-blue-light">Recover Existing Account</a>
                 </div>
             </div>
         </div>

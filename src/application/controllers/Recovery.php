@@ -61,6 +61,270 @@ class Recovery extends MY_Controller
         redirect($redirectUrl);
     }
 
+    public function new_number()
+    {
+        if (isset($_POST['dialcode'])) {
+            $redirectUrl = site_url('recovery/verify_otp');
+            $phone = "+{$this->input->post('dialcode')}{$this->input->post('phone')}";
+            $data = [
+                "phone" => $phone,
+                "lang" => "en",
+                "source" => "w",
+                "token" => $this->session->userdata('humanid_login')['token']
+            ];
+            $response = $this->humanid->getOtpNewNumber($data);
+            if (!$response->success) {
+                $code = $response->code;
+                $modal = (object)array(
+                    'title' => $this->lg->errorPage,
+                    'code' => $code ?? '',
+                    'message' => $response->message ?? '',
+                    'url' => site_url('recovery/new_number')
+                );
+
+                if ($response->code == 500) {
+                    $modal->url = site_url('error');
+                }
+
+                $this->session->set_flashdata('modal', $modal);
+                $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+                $redirectUrl = site_url('error');
+            } else {
+                $response->data->phone = $phone;
+                $this->session->set_userdata(['humanid_verification' => $response->data]);
+            }
+            redirect($redirectUrl);
+        }
+        $this->_app = $this->_app_info();
+        $this->data['app'] = $this->_app;
+        $this->scripts('humanid.formLogin("", ' . $this->pc->code_js . ');', 'embed');
+        $this->render(true, 'recovery/new-number');
+    }
+
+    public function verify_otp()
+    {
+        $code = $this->input->post('code');
+        if (isset($code) && $code[count($code) - 1] !== '') {
+            $redirectUrl = site_url('recovery/verify_email');
+            $data = [
+                "phone" => $this->session->userdata('humanid_verification')->phone,
+                "otpCode" => implode('', $code),
+                "source" => 'w',
+                "token" => $this->session->userdata('humanid_verification')->session->token
+            ];
+            $response = $this->humanid->verifyNewPhone($data);
+            if (!$response->success) {
+                $code = $response->code;
+                $modal = (object)array(
+                    'title' => $this->lg->errorPage,
+                    'code' => $code ?? '',
+                    'message' => $response->message ?? '',
+                    'url' => site_url('recovery/verify_otp')
+                );
+
+                if ($response->code == 500) {
+                    $modal->url = site_url('error');
+                }
+
+                $this->session->set_flashdata('modal', $modal);
+                $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+                $redirectUrl = site_url('error');
+
+                $this->init_logs(array('error' => "{$response->code} - {$response->message}"));
+            } else {
+                $this->session->set_userdata(['humanid_verification_new_phone' => $response->data]);
+            }
+
+            if ($response->code == 'ERR_5') {
+                $this->session->set_flashdata('error_otp', 'Incorrect code. Please try again.');
+                $redirectUrl = 'recovery/verify_otp';
+            }
+            redirect($redirectUrl);
+        }
+        $otpLength = $this->session->userdata('humanid_verification')->otp->config->otpCodeLength;
+        $this->_app = $this->_app_info();
+        $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
+        $this->data['app'] = $this->_app;
+        $this->data['otpLength'] = $otpLength;
+        $this->data['phone'] = $this->session->userdata('humanid_verification')->phone;
+        $this->scripts('humanid.formLoginVeriy("", "60");', 'embed');
+        $this->render(true, 'recovery/verify');
+    }
+
+    public function request_otp()
+    {
+        $phone = $this->session->userdata('humanid_verification')->phone;
+        $redirectUrl = 'recovery/verify_otp';
+        $data = [
+            "phone" => $phone,
+            "lang" => "en",
+            "source" => "w",
+            "token" => $this->session->userdata('humanid_login')['token']
+        ];
+        $response = $this->humanid->getOtpNewNumber($data);
+        if (!$response->success) {
+            $code = $response->code;
+            $modal = (object)array(
+                'title' => $this->lg->errorPage,
+                'code' => $code ?? '',
+                'message' => $response->message ?? '',
+                'url' => site_url($redirectUrl)
+            );
+
+            if ($response->code == 500) {
+                $modal->url = site_url('error');
+            }
+
+            $this->session->set_flashdata('modal', $modal);
+            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+            $redirectUrl = site_url('error');
+        } else {
+            $response->data->phone = $phone;
+            $this->session->set_userdata(['humanid_verification' => $response->data]);
+        }
+        redirect($redirectUrl);
+    }
+
+    public function verify_email()
+    {
+        $phone = $this->input->post('phone');
+        $email = $this->input->post('email');
+        if ($phone && $email) {
+            $phone = "+{$this->input->post('dialcode')}{$this->input->post('phone')}";
+            $redirectUrl = 'recovery/verify_email_code';
+            $data = [
+                "recoveryEmail" => $email,
+                "oldPhone" => $phone,
+                "token" => $this->session->userdata('humanid_verification_new_phone')->token,
+                "source" => "w"
+            ];
+            $response = $this->humanid->requestOtpToTransferAccount($data);
+            if (!$response->success) {
+                $code = $response->code;
+                $modal = (object)array(
+                    'title' => $this->lg->errorPage,
+                    'code' => $code ?? '',
+                    'message' => $response->message ?? '',
+                    'url' => site_url('recovery/verify_email')
+                );
+
+                if ($response->code == 500) {
+                    $modal->url = site_url('error');
+                }
+
+                $this->session->set_flashdata('modal', $modal);
+                $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+                $redirectUrl = site_url('error');
+            } else {
+                $response->data->phone = $phone;
+                $response->data->email = $email;
+                $this->session->set_userdata(['humanid_email_otp' => $response->data]);
+            }
+            redirect($redirectUrl);
+        }
+        $this->_app = $this->_app_info();
+        $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
+        $this->data['app'] = $this->_app;
+        $this->scripts('humanid.formLogin("", ' . $this->pc->code_js . ');', 'embed');
+        $this->render(true, 'recovery/verify-email');
+    }
+
+    public function verify_email_code()
+    {
+        $code = $this->input->post('code');
+        if (isset($code) && $code[count($code) - 1] !== '') {
+            $redirectUrl = site_url('recovery/change_number_success');
+            $data = [
+                "otpCode" => implode('', $code),
+                "token" => $this->session->userdata('humanid_verification_new_phone')->token,
+                "source" => "w"
+            ];
+            $response = $this->humanid->transferAccount($data);
+            if (!$response->success) {
+                $code = $response->code;
+                $modal = (object)array(
+                    'title' => $this->lg->errorPage,
+                    'code' => $code ?? '',
+                    'message' => $response->message ?? '',
+                    'url' => site_url('recovery/verify_email_code')
+                );
+
+                if ($response->code == 500) {
+                    $modal->url = site_url('error');
+                }
+
+                $this->session->set_flashdata('modal', $modal);
+                $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+                $redirectUrl = site_url('error');
+            } else {
+                $this->session->set_userdata(['success_new_recovery_account' => $response->data]);
+            }
+
+
+            if ($response->code == 'ERR_5') {
+                $this->session->set_flashdata('error_otp', 'Incorrect code. Please try again.');
+                $redirectUrl = 'recovery/verify_email_code';
+            }
+
+            redirect($redirectUrl);
+        }
+        $otpLength = $this->session->userdata('humanid_email_otp')->config->otpCodeLength;
+        $this->_app = $this->_app_info();
+        $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
+        $this->data['app'] = $this->_app;
+        $this->data['otpLength'] = $otpLength;
+        $this->scripts('humanid.formLoginVeriy("", "60");', 'embed');
+        $this->render(true, 'recovery/verify-email-code');
+    }
+
+    public function request_email()
+    {
+        $phone = $this->session->userdata('humanid_email_otp')->phone;
+        $email = $this->session->userdata('humanid_email_otp')->email;
+        $redirectUrl = 'recovery/verify_email_code';
+        $data = [
+            "recoveryEmail" => $email,
+            "oldPhone" => $phone,
+            "token" => $this->session->userdata('humanid_verification_new_phone')->token,
+            "source" => "w"
+        ];
+        $response = $this->humanid->requestOtpToTransferAccount($data);
+        if (!$response->success) {
+            $code = $response->code;
+            $modal = (object)array(
+                'title' => $this->lg->errorPage,
+                'code' => $code ?? '',
+                'message' => $response->message ?? '',
+                'url' => site_url($redirectUrl)
+            );
+
+            if ($response->code == 500) {
+                $modal->url = site_url('error');
+            }
+
+            $this->session->set_flashdata('modal', $modal);
+            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+            $redirectUrl = site_url('error');
+        } else {
+            $response->data->phone = $phone;
+            $response->data->email = $email;
+            $this->session->set_userdata(['humanid_email_otp' => $response->data]);
+        }
+        redirect($redirectUrl);
+    }
+
+    public function change_number_success()
+    {
+        if ($this->input->post('redirect')) {
+            session_destroy();
+            redirect($this->session->userdata('success_new_recovery_account')->redirectUrl);
+        }
+        $this->_app = $this->_app_info();
+        $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
+        $this->data['appName'] = $this->session->userdata('success_new_recovery_account')->app->name;
+        $this->render(true, 'recovery/change-number-success');
+    }
+
     public function add()
     {
         $login = $this->_login();

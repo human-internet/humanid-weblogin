@@ -5,6 +5,7 @@
  */
 
 use GuzzleHttp\Client;
+use \GuzzleHttp\Exception\RequestException;
 
 class Humanid
 {
@@ -232,9 +233,44 @@ class Humanid
                 'body' => json_encode($data),
             ]);
             $response = $response->getBody()->getContents();
-        }catch (\GuzzleHttp\Exception\RequestException $e){
+        }catch (RequestException $e){
             $response = $e->getResponse()->getBody()->getContents();
         }
         return json_decode($response);
+    }
+
+    public function postApi($url, $data)
+    {
+        try {
+            $response = $this->client->post($url, [
+                'auth' => [$this->client_id, $this->client_secret],
+                'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
+                'body' => json_encode($data),
+            ]);
+            $response = $response->getBody()->getContents();
+        }catch (RequestException $e){
+            $response = $e->getResponse()->getBody()->getContents();
+        }
+        return json_decode($response);
+    }
+
+    public function getOtpNewNumber($data)
+    {
+        return $this->postApi('accounts/recovery/verify/otp', $data);
+    }
+
+    public function verifyNewPhone($data)
+    {
+        return $this->postApi('accounts/recovery/verify', $data);
+    }
+
+    public function requestOtpToTransferAccount($data)
+    {
+        return $this->postApi('accounts/recovery/transfer/otp', $data);
+    }
+
+    public function transferAccount($data)
+    {
+        return $this->postApi('accounts/recovery/transfer', $data);
     }
 }
