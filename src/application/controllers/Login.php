@@ -21,6 +21,7 @@ class Login extends MY_Controller
     public function index()
     {
         $token = $this->_token();
+        $this->session->set_userdata(['humanid_login_token' =>  $token]);
         $this->_app = $this->_app_info(TRUE);
 
         $this->form_validation->set_rules('phone', $this->lg->phone, 'required|numeric|min_length[4]|max_length[14]', array(

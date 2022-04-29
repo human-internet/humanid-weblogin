@@ -70,7 +70,7 @@ class Recovery extends MY_Controller
                 "phone" => $phone,
                 "lang" => "en",
                 "source" => "w",
-                "token" => $this->session->userdata('humanid_login')['token']
+                "token" => $this->session->userdata('humanid_login_token')
             ];
             $response = $this->humanid->getOtpNewNumber($data);
             if (!$response->success) {
