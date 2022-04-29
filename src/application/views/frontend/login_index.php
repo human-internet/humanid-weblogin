@@ -32,7 +32,6 @@
         <!--<button class="btn-humanid btn-humanid-secondary" type="button"><?php echo $lang->newAccount;?></button>-->
     </div>
     <div>
-        <!-- TODO Change TO Lang function-->
-        <a href="">Got a New Number? Recover Account</a>
+        <a href="<?php echo base_url('recovery/new_number') ?>">Got a New Number? Recover Account</a>
     </div>
 </form>
