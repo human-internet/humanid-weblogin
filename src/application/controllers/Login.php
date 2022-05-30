@@ -143,8 +143,15 @@ class Login extends MY_Controller
                     $this->session->set_userdata($humanIdAppData);
 
                     $this->data['redirectUrl'] = $redirectUrl;
-                    $this->data['hasSetupRecovery'] = $result['data']['hasSetupRecovery'];
+                    $this->data['newAccount'] = $result['data']['user']['newAccount'];
+                    $this->data['hasSetupRecovery'] = $result['data']['user']['hasSetupRecovery'];
+                    $this->data['accountRecovery'] = $result['data']['app']['config']['accountRecovery'];
                     $this->data['redirectSetRecoveryEmail'] = base_url("recovery/create");
+
+                    if (!$this->data['hasSetupRecovery'] && $this->data['accountRecovery'] === true) {
+                        redirect($this->data['redirectSetRecoveryEmail']);
+                    }
+
                 } else {
                     if ($result['code'] == 'ERR_13') {
                         $this->init_logs(array('error' => 'ERR_13 - ' . $result['message']));

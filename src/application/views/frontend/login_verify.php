@@ -17,7 +17,7 @@
             <button class="btn-humanid btn-humanid-secondary" type="button"><?php echo str_replace(array("{TIMER}","{APPNAME}"),array('<span class="timer-text"></span>',$app['name']),$lang->text->timer);?></button>
             <input type="hidden" class="directed-link" value="<?php echo $redirectUrl;?>">
         </div>
-        <?php if(!$hasSetupRecovery) { ?>
+        <?php if(!$hasSetupRecovery && $accountRecovery === true) { ?>
                 <div class="humanid-content-link center">
                     <a href="<?php echo $redirectSetRecoveryEmail;?>" class="humanid-link-red">Recover an existing account instead</a>
                 </div>

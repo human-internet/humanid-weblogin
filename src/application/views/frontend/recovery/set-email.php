@@ -6,7 +6,11 @@
     </div>
 
     <div class="humanid-page-title">
-        Welcome to humanID!
+        <?php if (isset($newAccount) && $newAccount === true): ?>
+            Welcome to humanID!
+        <?php else: ?>
+            Success!
+        <?php endif;?>
     </div>
 
     <div class="humanid-content-text">
