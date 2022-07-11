@@ -42,8 +42,7 @@
         </div>
     </div>
     <div class="humanid-content-text">
-        OTP verification is managed by an independent 3rd party. Number & fingerprints are never visible to humanID or
-        Green Zone.
+        No personal information is ever stored beyond this recovery process.
         <a href="javascript:void(0)"><b>Learn More</b></a>
     </div>
     <div class="humanid-button humanid-button-vertical" style="display: flex;align-items: center">
