@@ -7,12 +7,12 @@
                     <img src="<?php echo $app['logoUrls']['thumbnail']; ?>" alt="<?php echo $app['name']; ?>">
                 </div>
             </div>
-            <p class="humanid-modal__modal__title humanid-text-primary">success</p>
-            <p>Email recovery has successfully been added to <br> your account.</p>
+            <p class="humanid-modal__modal__title humanid-text-primary humanid-modal__title">success</p>
+            <p class="humanid-modal__description first">Email recovery has successfully been added to <br> your account.</p>
 
             <input type="hidden" name="email" value="<?php echo $email ?? "#"; ?>">
 
-            <p>Use the email <span class="humanid-text-cyan-dark"><?php echo $email ?? ''; ?></span> if you ever <br> need to
+            <p class="humanid-modal__description second">Use the email <b class="humanid-text-cyan-dark"><?php echo $email ?? ''; ?></b> if you ever <br> need to
                 recover your account in the future.</p>
 
             <div class="humanid-modal__modal__footer">

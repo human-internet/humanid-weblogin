@@ -1,15 +1,17 @@
 .humanid-logo {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	justify-content: center;
 
-    &__placement {
-        max-width: rem(120px);
-        margin-bottom: rem(48px);
+	&__placement {
+		max-width: rem(120px);
+		margin-bottom: rem(48px);
 
 
-        img {
-            width: auto;
-            max-width: 100%;
-        }
-    }
+		img {
+			max-width: 100%;
+			width: rem(75px);
+			height: rem(75px);
+			margin-bottom: rem(12px);
+		}
+	}
 }

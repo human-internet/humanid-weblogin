@@ -68,4 +68,24 @@
             }
         }
     }
+
+	&__title{
+		font-size: rem(20px);
+		margin-top: 0;
+		margin-bottom: rem(23px);
+	}
+
+	&__description{
+		font-size: rem(12px);
+		line-height: rem(15px);
+		font-weight: 400;
+		&.first{
+			margin-bottom: rem(15px);
+		}
+		&.second{
+			margin-bottom: rem(25px);
+		}
+	}
+
+
 }
