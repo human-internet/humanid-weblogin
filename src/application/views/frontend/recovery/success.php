@@ -7,7 +7,7 @@
                     <img src="<?php echo $app['logoUrls']['thumbnail']; ?>" alt="<?php echo $app['name']; ?>">
                 </div>
             </div>
-            <p class="humanid-modal__modal__title humanid-text-primary">success</p>
+            <p class="humanid-modal__modal__title humanid-text-primary">SUCCESS!</p>
             <p>Email recovery has successfully been added to <br> your account.</p>
 
             <p>Use the email <span class="humanid-text-cyan-dark">{email user provided}</span> if you ever <br> need to
