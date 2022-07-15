@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.0
+
+- feat(recovery existing account): Add Skip Action Without Set Email
+- fix: Missing logo icon for demo page
+- fix: Update demo page
+- fix: Fix success text
+- fix: Limit input on last otp code
+- fix: Limited pin code to only 1 number per input
+- feat(recovery existing account): Change Wording And Style
+- fix(session): Fix link redirect to add email recovery
+- feat(recovery existing account): Add Link Target On Login Index
+- feat(recovery existing account): Implement Api for Recovery Existing Account
+
 ## 1.1.0
 
 - fix: Change logic for get exchange token
