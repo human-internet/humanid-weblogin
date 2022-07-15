@@ -171,6 +171,7 @@ const humanid = function () {
     modal: function () {
       const overlay = $('.humanid-modal__overlay');
       const closeModal = $('.humanid-modal__modal__close');
+      const closeButton = $('#humanid-modal-close-button');
       const target = $('[data-target]');
       target.click(function () {
         const modalTarget = $(this).data('target');
@@ -178,6 +179,11 @@ const humanid = function () {
         $(`#${modalTarget}`).addClass('active');
       })
       closeModal.click(function () {
+        const modalTargetClose = $(this).data('close');
+        overlay.removeClass('active');
+        $(`#${modalTargetClose}`).removeClass('active');
+      })
+      closeButton.click(function () {
         const modalTargetClose = $(this).data('close');
         overlay.removeClass('active');
         $(`#${modalTargetClose}`).removeClass('active');

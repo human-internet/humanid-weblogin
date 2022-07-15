@@ -57,9 +57,9 @@
         <p>Your account could be lost without account <br> recovery.</p>
         <div class="humanid-modal__modal__footer">
             <div class="action-button">
-                <button type="button" class="btn-humanid btn-humanid-primary" data-close="modal-agree"  id="close-popup" >No, return to creating email recovery
+                <button type="button" class="btn-humanid btn-humanid-primary"  data-close="modal-agree" id="humanid-modal-close-button" >No, return to creating email recovery
                 </button>
-                <button type="button" class="btn-humanid btn-humanid-primary">Yes, skip & risk losing account</button>
+                <a href="<?php echo $app['redirectUrl']; ?>" class="btn-humanid btn-humanid-primary">Yes, skip & risk losing account</a>
             </div>
         </div>
     </div>
