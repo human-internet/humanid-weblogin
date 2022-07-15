@@ -140,8 +140,8 @@ class Login extends MY_Controller
 
                     $redirectUrl = $result['data']['redirectUrl'];
                     $humanIdAppData['humanid_app']['exchangeToken'] = $exchangeToken;
+                    $humanIdAppData['humanid_app']['redirectUrl'] = $redirectUrl;
                     $this->session->set_userdata($humanIdAppData);
-
                     $this->data['redirectUrl'] = $redirectUrl;
                     $this->data['newAccount'] = $result['data']['user']['newAccount'];
                     $this->data['hasSetupRecovery'] = $result['data']['user']['hasSetupRecovery'];

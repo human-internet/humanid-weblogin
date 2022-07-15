@@ -20,6 +20,7 @@ class Recovery extends MY_Controller
     public function create()
     {
         $this->data['app'] = $this->session->userdata('humanid_app');
+        $this->scripts('humanid.modal()', 'embed');
         $this->render(true, 'recovery/set-email');
     }
 
@@ -353,6 +354,9 @@ class Recovery extends MY_Controller
     {
         $this->_app = $this->_app_info();
         $this->data['app'] = $this->_app;
+
+        $this->data['app'] = $this->session->userdata('humanid_app');
+        $this->scripts('humanid.modal()', 'embed');
         $this->render(true, 'recovery/invalid');
 
     }
