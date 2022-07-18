@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.1
+
+- fix(OTP): Fix Input Length Number Only 1 Character And Only Number
+- fix(OTP): Fix Logic Input OTP When Paste
+
 ## 1.2.0
 
 - feat(recovery existing account): Add Skip Action Without Set Email
