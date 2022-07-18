@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.2
+
+- fix: Success text on confirmation
+- feat(confirmation): Add Confirmation Page For Continue Email Or Not
+
 ## 1.2.1
 
 - fix(OTP): Fix Input Length Number Only 1 Character And Only Number
