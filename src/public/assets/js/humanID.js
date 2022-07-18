@@ -130,16 +130,23 @@ const humanid = function () {
           }
 
           if (Number(inputs[i].getAttribute('data-id')) === inputs.length) {
-            $('form').submit();
+            const inputFull=[]
+            for (let index = 0; index < inputs.length; index++) {
+              if (inputs[index].value.length>0){
+                inputFull.push(true)
+              }
+            }
+            if (inputFull.length===inputs.length){
+              $('form').submit();
+            }
           }
         });
         inputs[i].addEventListener('paste', async function (event) {
-          console.log('paste', inputs[i])
           const paste = (event.clipboardData || window.clipboardData).getData('text');
           const setTimeoutPromise = new Promise((resolve) => {
             setTimeout(() => {
               for (let index = 0; index < inputs.length; index++) {
-                inputs[index].value = ' ';
+                inputs[index].value = '';
                 if (paste[index]) {
                   inputs[index].value = paste[index];
                 }
