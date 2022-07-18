@@ -133,6 +133,9 @@ class Recovery extends MY_Controller
 
                 $this->init_logs(array('error' => "{$response->code} - {$response->message}"));
             } else {
+                if ($response->data->hasAccount) {
+                    $redirectUrl = site_url('recovery/confirmation_switch_email');
+                }
                 $this->session->set_userdata(['humanid_verification_new_phone' => $response->data]);
             }
 
@@ -151,6 +154,25 @@ class Recovery extends MY_Controller
         $this->scripts('humanid.formLoginVeriy("", "60");', 'embed');
         $this->render(true, 'recovery/verify');
     }
+
+    public function confirmation_switch_email()
+    {
+        $this->data['humanid_verification'] = $this->session->userdata('humanid_verification');
+        $this->render(true, 'recovery/confirmation_switch_email');
+    }
+
+    public function redirect_app()
+    {
+        $this->data['redirectUrl'] = $this->session->userdata('humanid_verification_new_phone')->redirectApp->redirectUrl;
+        $this->data['humanid_verification'] = $this->session->userdata('humanid_verification');
+        $this->data['app'] = $this->session->userdata('humanid_app');
+        $success=1;
+        $failAttemptLimit = 5;
+        $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
+        $this->scripts('humanid.formLoginVeriy(' . $success . ',' . $failAttemptLimit . ');', 'embed');
+        $this->render(true, 'recovery/redirect_app');
+    }
+
 
     public function request_otp()
     {
