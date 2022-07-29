@@ -55,13 +55,6 @@ class Login extends MY_Controller
 
                     redirect(site_url('login/verify?a=' . $this->_app['id'] . '&t=' . $token . '&lang=' . $this->lg->id . "&s=" . $this->source));
                 } else {
-                    $error_url = $this->_app['redirectUrlFail'] . '?code=' . $result['code'] . '&message=' . urlencode($result['message']);
-                    $this->data['modal'] = (object)array(
-                        'title' => $this->lg->errorPage,
-                        'code' => $result['code'],
-                        'message' => $result['message'],
-                        'url' => $error_url
-                    );
                     $this->data['error_message'] = $result['message'];
                 }
             } else {
