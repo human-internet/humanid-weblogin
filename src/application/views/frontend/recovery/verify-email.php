@@ -1,6 +1,6 @@
 <form action="" method="post">
     <div class="humanid-logo">
-        <div class="humanid-logo__placement">
+        <div class="humanid-logo__new-number">
             <img src="<?php echo base_url('assets/images/humanid-logo.svg'); ?>" alt="humanID"
                  style="">
         </div>

@@ -1,6 +1,6 @@
 <form action="" method="post">
     <div class="humanid-logo">
-        <div class="humanid-logo__placement">
+        <div class="humanid-logo__new-number">
             <img src="<?php echo base_url('assets/images/humanid-logo.svg'); ?>" alt="humanID"
                  style="">
         </div>
@@ -11,7 +11,7 @@
     </div>
 
     <div class="humanid-content-text humanid-fw-normal">
-        <p> Please enter the 4 digit code you received as SMS to <?php echo $phone ?? ''; ?> </p>
+        <p> Please enter the 4 digit code you received as SMS to <strong><?php echo $phone ?? ''; ?></strong> </p>
     </div>
 
     <div class="humanid-content-text humanid-fz-18">
