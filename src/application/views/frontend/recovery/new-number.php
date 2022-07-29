@@ -9,7 +9,7 @@
     <div class="humanid-content-text">
         <p> humanID is the independent & open online ID - giving back privacy, and the internet, to humans.
             <br>
-            <a href="javascript:void(0)" class="humanid-link-primary">Learn About Our Mission</a>
+            <a href="https://human-internet.org" class="humanid-link-primary">Learn About Our Mission</a>
         </p>
     </div>
 
