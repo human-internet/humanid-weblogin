@@ -18,7 +18,7 @@
         <div class="humanid-form-placement__default" style="margin-bottom: 15px;">
             <div class="humanid-form-placement__default-main" style="max-width: 500px">
                 <div class="humanid-form-group">
-                    <input type="tel" id="phoneDisplay" class="humanid-input-default" placeholder="812-345-6780"
+                    <input type="tel" id="phoneDisplay" class="humanid-input-default" placeholder="Your Old Phone Number"
                            maxlength="17">
                     <input type="hidden" name="dialcode" id="dialcode">
                     <input type="hidden" name="phone" id="phone" value="">
@@ -28,14 +28,14 @@
         <div class="humanid-form-placement__email-form">
             <div class="humanid-form-placement__email-main" style="max-width: 500px">
                 <div class="humanid-form-group">
-                    <input type="email" class="humanid-input-default" name="email" placeholder="Your email address"
+                    <input type="email" class="humanid-input-default" name="email" placeholder="Your Recovery Email"
                            autofocus>
                 </div>
             </div>
         </div>
     </div>
     <div class="humanid-button humanid-button-vertical" style="display: flex;align-items: center">
-        <button class="btn-humanid btn-humanid-primary" type="submit" style="width: 250px">Get Code</button>
+        <button class="btn-humanid btn-humanid-primary" type="submit" style="width: 250px">SEND EMAIL WITH VERIFICATION CODE</button>
     </div>
     <div class="humanid-content-text">
         <a href="javascript:void(0)" data-target="modal-cannot-recovery"><b class="humanid-text-blue-dark">I did not set up a recovery email, or <br> cannot access it anymore</b></a>
