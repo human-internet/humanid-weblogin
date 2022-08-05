@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.3
+
+- fix: Wording in recovery email
+- fix(recovery): Fix jwt expiry message and Add validation phone number
+- fix(Invalid Number): Remove Error Modal Dialog
+- fix(Logo): Fix Small Logo Size And Add Style For Number
+- fix: Set url in button Learn About Our Mission
 ## 1.2.2
 
 - fix: Success text on confirmation
