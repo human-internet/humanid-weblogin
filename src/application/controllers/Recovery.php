@@ -10,6 +10,10 @@ class Recovery extends MY_Controller
 {
     var $_app;
 
+    const WRONG_NUMBER = 'ERR_33'; //User not found
+    const WRONG_EMAIL = 'ERR_34'; //Account Recovery has not been set-up
+
+
     function __construct()
     {
         parent::__construct();
@@ -255,6 +259,7 @@ class Recovery extends MY_Controller
     {
         $phone = $this->input->post('phone');
         $email = $this->input->post('email');
+        $wrongNumberAndEmail = false;
         if ($phone && $email) {
             $phone = "+{$this->input->post('dialcode')}{$this->input->post('phone')}";
             $redirectUrl = 'recovery/verify_email_code';
@@ -265,7 +270,11 @@ class Recovery extends MY_Controller
                 "source" => "w"
             ];
             $response = $this->humanid->requestOtpToTransferAccount($data);
-            if (!$response->success) {
+            if ($response->code == self::WRONG_NUMBER || $response->code == self::WRONG_EMAIL){
+                $wrongNumberAndEmail = true;
+            }
+
+            if (!$response->success && $response->code !== self::WRONG_NUMBER || $response->code !== self::WRONG_EMAIL) {
                 $code = $response->code;
                 $modal = (object)array(
                     'title' => $this->lg->errorPage,
@@ -280,18 +289,20 @@ class Recovery extends MY_Controller
 
                 $this->session->set_flashdata('modal', $modal);
                 $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-                $redirectUrl = site_url('error');
-            } else {
+            }
+            if ($response->success){
                 $response->data->phone = $phone;
                 $response->data->email = $email;
                 $this->session->set_userdata(['humanid_email_otp' => $response->data]);
+                redirect($redirectUrl);
             }
-            redirect($redirectUrl);
         }
         $this->_app = $this->_app_info();
         $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
         $this->data['app'] = $this->_app;
+        $this->data['wrongNumberAndEmail'] = $wrongNumberAndEmail;
         $this->scripts('humanid.formLogin("", ' . $this->pc->code_js . ');', 'embed');
+        $this->scripts('humanid.modal()', 'embed');
         $this->render(true, 'recovery/verify-email');
     }
 
