@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.5
+
+- fix(recovery): Fix message formatting
+
 ## 1.2.4
 
 - fix(recovery): Update text message after success recover
