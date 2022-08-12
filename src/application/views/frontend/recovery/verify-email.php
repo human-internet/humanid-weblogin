@@ -41,7 +41,9 @@
         <a href="javascript:void(0)" data-target="modal-cannot-recovery"><b class="humanid-text-blue-dark">I did not set up a recovery email, or <br> cannot access it anymore</b></a>
     </div>
 </form>
-<div class="humanid-modal__overlay"></div>
+<a href="javascript:void(0)" id="b-modal-agree" data-target="modal-agree"><b class="humanid-text-blue-dark"></b></a>
+
+<div class="humanid-modal__overlay" id="overlay"></div>
 <div class="humanid-modal__modal" id="modal-cannot-recovery">
     <div class="humanid-modal__modal__main" style="padding: 0 40px;padding-top: 70px;">
         <button type="button" class="humanid-modal__modal__close" data-close="modal-cannot-recovery">X</button>
@@ -55,8 +57,51 @@
                 <button type="button" class="btn-humanid btn-humanid-primary" data-close="modal-agree" id="close-popup" style="margin-bottom: 20px;">
                     login with new account
                 </button>
-                <a href="javascript:void(0)" class="" data-close="modal-cannot-recovery">Cancel Login </a>
+                <a href="<?php echo $_SESSION['humanid_app']['redirectUrlFail'] ?>" style="display: block;padding-bottom: 15px;" data-close="modal-cannot-recovery">Cancel Login </a>
             </div>
         </div>
     </div>
 </div>
+
+
+<div class="humanid-modal__modal" id="modal-agree">
+    <div class="humanid-modal__modal__main recovery-success">
+        <p class="humanid-modal__modal__title" style="margin-bottom: 40px;line-height: 1.5;">
+            We couldn’t identify
+            <br>
+            your old account
+        </p>
+
+        <div class="humanid-modal__modal__footer">
+            <div class="action-button">
+                <button type="button" class="humanid-modal__modal__close" data-close="modal-agree" >X</button>
+                <button type="button" id="t-modal-cannot-recovery" class="btn-humanid btn-humanid-primary"
+                        style="position: relative;right: 0;margin-bottom:25px;"
+                >
+                    create an ACCOUNT with <br> your new NUMBER INSTEAD
+                </button>
+                <button type="button"
+                        data-close="modal-agree"
+                   class="humanid-modal__modal__close btn-humanid btn-humanid-primary" style="position: relative;right: 0;margin-bottom:25px;"
+                   id="close-popup">Try a different number/EMAIL</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+if($wrongNumberAndEmail){
+?>
+    <script>
+        window.addEventListener('load', function() {
+            document.getElementById('b-modal-agree').click();
+        })
+
+        document.getElementById('t-modal-cannot-recovery').addEventListener('click', function() {
+            document.getElementById('modal-agree').classList.remove('active')
+            document.getElementById('b-modal-cannot-recovery').click();
+        })
+    </script>
+<?php
+}
+?>
