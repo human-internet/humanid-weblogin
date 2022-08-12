@@ -9,9 +9,8 @@
         </div>
         <p class="humanid-modal__modal__title">Phone number has been changed</p>
         <p class="humanid-fw-normal" style="text-align: center; margin-bottom: 60px;">
-            The phone number on your account has been <br>
-            successfully changed and hashed and deleted. You can now log into <br>
-            to your previous humanID accounts across all services.
+            The phone number on your account has been successfully changed, hashed and deleted.
+            You can now log into your previous humanID account across all services.
         </p>
 
         <div class="humanid-modal__modal__footer">
