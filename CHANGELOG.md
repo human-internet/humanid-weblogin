@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.4
+
+- fix(recovery): Update text message after success recover
+
 ## 1.2.3
 
 - fix: Wording in recovery email
