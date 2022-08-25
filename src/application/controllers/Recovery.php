@@ -404,8 +404,6 @@ class Recovery extends MY_Controller
 
     public function add()
     {
-        $login = $this->_login();
-        $token = $this->_token($login['token']);
         $this->_app = $this->_app_info();
         $this->data['app'] = $this->_app;
         $email = $this->input->post('email', true);

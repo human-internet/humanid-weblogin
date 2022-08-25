@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * @property Humanid $humanid
+ * @property CI_Form_validation $form_validation
+ * @property CI_Session $session
+ */
 class Recovery_exist extends MY_Controller
 {
     var $_app;
@@ -97,6 +102,11 @@ class Recovery_exist extends MY_Controller
     public function instead_login()
     {
         $this->_app = $this->_app_info();
+        if ($this->session->has_userdata('humanid_phone')) {
+            $humanIdPhone = $this->session->userdata('humanid_phone');
+            $this->data['phone'] = $humanIdPhone['phone'];
+            $this->data['dialcode'] = $humanIdPhone['dialcode'];
+        }
         $this->render(true, 'recovery-exist/instead-login');
     }
 

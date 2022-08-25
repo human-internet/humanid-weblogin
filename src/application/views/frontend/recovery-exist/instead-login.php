@@ -7,7 +7,7 @@
 
 <div class="humanid-content-text" style="margin-bottom: 40px;">
     <p class="humanid-fw-semi-bold">
-        The phone number (+1) 1231231234 has previously been used to <br>
+        The phone number <?php echo "(+$dialcode) $phone";  ?> has previously been used to <br>
         create a humanID account, but gone inactive. What are you trying to do?
     </p>
 </div>

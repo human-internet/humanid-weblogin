@@ -121,6 +121,10 @@ class Login extends MY_Controller
                 $result = $res['result'];
                 if ($result['success']) {
                     $humanIdAppData['humanid_app'] = $this->session->userdata('humanid_app');
+                    $this->session->set_userdata(['humanid_phone' => [
+                        'phone' => $login['phone'],
+                        'dialcode' => $login['dialcode'],
+                    ]]);
                     $this->session->unset_userdata(['humanid_login']);
 
                     $this->init_logs(array('url' => $result['data']['redirectUrl']));
@@ -141,14 +145,20 @@ class Login extends MY_Controller
                     $this->data['accountRecovery'] = $result['data']['app']['config']['accountRecovery'];
                     $this->data['userIsActive'] = $result['data']['user']['isActive'];
                     $this->data['redirectSetRecoveryEmail'] = base_url("recovery/create");
+                    $this->data['redirectInsteadLogin'] = base_url('recovery-exist/instead-login');
 
                     if (!$this->data['hasSetupRecovery'] && $this->data['accountRecovery'] === true) {
                         redirect($this->data['redirectSetRecoveryEmail']);
                     }
 
                     // Inactive User, but no Account Recovery Setup then redirect to set email
-                    if ($this->data['userIsActive'] === false && $this['hasSetupRecovery'] === false) {
+                    if ($this->data['userIsActive'] === false && $this->data['hasSetupRecovery'] === false) {
                         redirect($this->data['redirectSetRecoveryEmail']);
+                    }
+
+                    // Inactive User with has recovery account
+                    if ($this->data['userIsActive'] === false && $this->data['hasSetupRecovery'] === true) {
+                        redirect($this->data['redirectInsteadLogin']);
                     }
 
                 } else {
