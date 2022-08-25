@@ -139,9 +139,15 @@ class Login extends MY_Controller
                     $this->data['newAccount'] = $result['data']['user']['newAccount'];
                     $this->data['hasSetupRecovery'] = $result['data']['user']['hasSetupRecovery'];
                     $this->data['accountRecovery'] = $result['data']['app']['config']['accountRecovery'];
+                    $this->data['userIsActive'] = $result['data']['user']['isActive'];
                     $this->data['redirectSetRecoveryEmail'] = base_url("recovery/create");
 
                     if (!$this->data['hasSetupRecovery'] && $this->data['accountRecovery'] === true) {
+                        redirect($this->data['redirectSetRecoveryEmail']);
+                    }
+
+                    // Inactive User, but no Account Recovery Setup then redirect to set email
+                    if ($this->data['userIsActive'] === false && $this['hasSetupRecovery'] === false) {
                         redirect($this->data['redirectSetRecoveryEmail']);
                     }
 
