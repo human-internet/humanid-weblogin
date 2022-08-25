@@ -54,9 +54,10 @@
         </p>
         <div class="humanid-modal__modal__footer">
             <div class="action-button">
-                <button type="button" class="btn-humanid btn-humanid-primary" data-close="modal-agree" id="close-popup" style="margin-bottom: 20px;">
+                <a href="<?php echo base_url('recovery/redirect_app'); ?>" class="btn-humanid btn-humanid-primary directed-now" data-close="modal-agree"
+                        id="close-popup" style="margin-bottom: 20px;">
                     login with new account
-                </button>
+                </a>
                 <a href="<?php echo $_SESSION['humanid_app']['redirectUrlFail'] ?>" style="display: block;padding-bottom: 15px;" data-close="modal-cannot-recovery">Cancel Login </a>
             </div>
         </div>
