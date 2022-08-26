@@ -210,10 +210,46 @@ class Recovery extends MY_Controller
 
     public function redirect_app()
     {
-        $this->data['redirectUrl'] = $this->session->userdata('humanid_verification_new_phone')->redirectApp->redirectUrl;
+        $this->_app = $this->_app_info();
+        $verification = $this->session->userdata('humanid_verification_new_phone');
+        $data = [
+            'token' => $verification->token,
+            'source' => 'w',
+        ];
+        $loginRecovery = $this->humanid->loginRecovery($data);
         $this->data['humanid_verification'] = $this->session->userdata('humanid_verification');
+
+        // TODO: Validate Expired At
+        $loginRecoveryData = $loginRecovery->data;
+        $this->data['redirectUrl'] = $loginRecoveryData->redirectUrl;
         $this->data['app'] = $this->session->userdata('humanid_app');
-        $success=1;
+
+        $this->data['redirectSetRecoveryEmail'] = base_url('recovery/create');
+
+        $humanIdAppData['humanid_app'] = $this->data['app'];
+        $humanIdAppData['humanid_app']['exchangeToken'] = $loginRecoveryData->exchangeToken;
+        $humanIdAppData['humanid_app']['redirectUrl'] = $loginRecoveryData->redirectUrl;
+        $this->session->set_userdata($humanIdAppData);
+
+        $user = $loginRecoveryData->user;
+        $appConfig = $loginRecoveryData->app->config;
+
+        // new account then redirect to recovery email create
+        if ($user->newAccount === true) {
+            redirect($this->data['redirectSetRecoveryEmail']);
+        }
+
+        // Setup recovery not setup & config recovery
+        if (!$user->hasSetupRecovery && $appConfig->accountRecovery === true) {
+            redirect($this->data['redirectSetRecoveryEmail']);
+        }
+
+        // Inactive User, but no Account Recovery Setup then redirect to set email
+        if ($user->isActive === false && $user->hasSetupRecovery === false) {
+            redirect($this->data['redirectSetRecoveryEmail']);
+        }
+
+        $success = 1;
         $failAttemptLimit = 5;
         $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
         $this->scripts('humanid.formLoginVeriy(' . $success . ',' . $failAttemptLimit . ');', 'embed');

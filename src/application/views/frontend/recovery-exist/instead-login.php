@@ -21,5 +21,7 @@
 </div>
 
 <div class="humanid-content-link" style="justify-content: center;">
-    <a href="<?php echo base_url('recovery-exist/switch-number');?>" class="humanid-link-blue-light">I’m trying to move another account to this number</a>
+    <a href="<?php echo base_url('recovery-exist/switch-number');?>" class="humanid-link-blue-light">
+        I’m trying to move another account to this number
+    </a>
 </div>
