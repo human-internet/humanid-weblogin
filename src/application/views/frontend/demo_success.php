@@ -234,9 +234,8 @@
     </style>
 </head>
 <body>
-<h1>Hi User</h1>
-<h2>App UserID:<b><?php echo $appUserId ?></b><br/>
-    User Country Code: <b><?php echo $countryCode; ?></b>
+<p>Hello Stranger from <b><?php echo $countryCode; ?></b></p>
+<p>Your User ID is <b><?php echo $appUserId ?></b></p>
 </h2>
 </body>
 </html>

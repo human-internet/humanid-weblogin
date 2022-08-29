@@ -17,7 +17,7 @@ class Demo extends MY_Controller
         $exchangeToken = $this->input->get('et');
         $response = $this->humanid->exchange($exchangeToken);
         if (!$response->success) {
-            redirect(base_url('demo/error'));
+            redirect(base_url('demo'));
         }
         $data = $response->data ?? (object)[];
         $this->data['appUserId'] = $data->appUserId ?? "-";
