@@ -1,14 +1,14 @@
 <form method="post">
     <div class="humanid-logo">
         <div class="humanid-logo__placement">
-            <img src="<?php echo $app['logoUrls']['thumbnail'];?>" alt="<?php echo $app['name'];?>">
+            <img src="<?php echo $app['logoUrls']['thumbnail']; ?>" alt="<?php echo $app['name'];?>">
         </div>
     </div>
-    <div class="humanid-page-title"><?php echo str_replace("{APPNAME}",$app['name'],$lang->text->pageTitleApp);?></div>
+    <div class="humanid-page-title"><?php echo str_replace("{APPNAME}",$app['name'], $lang->text->pageTitleApp);?></div>
     <div class="humanid-content-text">
         <div class="humanid-text-info humanid-text-info-default">
             <p><?php echo $lang->text->welcome;?></p>
-            <p><?php echo str_replace("{APPNAME}",$app['name'],$lang->text->continue);?></p>
+            <p><?php echo str_replace("{APPNAME}",$app['name'], $lang->text->continue);?></p>
         </div>
     </div>
 
@@ -18,6 +18,8 @@
         <input type="hidden" class="directed-link" value="<?php echo $redirectUrl;?>">
     </div>
     <div class="humanid-content-link center">
-        <a href="<?php echo base_url("recovery/create");?>" class="humanid-link-red">Recover an existing account instead</a>
+        <a href="<?php echo base_url('recovery/create');?>" class="humanid-link-red">
+            Recover an existing account instead
+        </a>
     </div>
 </form>

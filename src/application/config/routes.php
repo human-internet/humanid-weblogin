@@ -53,6 +53,10 @@ $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+// Global App Redirect
+$route['redirect_app'] = 'login/redirect_app';
+$route['confirmation-login'] = 'recovery/confirmation_login';
+
 $route['error'] = 'home/error';
 $route['recovery-exist/login'] = 'recovery_exist/login';
 $route['recovery-exist/verification'] = 'recovery_exist/verification';
@@ -66,6 +70,11 @@ $route['recovery-exist/identify-failure'] = 'recovery_exist/identify_failure';
 $route['recovery-exist/recovery'] = 'recovery_exist/recovery';
 $route['recovery-exist/instead-login'] = 'recovery_exist/instead_login';
 
-$route['demo/success'] = 'demo/success';
-$route['demo/failed'] = 'demo/failed';
-$route['demo/error'] = 'demo/error';
+// Purpose for Demo
+$route['demo/success'] = 'demo/success/1';
+$route['demo/failed'] = 'demo/failed/1';
+$route['demo/error'] = 'demo/error/1';
+
+$route['demo2/success'] = 'demo/success/2';
+$route['demo2/failed'] = 'demo/failed/2';
+$route['demo2/error'] = 'demo/error/2';

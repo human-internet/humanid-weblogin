@@ -225,13 +225,28 @@ class Humanid
         return json_decode($response);
     }
 
-    public function loginRecovery($data)
+    public function accountRecoveryLogin($data)
     {
         try {
             $response = $this->client->post('accounts/recovery/login', [
                 'auth' => [$this->client_id, $this->client_secret],
                 'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
                 'body' => json_encode($data),
+            ]);
+            $response = $response->getBody()->getContents();
+        } catch (RequestException $e){
+            $response = $e->getResponse()->getBody()->getContents();
+        }
+        return json_decode($response);
+    }
+
+    public function accountLoginRecovery($data)
+    {
+        try {
+            $response = $this->client->post('accounts/login/recovery', [
+                'auth' => [$this->client_id, $this->client_secret],
+                'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
+                'json' => $data,
             ]);
             $response = $response->getBody()->getContents();
         } catch (RequestException $e){

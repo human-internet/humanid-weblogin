@@ -54,7 +54,7 @@
         </p>
         <div class="humanid-modal__modal__footer">
             <div class="action-button">
-                <a href="<?php echo base_url('recovery/redirect_app'); ?>" class="btn-humanid btn-humanid-primary directed-now" data-close="modal-agree"
+                <a href="<?php echo base_url('redirect_app'); ?>" class="btn-humanid btn-humanid-primary directed-now" data-close="modal-agree"
                         id="close-popup" style="margin-bottom: 20px;">
                     login with new account
                 </a>

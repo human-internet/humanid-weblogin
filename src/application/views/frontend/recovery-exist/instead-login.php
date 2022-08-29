@@ -13,11 +13,13 @@
 </div>
 
 <div class="humanid-button humanid-button-vertical" style="display: flex;align-items: center">
-    <a href="<?php echo base_url('recovery/add'); ?> " class="btn-humanid btn-humanid-primary" type="submit" style="width: 370px; margin-bottom: 40px;">
+    <a href="<?php echo $app['hasSetupRecovery'] ? base_url('redirect_app') : base_url('recovery/add'); ?> " class="btn-humanid btn-humanid-primary" style="width: 370px; margin-bottom: 40px;">
         I’m creating a new account
     </a>
     <a href="<?php echo base_url('recovery-exist/recovery') ?>" class="btn-humanid btn-humanid-default"
-       style="width: 370px; display: block;margin-bottom: 20px;">Use Email recovery to LOGIN AGAIN</a>
+       style="width: 370px; display: block;margin-bottom: 20px;">
+        Use Email recovery to LOGIN AGAIN
+    </a>
 </div>
 
 <div class="humanid-content-link" style="justify-content: center;">

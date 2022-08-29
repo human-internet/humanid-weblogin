@@ -139,27 +139,22 @@ class Login extends MY_Controller
                     $redirectUrl = $result['data']['redirectUrl'];
                     $humanIdAppData['humanid_app']['exchangeToken'] = $exchangeToken;
                     $humanIdAppData['humanid_app']['redirectUrl'] = $redirectUrl;
+                    $humanIdAppData['humanid_app']['hasSetupRecovery'] = $result['data']['user']['hasSetupRecovery'];
                     $this->session->set_userdata($humanIdAppData);
                     $this->data['redirectUrl'] = $redirectUrl;
                     $this->data['newAccount'] = $result['data']['user']['newAccount'];
                     $this->data['hasSetupRecovery'] = $result['data']['user']['hasSetupRecovery'];
                     $this->data['accountRecovery'] = $result['data']['app']['config']['accountRecovery'];
                     $this->data['userIsActive'] = $result['data']['user']['isActive'];
-                    $this->data['redirectSetRecoveryEmail'] = base_url("recovery/create");
+                    $this->data['redirectSetRecoveryEmail'] = base_url('recovery/create');
                     $this->data['redirectInsteadLogin'] = base_url('recovery-exist/instead-login');
 
-                    if (!$this->data['hasSetupRecovery'] && $this->data['accountRecovery'] === true) {
-                        redirect($this->data['redirectSetRecoveryEmail']);
-                    }
-
-                    // Inactive User, but no Account Recovery Setup then redirect to set email
-                    if ($this->data['userIsActive'] === false && $this->data['hasSetupRecovery'] === false) {
-                        redirect($this->data['redirectSetRecoveryEmail']);
-                    }
-
-                    // Inactive User with has recovery account
-                    if ($this->data['userIsActive'] === false && $this->data['hasSetupRecovery'] === true) {
+                    if ($this->data['userIsActive'] === false) {
                         redirect($this->data['redirectInsteadLogin']);
+                    }
+
+                    if ($this->data['accountRecovery'] === true && $this->data['hasSetupRecovery'] === false) {
+                        redirect($this->data['redirectSetRecoveryEmail']);
                     }
 
                 } else {
@@ -186,6 +181,23 @@ class Login extends MY_Controller
         $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
         $this->scripts('humanid.formLoginVeriy(' . $success . ',' . $failAttemptLimit . ');', 'embed');
         $this->render();
+    }
+
+    public function redirect_app()
+    {
+        $this->_app = $this->_app_info();
+        $this->data['app'] = $this->session->userdata('humanid_app');
+
+        if (!isset($this->data['app']['redirectUrl'])) {
+            redirect($this->data['app']['redirectUrlFail']);
+        }
+        $this->data['redirectUrl'] = $this->data['app']['redirectUrl'];
+
+        $success = 1;
+        $failAttemptLimit = 5;
+        $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
+        $this->scripts('humanid.formLoginVeriy(' . $success . ',' . $failAttemptLimit . ');', 'embed');
+        $this->render(true, 'recovery/redirect_app');
     }
 
     public function resend()

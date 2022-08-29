@@ -12,11 +12,11 @@
 </div>
 
 <div class="humanid-button humanid-button-vertical" style="display: flex;align-items: center">
-    <a href="<?php echo base_url('recovery-exist/instead-login')?>" class="btn-humanid btn-humanid-primary"
+    <a href="<?php echo base_url('redirect_app')?>" class="btn-humanid btn-humanid-primary"
        type="submit" style="width: 340px; margin-bottom: 40px;">
         YES, LOG ME IN INSTEAD
     </a>
-    <a href="<?php echo base_url('recovery-exist/switch-number') ?>" class="btn-humanid btn-humanid-primary"
+    <a href="<?php echo base_url('recovery/verify_email') ?>" class="btn-humanid btn-humanid-primary"
        style="width: 340px; display: block;">No, CONTINUE SWITCHING NUMBERS
     </a>
 </div>
