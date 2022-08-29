@@ -172,40 +172,26 @@ class Humanid
         return $res;
     }
 
-    public function exchange($token, $debug = false)
+    public function exchange($token)
     {
-        $res = array(
-            'send' => FALSE,
-            'result' => 'No response!'
-        );
-
-        $fields = array(
-            'exchangeToken' => $token
-        );
-        $data_json = json_encode($fields);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->url . 'server/users/exchange');
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($ch, CURLOPT_POST, TRUE);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
-        curl_setopt($ch, CURLOPT_HEADER, FALSE);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data_json), 'client-id:' . $this->server_id, 'client-secret:' . $this->server_secret));
-        if ($debug) {
-            $res['fields'] = json_encode($fields);
+        try {
+            $response = $this->client->post($this->url. 'server/users/exchange', [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'client-id' => $this->server_id,
+                    'client-secret' => $this->server_secret,
+                ],
+                'json' => [
+                    'exchangeToken' => $token,
+                ],
+            ]);
+            $response = $response->getBody()->getContents();
+        } catch (RequestException $e){
+            $response = $e->getResponse()->getBody()->getContents();
         }
-        $result = curl_exec($ch);
-        if ($result === false) {
-            $res['result'] = 'Curl failed: ' . curl_error($ch);
-        } else {
-            $res['send'] = TRUE;
-            $res['result'] = json_decode($result, true);
-        }
-        curl_close($ch);
 
-        return $res;
+        return json_decode($response);
     }
 
     private function contains($data = NULL, $key = FALSE, $explode = ",")

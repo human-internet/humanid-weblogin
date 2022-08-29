@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -66,3 +66,6 @@ $route['recovery-exist/identify-failure'] = 'recovery_exist/identify_failure';
 $route['recovery-exist/recovery'] = 'recovery_exist/recovery';
 $route['recovery-exist/instead-login'] = 'recovery_exist/instead_login';
 
+$route['demo/success'] = 'demo/success';
+$route['demo/failed'] = 'demo/failed';
+$route['demo/error'] = 'demo/error';
