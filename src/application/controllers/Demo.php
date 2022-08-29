@@ -28,6 +28,7 @@ class Demo extends MY_Controller
 
     public function failed()
     {
+        $this->data['demoUrl'] = base_url('demo');
         $this->render(false, 'demo_failed');
     }
 
