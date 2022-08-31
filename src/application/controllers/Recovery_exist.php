@@ -111,6 +111,8 @@ class Recovery_exist extends MY_Controller
         $this->_app = $this->_app_info();
         $this->_check_session();
         $this->data['app'] = $this->_app;
+        $user = $this->session->userdata('humanId__userLogin')['user'];
+        $this->data['hasSetupRecovery'] = $user->hasSetupRecovery;
         if ($this->session->has_userdata('humanid_phone')) {
             $humanIdPhone = $this->session->userdata('humanid_phone');
             $this->data['phone'] = $humanIdPhone['phone'];
@@ -121,10 +123,8 @@ class Recovery_exist extends MY_Controller
 
     private function _check_session()
     {
-        $login = $this->session->userdata('humanid_phone');
-        if ($login && !empty($login)) {
-            return $login;
-        } else {
+        $session = $this->session->userdata('humanId__userLogin');
+        if (!$session) {
             $code = 'WSDK_01';
             $message = $this->lg->error->sessionExpired;
             $error_url = $this->_app['redirectUrlFail'] . '?code=' . $code . '&message=' . urlencode($message);
@@ -138,7 +138,6 @@ class Recovery_exist extends MY_Controller
             $this->session->set_flashdata('error_message', $message);
             redirect(site_url('error'));
         }
-        return null;
     }
 
     private function _app_info($new_session = FALSE)

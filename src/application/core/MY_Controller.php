@@ -20,7 +20,7 @@ class MY_Controller extends AppMaster
         $this->load->library('session');
 
         $lang = $this->input->get('lang', TRUE) ?? 'en_US';
-        $lang = $lang=='en' ? 'en_US' : $lang;
+        $lang = $lang== 'en' ? 'en_US' : $lang;
         $this->lg = $this->init_language($lang);
         $this->data['lang'] = $this->lg;
 

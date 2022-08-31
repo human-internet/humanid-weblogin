@@ -56,6 +56,7 @@ $route['translate_uri_dashes'] = FALSE;
 // Global App Redirect
 $route['redirect_app'] = 'login/redirect_app';
 $route['confirmation-login'] = 'recovery/confirmation_login';
+$route['verify'] = 'login/verify';
 
 $route['error'] = 'home/error';
 $route['recovery-exist/login'] = 'recovery_exist/login';

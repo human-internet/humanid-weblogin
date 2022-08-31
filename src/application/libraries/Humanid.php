@@ -5,7 +5,7 @@
  */
 
 use GuzzleHttp\Client;
-use \GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\RequestException;
 
 class Humanid
 {
@@ -13,6 +13,8 @@ class Humanid
     private $url;
     private $client_id;
     private $client_secret;
+    private $webLoginClientId;
+    private $webLoginClientSecret;
     private $server_id;
     private $server_secret;
     private $client;
@@ -24,6 +26,8 @@ class Humanid
         $this->url = $humanIdConfig['url'];
         $this->client_id = $humanIdConfig['client_id'];
         $this->client_secret = $humanIdConfig['client_secret'];
+        $this->webLoginClientId = $humanIdConfig['client_id'];
+        $this->webLoginClientSecret = $humanIdConfig['client_secret'];
         $this->server_id = $humanIdConfig['server_id'];
         $this->server_secret = $humanIdConfig['server_secret'];
 
@@ -93,6 +97,59 @@ class Humanid
         curl_close($ch);
 
         return $res;
+    }
+
+    public function userRequestOTP($countryCode, $phone, $requestOtpToken, $source, $lang = 'en')
+    {
+        $url = $this->url. 'web-login/users/request-otp';
+        $body = [
+            'countryCode' => $countryCode,
+            'phone' => $phone,
+            'token' => $requestOtpToken,
+        ];
+        $param = [
+            'lang' => $lang,
+            's' => $source,
+        ];
+
+        return $this->internalWebLogin($url, $body, $param);
+    }
+
+    public function userLogin($countryCode, $phone, $verificationCode, $token, $source)
+    {
+        $url = $this->url . 'web-login/users/login';
+        $body = [
+            'countryCode' => $countryCode,
+            'phone' => $phone,
+            'deviceId' => 'deviceId',
+            'verificationCode' => $verificationCode,
+            'notifId' => 'notifId',
+            'token' => $token,
+        ];
+        $param = [
+            's' => $source,
+        ];
+        return $this->internalWebLogin($url, $body, $param);
+    }
+
+    private function internalWebLogin($url, $body, $queryParam = [])
+    {
+        try {
+            $opt = [
+                'headers' => [
+                    'client-id' => $this->webLoginClientId,
+                    'client-secret' => $this->webLoginClientSecret,
+                ],
+                'form_params' => $body,
+                'query' => $queryParam,
+            ];
+            $response = $this->client->post($url, $opt);
+            $response = $response->getBody()->getContents();
+        } catch (RequestException $e) {
+            $response = $e->getResponse()->getBody()->getContents();
+        }
+
+        return json_decode($response);
     }
 
     public function request_otp($countryCode, $phone, $token, $source = "w", $lang = 'en_US', $debug = false)
@@ -172,10 +229,10 @@ class Humanid
         return $res;
     }
 
-    public function exchange($token)
+    public function userExchange($token)
     {
         try {
-            $response = $this->client->post($this->url. 'server/users/exchange', [
+            $response = $this->client->post($this->url . 'server/users/exchange', [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
@@ -187,7 +244,7 @@ class Humanid
                 ],
             ]);
             $response = $response->getBody()->getContents();
-        } catch (RequestException $e){
+        } catch (RequestException $e) {
             $response = $e->getResponse()->getBody()->getContents();
         }
 
@@ -210,51 +267,6 @@ class Humanid
         return $status;
     }
 
-    public function setEmailRecovery($data)
-    {
-        try {
-            $response = $this->client->post('accounts/recovery', [
-                'auth' => [$this->client_id, $this->client_secret],
-                'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
-                'body' => json_encode($data),
-            ]);
-            $response = $response->getBody()->getContents();
-        }catch (RequestException $e){
-            $response = $e->getResponse()->getBody()->getContents();
-        }
-        return json_decode($response);
-    }
-
-    public function accountRecoveryLogin($data)
-    {
-        try {
-            $response = $this->client->post('accounts/recovery/login', [
-                'auth' => [$this->client_id, $this->client_secret],
-                'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
-                'body' => json_encode($data),
-            ]);
-            $response = $response->getBody()->getContents();
-        } catch (RequestException $e){
-            $response = $e->getResponse()->getBody()->getContents();
-        }
-        return json_decode($response);
-    }
-
-    public function accountLoginRecovery($data)
-    {
-        try {
-            $response = $this->client->post('accounts/login/recovery', [
-                'auth' => [$this->client_id, $this->client_secret],
-                'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
-                'json' => $data,
-            ]);
-            $response = $response->getBody()->getContents();
-        } catch (RequestException $e){
-            $response = $e->getResponse()->getBody()->getContents();
-        }
-        return json_decode($response);
-    }
-
     public function postApi($url, $data)
     {
         try {
@@ -264,23 +276,23 @@ class Humanid
                 'body' => json_encode($data),
             ]);
             $response = $response->getBody()->getContents();
-        }catch (RequestException $e){
+        } catch (RequestException $e) {
             $response = $e->getResponse()->getBody()->getContents();
         }
         return json_decode($response);
     }
 
-    public function getOtpNewNumber($data)
+    public function requestOtpForRecovery($data)
     {
         return $this->postApi('accounts/recovery/verify/otp', $data);
     }
 
-    public function verifyNewPhone($data)
+    public function verifyOtpForVerifyNewPhone($data)
     {
         return $this->postApi('accounts/recovery/verify', $data);
     }
 
-    public function requestOtpToTransferAccount($data)
+    public function requestOtpTransferAccount($data)
     {
         return $this->postApi('accounts/recovery/transfer/otp', $data);
     }
@@ -288,5 +300,20 @@ class Humanid
     public function transferAccount($data)
     {
         return $this->postApi('accounts/recovery/transfer', $data);
+    }
+
+    public function setEmailRecovery($data)
+    {
+        return $this->postApi('accounts/recovery', $data);
+    }
+
+    public function accountLoginRecovery($data)
+    {
+        return $this->postApi('accounts/login/recovery', $data);
+    }
+
+    public function accountRecoveryLogin($data)
+    {
+        return $this->postApi('accounts/recovery/login', $data);
     }
 }

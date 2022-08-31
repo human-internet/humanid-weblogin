@@ -46,8 +46,12 @@
     </div>
 </form>
 <div class="humanid-content-link">
-    <a href="<?php echo base_url('recovery-exist/login')?>" class="humanid-link-red">Recover an existing account instead</a>
-    <a href="javascript:void(0)" data-target="modal-agree" class="humanid-link-red">Skip & Risk losing your account</a>
+    <a href="<?php echo base_url('recovery/new_number')?>" class="humanid-link-red">
+        Recover an existing account instead
+    </a>
+    <a href="javascript:void(0)" data-target="modal-agree" class="humanid-link-red">
+        Skip & Risk losing your account
+    </a>
 </div>
 <div class="humanid-modal__overlay"></div>
 <div class="humanid-modal__modal" id="modal-agree">
@@ -57,9 +61,12 @@
         <p>Your account could be lost without account <br> recovery.</p>
         <div class="humanid-modal__modal__footer">
             <div class="action-button">
-                <button type="button" class="btn-humanid btn-humanid-primary"  data-close="modal-agree" id="humanid-modal-close-button" >No, return to creating email recovery
+                <button type="button" class="btn-humanid btn-humanid-primary" data-close="modal-agree" id="humanid-modal-close-button">
+                    No, return to creating email recovery
                 </button>
-                <a href="<?php echo $app['redirectUrl']; ?>" class="btn-humanid btn-humanid-primary">Yes, skip & risk losing account</a>
+                <a href="<?php echo base_url('recovery/skip') ?>" class="btn-humanid btn-humanid-primary">
+                    Yes, skip & risk losing account
+                </a>
             </div>
         </div>
     </div>

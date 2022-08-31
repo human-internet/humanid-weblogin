@@ -6,7 +6,7 @@
 </div>
 
 <div class="humanid-content-text" style="margin-bottom: 40px;">
-    <p> The phone number <?php echo $humanid_verification->phone; ?> has previously been used to create <br>
+    <p> The phone number <?php echo $phone; ?> has previously been used to create <br>
         a humanID account. Do you want to log in with this number instead?
     </p>
 </div>

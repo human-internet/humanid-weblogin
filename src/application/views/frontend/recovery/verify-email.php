@@ -35,7 +35,9 @@
         </div>
     </div>
     <div class="humanid-button humanid-button-vertical" style="display: flex;align-items: center">
-        <button class="btn-humanid btn-humanid-primary" type="submit" style="width: 250px">SEND EMAIL WITH VERIFICATION CODE</button>
+        <button class="btn-humanid btn-humanid-primary" type="submit" style="width: 380px">
+            SEND EMAIL WITH VERIFICATION CODE
+        </button>
     </div>
     <div class="humanid-content-text">
         <a href="javascript:void(0)" data-target="modal-cannot-recovery"><b class="humanid-text-blue-dark">I did not set up a recovery email, or <br> cannot access it anymore</b></a>
@@ -55,7 +57,7 @@
         <div class="humanid-modal__modal__footer">
             <div class="action-button">
                 <a href="<?php echo base_url('redirect_app'); ?>" class="btn-humanid btn-humanid-primary directed-now" data-close="modal-agree"
-                        id="close-popup" style="margin-bottom: 20px;">
+                        id="close-popup" style="margin-bottom: 30px;">
                     login with new account
                 </a>
                 <a href="<?php echo $_SESSION['humanid_app']['redirectUrlFail'] ?>" style="display: block;padding-bottom: 15px;" data-close="modal-cannot-recovery">Cancel Login </a>

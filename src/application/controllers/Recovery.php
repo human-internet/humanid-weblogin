@@ -2,9 +2,9 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
- * @property Humanid $humanid
+ * @property Humanid            $humanid
  * @property CI_Form_validation $form_validation
- * @property CI_Session $session
+ * @property CI_Session         $session
  */
 class Recovery extends MY_Controller
 {
@@ -23,9 +23,21 @@ class Recovery extends MY_Controller
 
     public function create()
     {
-        $this->data['app'] = $this->session->userdata('humanid_app');
+        $this->_app = $this->_app_info();
+        $this->data['app'] = $this->_app;
+        $this->_check_session();
+        $userLogin = $this->session->userdata('humanId__userLogin');
+        $this->data['newAccount'] = $userLogin->user->newAccount;
         $this->scripts('humanid.modal()', 'embed');
         $this->render(true, 'recovery/set-email');
+    }
+
+    public function skip()
+    {
+        $userLogin = $this->session->userdata('humanId__userLogin');
+        $redirectUrl = $userLogin->redirectUrl;
+        $this->session->unset_userdata('humanId__userLogin');
+        redirect($redirectUrl);
     }
 
     public function confirmation()
@@ -50,7 +62,7 @@ class Recovery extends MY_Controller
 
         if (!$response->success) {
             $code = $response->code;
-            $modal = (object)array(
+            $modal = (object) array(
                 'title' => $this->lg->errorPage,
                 'code' => $code ?? '',
                 'message' => $response->message ?? '',
@@ -66,14 +78,24 @@ class Recovery extends MY_Controller
         redirect($redirectUrl);
     }
 
+    private function _checkOtpSession()
+    {
+        $session = $this->session->has_userdata('humanId__requestOtpRecovery');
+        $phone = $this->session->has_userdata('humanId__phone');
+        if ($session === null || $phone === null) {
+            $this->session->unset_userdata('humanId__phone');
+            redirect(site_url('recovery/new_number'));
+        }
+    }
+
     public function new_number()
     {
         $this->_app = $this->_app_info();
+        $webLoginToken = $this->session->userdata('humanId__webLoginToken');
         $this->data['app'] = $this->_app;
         $this->scripts('humanid.formLogin("", ' . $this->pc->code_js . ');', 'embed');
 
         if (isset($_POST['dialcode'])) {
-            $redirectUrl = site_url('recovery/verify_otp');
             $this->form_validation->set_rules('phone', $this->lg->phone, 'required|numeric|min_length[4]|max_length[14]', array(
                 'required' => $this->lg->form->phoneRequired,
                 'numeric' => $this->lg->form->phoneNumeric,
@@ -90,125 +112,93 @@ class Recovery extends MY_Controller
                 $this->render(true, 'recovery/new-number');
                 return;
             }
+            $phone = $this->input->post('phone', TRUE);
+            $dialcode = $this->input->post('dialcode', TRUE);
 
-            $phone = "+{$this->input->post('dialcode')}{$this->input->post('phone')}";
+            $this->session->set_userdata('humanId__phone', [
+                'dialcode' => $dialcode,
+                'phone' => $phone
+            ]);
+
             $data = [
-                'phone' => $phone,
-                'lang' => "en",
-                'source' => "w",
-                'token' => $this->session->userdata('humanid_login_token')
+                'phone' => "+{$dialcode}{$phone}",
+                'token' => $webLoginToken,
+                'lang' => 'en',
+                'source' => 'w',
             ];
-            $response = $this->humanid->getOtpNewNumber($data);
+
+            $requestOtp = $this->humanid->requestOtpForRecovery($data);
             // If not success
-            if (!$response->success) {
-                $code = $response->code;
-                $modal = (object)array(
-                    'title' => $this->lg->errorPage,
-                    'code' => $code ?? '',
-                    'message' => $response->message ?? '',
-                    'url' => site_url('recovery/new_number')
-                );
-
-                if ($response->code == "ERR_10") {
-                    $this->data['error_message'] = $response->message;
-                    $this->render(true, 'recovery/new-number');
-                    return;
-                }
-
-                if ($response->message == "jwt expired") {
-                    $modal = (object)array(
-                        'title' => $this->lg->errorPage,
-                        'code' => $code ?? '',
-                        'message' => $this->lg->error->tokenExpired,
-                        'url' => $this->data['app']['redirectUrlFail'] ?? site_url('demo')
-                    );
-                    $this->session->set_flashdata('modal', $modal);
-                    $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-                    redirect(site_url('error'));
-                }
-                $this->session->set_flashdata('modal', $modal);
-                $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-                $redirectUrl = site_url('error');
-                redirect($redirectUrl);
+            if (!$requestOtp->success) {
+                $this->handleErrorRequestOtp($requestOtp);
             }
 
-            // if Success
-            $response->data->phone = $phone;
-            $this->session->set_userdata(['humanid_verification' => $response->data]);
-            redirect($redirectUrl);
+            $this->session->set_userdata([
+                'humanId__phone' => [
+                    'phone' => $phone,
+                    'dialcode' => $dialcode,
+                ],
+            ]);
+
+            // Save to session
+            $this->session->set_userdata('humanId__requestOtpRecovery', $requestOtp->data);
+
+            redirect(site_url('recovery/verify_otp'));
         }
         $this->render(true, 'recovery/new-number');
-    }
-
-    private function _first_error_msg()
-    {
-        $error = validation_errors();
-        $error = preg_split('/\r\n|\r|\n/', $error);
-        if (count($error) > 0 && !empty($error[0])) {
-            $this->data['error_message'] = trim($error[0]);
-        }
     }
 
     public function verify_otp()
     {
         $this->_app = $this->_app_info();
+        $this->_checkOtpSession();
         $this->data['app'] = $this->_app;
-        $humanIdAppData['humanid_app'] = $this->session->userdata('humanid_app');
 
         $code = $this->input->post('code');
         if (isset($code) && $code[count($code) - 1] !== '') {
             $redirectUrl = site_url('recovery/verify_email');
+            $sessionPhone = $this->session->userdata('humanId__phone');
+            $fromRequestOtp = $this->session->userdata('humanId__requestOtpRecovery');
+            $sessionToken = $fromRequestOtp->session->token;
             $data = [
-                'phone' => $this->session->userdata('humanid_verification')->phone,
+                'phone' => "+{$sessionPhone['dialcode']}{$sessionPhone['phone']}",
                 'otpCode' => implode('', $code),
                 'source' => 'w',
-                'token' => $this->session->userdata('humanid_verification')->session->token
+                'token' => $sessionToken
             ];
-            $response = $this->humanid->verifyNewPhone($data);
-            if (!$response->success) {
-                $code = $response->code;
-                $modal = (object)array(
-                    'title' => $this->lg->errorPage,
-                    'code' => $code ?? '',
-                    'message' => $response->message ?? '',
-                    'url' => site_url('recovery/verify_otp')
-                );
+            $verifyOtpResponse = $this->humanid->verifyOtpForVerifyNewPhone($data);
+            if (!$verifyOtpResponse->success) {
+                $this->handleErrorVerifyOtp($verifyOtpResponse);
+            }
 
-                if ($response->code == 500) {
-                    $modal->url = site_url('error');
-                }
+            if ($verifyOtpResponse->data->hasAccount === true) {
+                // Save session to userdata
+                $this->session->set_userdata('humanId__verifyOtpRecovery', $verifyOtpResponse->data);
+                $redirectUrl = site_url('confirmation-login');
+            }
 
-                $this->session->set_flashdata('modal', $modal);
-                $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-                $redirectUrl = site_url('error');
-
-                $this->init_logs(array('error' => "{$response->code} - {$response->message}"));
-                redirect($redirectUrl);
-            } else {
+            if ($verifyOtpResponse->data->hasAccount === false) {
                 // When OTP Verified then recovery login with exchange token
-                $resultLogin = $this->humanid->accountRecoveryLogin([
+                $recoveryLogin = $this->humanid->accountRecoveryLogin([
+                    'token' => $verifyOtpResponse->data->token,
                     'source' => 'w',
-                    'token' => $response->data->token,
                 ]);
-                $humanIdAppData['humanid_app']['redirectUrl'] = $resultLogin->data->redirectUrl;
-                $humanIdAppData['humanid_app']['hasSetupRecovery'] = $resultLogin->data->user->hasSetupRecovery;
-                $this->session->set_userdata($humanIdAppData);
-                if ($response->data->hasAccount) {
-                    $redirectUrl = site_url('confirmation-login');
-                }
-                $this->session->set_userdata(['humanid_verification_new_phone' => $response->data]);
-            }
+                $this->session->set_userdata('humanId__userLogin', $recoveryLogin->data);
 
-            if ($response->code == 'ERR_5') {
-                $this->session->set_flashdata('error_otp', 'Incorrect code. Please try again.');
-                $redirectUrl = 'recovery/verify_otp';
+                $redirectUrl = site_url('recovery/confirmation_switch_email');
             }
+            // Remove otp session if otp code is valid
+            $this->session->unset_userdata('humanId__requestOtpRecovery');
+
+            // Redirect
             redirect($redirectUrl);
         }
-        $otpLength = $this->session->userdata('humanid_verification')->otp->config->otpCodeLength;
+
+        $otpSession = $this->session->userdata('humanId__requestOtpRecovery');
+        $this->data['otpLength'] = $otpSession->otp->config->otpCodeLength;
+        $this->data['phone'] = $this->session->userdata('humanId__phone')['phone'];
+
         $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
-        $this->data['otpLength'] = $otpLength;
-        $this->data['phone'] = $this->session->userdata('humanid_verification')->phone;
         $this->scripts('humanid.formLoginVeriy("", "60");', 'embed');
         $this->render(true, 'recovery/verify');
     }
@@ -216,78 +206,45 @@ class Recovery extends MY_Controller
     public function confirmation_login()
     {
         $this->_app = $this->_app_info();
-        $this->data['humanid_verification'] = $this->session->userdata('humanid_verification');
+        $sessionPhone = $this->session->userdata('humanId__phone');
+        $this->data['phone'] = "+{$sessionPhone['dialcode']}{$sessionPhone['phone']}";
+
         $this->render(true, 'recovery/confirmation_switch_email');
     }
 
-    public function redirect_app()
-    {
-        $this->_app = $this->_app_info();
-        $verification = $this->session->userdata('humanid_verification_new_phone');
-        $data = [
-            'token' => $verification->token,
-            'source' => 'w',
-        ];
-        $loginRecovery = $this->humanid->accountRecoveryLogin($data);
-        $this->data['humanid_verification'] = $this->session->userdata('humanid_verification');
-
-        // TODO: Validate Expired At
-        $loginRecoveryData = $loginRecovery->data;
-        $this->data['redirectUrl'] = $loginRecoveryData->redirectUrl;
-        $this->data['app'] = $this->session->userdata('humanid_app');
-
-        $this->data['redirectSetRecoveryEmail'] = base_url('recovery/create');
-
-        $humanIdAppData['humanid_app'] = $this->data['app'];
-        $humanIdAppData['humanid_app']['exchangeToken'] = $loginRecoveryData->exchangeToken;
-        $humanIdAppData['humanid_app']['redirectUrl'] = $loginRecoveryData->redirectUrl;
-        $this->session->set_userdata($humanIdAppData);
-
-        $user = $loginRecoveryData->user;
-        $appConfig = $loginRecoveryData->app->config;
-
-        // new account then redirect to recovery email create
-        if ($user->newAccount === true) {
-            redirect($this->data['redirectSetRecoveryEmail']);
-        }
-
-        // Setup recovery not setup & config recovery
-        if (!$user->hasSetupRecovery && $appConfig->accountRecovery === true) {
-            redirect($this->data['redirectSetRecoveryEmail']);
-        }
-
-        // Inactive User, but no Account Recovery Setup then redirect to set email
-        if ($user->isActive === false && $user->hasSetupRecovery === false) {
-            redirect($this->data['redirectSetRecoveryEmail']);
-        }
-
-        $success = 1;
-        $failAttemptLimit = 5;
-        $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
-        $this->scripts('humanid.formLoginVeriy(' . $success . ',' . $failAttemptLimit . ');', 'embed');
-        $this->render(true, 'recovery/redirect_app');
-    }
-
-
     public function request_otp()
     {
-        $phone = $this->session->userdata('humanid_verification')->phone;
+        $webLoginToken = $this->session->userdata('humanId__webLoginToken');
+        $sessionPhone = $this->session->userdata('humanId__phone');
         $redirectUrl = 'recovery/verify_otp';
         $data = [
-            'phone' => $phone,
-            'lang' => "en",
-            'source' => "w",
-            'token' => $this->session->userdata('humanid_login')['token']
+            'phone' => "+{$sessionPhone['dialcode']}{$sessionPhone['phone']}",
+            'lang' => 'en',
+            'source' => 'w',
+            'token' => $webLoginToken
         ];
-        $response = $this->humanid->getOtpNewNumber($data);
+        $response = $this->humanid->requestOtpForRecovery($data);
         if (!$response->success) {
             $code = $response->code;
-            $modal = (object)array(
+            $modal = (object) array(
                 'title' => $this->lg->errorPage,
                 'code' => $code ?? '',
                 'message' => $response->message ?? '',
                 'url' => site_url($redirectUrl)
             );
+
+            if ($response->message == "jwt expired") {
+                $modal = (object) [
+                    'title' => $this->lg->errorPage,
+                    'code' => $code ?? '',
+                    'message' => $this->lg->error->tokenExpired,
+                    'url' => $this->data['app']['redirectUrlFail'] ?? site_url('demo')
+                ];
+                $this->session->unset_userdata('humanId__phone');
+                $this->session->set_flashdata('modal', $modal);
+                $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+                redirect(site_url('error'));
+            }
 
             if ($response->code == 500) {
                 $modal->url = site_url('error');
@@ -298,8 +255,8 @@ class Recovery extends MY_Controller
             $redirectUrl = site_url('error');
             redirect($redirectUrl);
         }
-        $response->data->phone = $phone;
-        $this->session->set_userdata(['humanid_verification' => $response->data]);
+
+        $this->session->set_userdata('humanId__requestOtp', $response->data);
 
         redirect($redirectUrl);
     }
@@ -307,27 +264,53 @@ class Recovery extends MY_Controller
     public function verify_email()
     {
         $this->_app = $this->_app_info();
+        $this->_check_session();
         $this->data['app'] = $this->_app;
         $phone = $this->input->post('phone');
         $email = $this->input->post('email');
         $wrongNumberAndEmail = false;
         if ($phone && $email) {
-            $phone = "+{$this->input->post('dialcode')}{$this->input->post('phone')}";
             $redirectUrl = 'recovery/verify_email_code';
+            $phone = "+{$this->input->post('dialcode')}{$this->input->post('phone')}";
+            $session = $this->session->userdata('humanId__userLogin');
             $data = [
                 'recoveryEmail' => $email,
                 'oldPhone' => $phone,
-                'token' => $this->session->userdata('humanid_verification_new_phone')->token,
-                'source' => "w"
+                'token' => $session['exchangeToken'],
+                'source' => 'w',
             ];
-            $response = $this->humanid->requestOtpToTransferAccount($data);
-            if ($response->code == self::WRONG_NUMBER || $response->code == self::WRONG_EMAIL){
+
+            // Set user
+            $user = $session['user'];
+            // Check account is inactive then login with exchange token
+            if ($user->isActive === false) {
+                $loginRecoveryResult = $this->humanid->accountLoginRecovery([
+                    'exchangeToken' => $session['exchangeToken'],
+                    'source' => 'w',
+                ]);
+                if (!$loginRecoveryResult->success) {
+                    $modal = (object) array(
+                        'title' => $this->lg->errorPage,
+                        'code' => $loginRecoveryResult->code,
+                        'message' => $this->lg->error->tokenExpired,
+                        'url' => $this->_app['redirectUrlFail'] ?? site_url('demo'),
+                    );
+                    $this->session->set_flashdata('modal', $modal);
+                    $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+                    redirect(site_url('error'));
+                }
+                $data['token'] = $loginRecoveryResult->data->token;
+                $this->session->set_userdata('humanId__loginRecovery', $loginRecoveryResult->data);
+            }
+
+            $response = $this->humanid->requestOtpTransferAccount($data);
+            if ($response->code == self::WRONG_NUMBER || $response->code == self::WRONG_EMAIL) {
                 $wrongNumberAndEmail = true;
             }
 
             if ((!$response->success && $response->code !== self::WRONG_NUMBER) || $response->code !== self::WRONG_EMAIL) {
                 $code = $response->code;
-                $modal = (object)array(
+                $modal = (object) array(
                     'title' => $this->lg->errorPage,
                     'code' => $code ?? '',
                     'message' => $response->message ?? '',
@@ -341,7 +324,8 @@ class Recovery extends MY_Controller
                 $this->session->set_flashdata('modal', $modal);
                 $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
             }
-            if ($response->success){
+
+            if ($response->success) {
                 $response->data->phone = $phone;
                 $response->data->email = $email;
                 $this->session->set_userdata(['humanid_email_otp' => $response->data]);
@@ -359,16 +343,22 @@ class Recovery extends MY_Controller
     {
         $code = $this->input->post('code');
         if (isset($code) && $code[count($code) - 1] !== '') {
+            $session = $this->session->userdata('humanId__userLogin');
             $redirectUrl = site_url('recovery/change_number_success');
             $data = [
                 "otpCode" => implode('', $code),
                 "token" => $this->session->userdata('humanid_verification_new_phone')->token,
                 "source" => "w"
             ];
+            $user = $session['user'];
+            if ($user->isActive === false) {
+                $loginRecovery = $this->session->userdata('humanId__loginRecovery');
+                $data['token'] = $loginRecovery->token;
+            }
             $response = $this->humanid->transferAccount($data);
             if (!$response->success) {
                 $code = $response->code;
-                $modal = (object)array(
+                $modal = (object) array(
                     'title' => $this->lg->errorPage,
                     'code' => $code ?? '',
                     'message' => $response->message ?? '',
@@ -414,10 +404,10 @@ class Recovery extends MY_Controller
             "token" => $this->session->userdata('humanid_verification_new_phone')->token,
             "source" => "w"
         ];
-        $response = $this->humanid->requestOtpToTransferAccount($data);
+        $response = $this->humanid->requestOtpTransferAccount($data);
         if (!$response->success) {
             $code = $response->code;
-            $modal = (object)array(
+            $modal = (object) array(
                 'title' => $this->lg->errorPage,
                 'code' => $code ?? '',
                 'message' => $response->message ?? '',
@@ -476,8 +466,6 @@ class Recovery extends MY_Controller
     public function invalid()
     {
         $this->_app = $this->_app_info();
-        $this->data['app'] = $this->_app;
-
         $this->data['app'] = $this->session->userdata('humanid_app');
         $this->scripts('humanid.modal()', 'embed');
         $this->render(true, 'recovery/invalid');
@@ -525,7 +513,7 @@ class Recovery extends MY_Controller
             $code = 'WSDK_01';
             $message = $this->lg->error->sessionExpired;
             $error_url = $this->_app['redirectUrlFail'] . '?code=' . $code . '&message=' . urlencode($message);
-            $modal = (object)array(
+            $modal = (object) array(
                 'title' => $this->lg->errorPage,
                 'code' => $code,
                 'message' => $message,
@@ -549,7 +537,7 @@ class Recovery extends MY_Controller
                     $code = 'WSDK_02';
                     $message = $this->lg->error->tokenExpired;
                     $error_url = $this->_app['redirectUrlFail'] . '?code=' . $code . '&message=' . urlencode($message);
-                    $modal = (object)array(
+                    $modal = (object) array(
                         'title' => $this->lg->errorPage,
                         'code' => $code,
                         'message' => $message,
@@ -570,4 +558,109 @@ class Recovery extends MY_Controller
         return null;
     }
 
+    private function handleErrorVerifyOtp($response)
+    {
+        $this->session->unset_userdata('humanId__phone');
+        // Validate if expired
+        if ($response->message == "jwt expired") {
+            $modal = (object) array(
+                'title' => $this->lg->errorPage,
+                'code' => $response->code,
+                'message' => $this->lg->error->tokenExpired,
+                'url' => $this->_app['redirectUrlFail'] ?? site_url('demo'),
+            );
+            $this->session->set_flashdata('modal', $modal);
+            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+            redirect(site_url('error'));
+        }
+
+        $code = $response->code;
+        $modal = (object) array(
+            'title' => $this->lg->errorPage,
+            'code' => $code ?? '',
+            'message' => $response->message ?? '',
+            'url' => site_url('recovery/verify_otp')
+        );
+
+        if ($response->code == 'ERR_5') {
+            $this->session->set_flashdata('error_otp', 'Incorrect code. Please try again.');
+            $redirectUrl = 'recovery/verify_otp';
+            redirect($redirectUrl);
+        }
+
+        if ($response->code == 500) {
+            $modal->url = site_url('error');
+        }
+
+        $this->session->set_flashdata('modal', $modal);
+        $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+        $redirectUrl = site_url('error');
+
+        $this->init_logs(array('error' => "{$response->code} - {$response->message}"));
+
+        redirect($redirectUrl);
+    }
+
+    private function _check_session()
+    {
+        $hasUserLogin = $this->session->has_userdata('humanId__userLogin');
+        if (!$hasUserLogin) {
+            $code = 'WSDK_01';
+            $message = $this->lg->error->sessionExpired;
+            $error_url = $this->_app['redirectUrlFail'] . '?code=' . $code . '&message=' . urlencode($message);
+            $modal = (object) [
+                'title' => $this->lg->errorPage,
+                'code' => $code,
+                'message' => $message,
+                'url' => $error_url
+            ];
+            $this->session->unset_userdata('humanId__phone');
+            $this->session->set_flashdata('modal', $modal);
+            $this->session->set_flashdata('error_message', $message);
+            redirect(site_url('error'));
+        }
+    }
+
+    private function handleErrorRequestOtp($requestOtpResponse)
+    {
+        $code = $requestOtpResponse->code;
+        $modal = (object) [
+            'title' => $this->lg->errorPage,
+            'code' => $code ?? '',
+            'message' => $requestOtpResponse->message ?? '',
+            'url' => site_url('recovery/new_number')
+        ];
+
+        if ($requestOtpResponse->code == "ERR_10") {
+            $this->data['error_message'] = $requestOtpResponse->message;
+            $this->render(true, 'recovery/new-number');
+            return;
+        }
+
+        if ($requestOtpResponse->message == "jwt expired") {
+            $modal = (object) [
+                'title' => $this->lg->errorPage,
+                'code' => $code ?? '',
+                'message' => $this->lg->error->tokenExpired,
+                'url' => $this->data['app']['redirectUrlFail'] ?? site_url('demo')
+            ];
+            $this->session->unset_userdata('humanId__phone');
+            $this->session->set_flashdata('modal', $modal);
+            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+            redirect(site_url('error'));
+        }
+        $this->session->set_flashdata('modal', $modal);
+        $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+        $redirectUrl = site_url('error');
+        redirect($redirectUrl);
+    }
+
+    private function _first_error_msg()
+    {
+        $error = validation_errors();
+        $error = preg_split('/\r\n|\r|\n/', $error);
+        if (count($error) > 0 && !empty($error[0])) {
+            $this->data['error_message'] = trim($error[0]);
+        }
+    }
 }
