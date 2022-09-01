@@ -1,10 +1,10 @@
 <form method="post">
     <div class="humanid-logo">
         <div class="humanid-logo__placement">
-            <img src="<?php echo $app['logoUrls']['thumbnail'];?>" alt="<?php echo $app['name'];?>">
+            <img src="<?php echo $app->logoUrls->thumbnail ;?>" alt="<?php echo $app->name ;?>">
         </div>
     </div>
-    <div class="humanid-page-title"><?php echo str_replace("{APPNAME}",$app['name'],$lang->text->pageTitleApp);?></div>
+    <div class="humanid-page-title"><?php echo str_replace("{APPNAME}", $app->name, $lang->text->pageTitleApp);?></div>
 
     <div class="humanid-content-text">
         <div class="humanid-text-info humanid-text-info-danger">

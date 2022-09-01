@@ -4,7 +4,7 @@
         <div class="humanid-modal__modal__main recovery-success">
             <div class="humanid-logo">
                 <div class="humanid-logo__placement" style="margin: 0">
-                    <img src="<?php echo $app['logoUrls']['thumbnail']; ?>" alt="<?php echo $app['name']; ?>">
+                    <img src="<?php echo $app->logoUrls->thumbnail; ?>" alt="<?php echo $app->name; ?>">
                 </div>
             </div>
             <p class="humanid-modal__modal__title humanid-text-primary">SUCCESS!</p>

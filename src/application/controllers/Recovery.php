@@ -1,98 +1,16 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-/**
- * @property Humanid            $humanid
- * @property CI_Form_validation $form_validation
- * @property CI_Session         $session
- */
-class Recovery extends MY_Controller
-{
-    var $_app;
+require_once 'BaseController.php';
 
+class Recovery extends BaseController
+{
     const WRONG_NUMBER = 'ERR_33'; //User not found
     const WRONG_EMAIL = 'ERR_34'; //Account Recovery has not been set-up
 
-
-    function __construct()
-    {
-        parent::__construct();
-        $this->load->library('humanid');
-        $this->load->library('form_validation');
-    }
-
-    public function create()
-    {
-        $this->_app = $this->_app_info();
-        $this->data['app'] = $this->_app;
-        $this->_check_session();
-        $userLogin = $this->session->userdata('humanId__userLogin');
-        $this->data['newAccount'] = $userLogin->user->newAccount;
-        $this->scripts('humanid.modal()', 'embed');
-        $this->render(true, 'recovery/set-email');
-    }
-
-    public function skip()
-    {
-        $userLogin = $this->session->userdata('humanId__userLogin');
-        $redirectUrl = $userLogin->redirectUrl;
-        $this->session->unset_userdata('humanId__userLogin');
-        redirect($redirectUrl);
-    }
-
-    public function confirmation()
-    {
-        $this->form_validation->set_rules('email', 'email', 'required|valid_email');
-        $this->data['app'] = $this->session->userdata('humanid_app');
-        $this->data['email'] = $this->input->post('email');
-        $this->data['redirectSetRecoveryEmail'] = base_url('recovery/create');
-
-        $this->render(true, 'recovery/confirmation');
-    }
-
-    public function confirmation_process()
-    {
-        $exchangeToken = $this->session->userdata('humanid_app')['exchangeToken'];
-        $data = [
-            'recoveryEmail' => $this->input->post('email'),
-            'exchangeToken' => $exchangeToken,
-            'source' => 'w',
-        ];
-        $response = $this->humanid->setEmailRecovery($data);
-
-        if (!$response->success) {
-            $code = $response->code;
-            $modal = (object) array(
-                'title' => $this->lg->errorPage,
-                'code' => $code ?? '',
-                'message' => $response->message ?? '',
-                'url' => $this->config->item('humanid')['fe_url']
-            );
-            $this->session->set_flashdata('modal', $modal);
-            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-            $redirectUrl = site_url('error');
-        } else {
-            $redirectUrl = $response->data->redirectUrl;
-        }
-
-        redirect($redirectUrl);
-    }
-
-    private function _checkOtpSession()
-    {
-        $session = $this->session->has_userdata('humanId__requestOtpRecovery');
-        $phone = $this->session->has_userdata('humanId__phone');
-        if ($session === null || $phone === null) {
-            $this->session->unset_userdata('humanId__phone');
-            redirect(site_url('recovery/new_number'));
-        }
-    }
-
     public function new_number()
     {
-        $this->_app = $this->_app_info();
-        $webLoginToken = $this->session->userdata('humanId__webLoginToken');
-        $this->data['app'] = $this->_app;
+        $webLoginToken = $this->session->userdata('humanId__sessionToken');
         $this->scripts('humanid.formLogin("", ' . $this->pc->code_js . ');', 'embed');
 
         if (isset($_POST['dialcode'])) {
@@ -148,9 +66,102 @@ class Recovery extends MY_Controller
         $this->render(true, 'recovery/new-number');
     }
 
+    public function create()
+    {
+        $this->_app = $this->getAppInfo();
+        $this->checkUserLogin();
+        $this->data['app'] = $this->_app;
+        $userLogin = $this->session->userdata('humanId__userLogin');
+        $this->data['newAccount'] = $userLogin->user->newAccount;
+        $error_message = $this->session->flashdata('error_message');
+        if ($error_message) {
+            $this->data['error_message'] = $error_message;
+        }
+
+        $this->scripts('humanid.modal()', 'embed');
+        $this->render(true, 'recovery/set-email');
+    }
+
+    public function skip()
+    {
+        $userLogin = $this->session->userdata('humanId__userLogin');
+        $redirectUrl = $userLogin->redirectUrl;
+        $this->session->unset_userdata('humanId__userLogin');
+        redirect($redirectUrl);
+    }
+
+    public function confirmation()
+    {
+        $this->_app = $this->getAppInfo();
+        $this->data['app'] = $this->_app;
+        $this->data['email'] = $this->input->post('email');
+        $this->form_validation->set_rules('email', 'email', 'required|valid_email');
+        if ($this->form_validation->run() == false) {
+            $this->_first_error_msg();
+            $this->session->set_flashdata('error_message', $this->data['error_message']);
+            redirect(base_url('recovery/create'));
+        }
+        // Set email recovery flow
+
+        $this->data['redirectSetRecoveryEmail'] = base_url('recovery/create');
+
+        $this->render(true, 'recovery/confirmation');
+    }
+
+    public function confirmation_process()
+    {
+        $this->_app = $this->getAppInfo();
+        $this->checkUserLogin();
+        $userLogin = $this->session->userdata('humanId__userLogin');
+        $redirectUrl = $userLogin->redirectUrl;
+        $data = [
+            'recoveryEmail' => $this->input->post('email'),
+            'exchangeToken' => $userLogin->exchangeToken,
+            'source' => 'w',
+        ];
+        $setEmailRecovery = $this->humanid->setEmailRecovery($data);
+        if (!$setEmailRecovery->success) {
+            $code = $setEmailRecovery->code;
+            $modal = (object) array(
+                'title' => $this->lg->errorPage,
+                'code' => $code ?? '',
+                'message' => $setEmailRecovery->message ?? '',
+                'url' => $this->_app->redirectUrlFail ?? site_url('demo'),
+            );
+            $this->session->set_flashdata('modal', $modal);
+            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+            redirect(site_url('error'));
+        }
+        // Verify exchange token
+        $response = $this->humanid->userExchange($setEmailRecovery->data->exchangeToken);
+        if (!$response->success) {
+            $modal = (object)array(
+                'title' => $this->lg->errorPage,
+                'code' => $response->code,
+                'message' => $this->lg->error->tokenExpired,
+                'url' => $this->_app->redirectUrlFail ?? site_url('demo'),
+            );
+            $this->session->set_flashdata('modal', $modal);
+            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+            redirect(site_url('error'));
+        }
+
+        redirect($redirectUrl);
+    }
+
+    private function _checkOtpSession()
+    {
+        $session = $this->session->has_userdata('humanId__requestOtpRecovery');
+        $phone = $this->session->has_userdata('humanId__phone');
+        if ($session === null || $phone === null) {
+            $this->session->unset_userdata('humanId__phone');
+            redirect(site_url('recovery/new_number'));
+        }
+    }
+
     public function verify_otp()
     {
-        $this->_app = $this->_app_info();
+        $this->_app = $this->getAppInfo();
         $this->_checkOtpSession();
         $this->data['app'] = $this->_app;
 
@@ -205,7 +216,7 @@ class Recovery extends MY_Controller
 
     public function confirmation_login()
     {
-        $this->_app = $this->_app_info();
+        $this->_app = $this->getAppInfo();
         $sessionPhone = $this->session->userdata('humanId__phone');
         $this->data['phone'] = "+{$sessionPhone['dialcode']}{$sessionPhone['phone']}";
 
@@ -214,7 +225,7 @@ class Recovery extends MY_Controller
 
     public function request_otp()
     {
-        $webLoginToken = $this->session->userdata('humanId__webLoginToken');
+        $webLoginToken = $this->session->userdata('humanId__sessionToken');
         $sessionPhone = $this->session->userdata('humanId__phone');
         $redirectUrl = 'recovery/verify_otp';
         $data = [
@@ -263,8 +274,8 @@ class Recovery extends MY_Controller
 
     public function verify_email()
     {
-        $this->_app = $this->_app_info();
-        $this->_check_session();
+        $this->_app = $this->getAppInfo();
+        $this->checkWebLoginToken();
         $this->data['app'] = $this->_app;
         $phone = $this->input->post('phone');
         $email = $this->input->post('email');
@@ -385,7 +396,7 @@ class Recovery extends MY_Controller
             redirect($redirectUrl);
         }
         $otpLength = $this->session->userdata('humanid_email_otp')->config->otpCodeLength;
-        $this->_app = $this->_app_info();
+        $this->_app = $this->getAppInfo();
         $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
         $this->data['app'] = $this->_app;
         $this->data['otpLength'] = $otpLength;
@@ -435,7 +446,7 @@ class Recovery extends MY_Controller
             session_destroy();
             redirect($this->session->userdata('success_new_recovery_account')->redirectUrl);
         }
-        $this->_app = $this->_app_info();
+        $this->_app = $this->getAppInfo();
         $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
         $this->data['appName'] = $this->session->userdata('success_new_recovery_account')->app->name;
         $this->render(true, 'recovery/change-number-success');
@@ -443,7 +454,7 @@ class Recovery extends MY_Controller
 
     public function add()
     {
-        $this->_app = $this->_app_info();
+        $this->_app = $this->getAppInfo();
         $this->data['app'] = $this->_app;
         $email = $this->input->post('email', true);
         if (!empty($email) && !strpos($email, '@')) {
@@ -458,50 +469,17 @@ class Recovery extends MY_Controller
 
     public function success()
     {
-        $this->_app = $this->_app_info();
+        $this->_app = $this->getAppInfo();
         $this->data['app'] = $this->_app;
         $this->render(true, 'recovery/success');
     }
 
     public function invalid()
     {
-        $this->_app = $this->_app_info();
-        $this->data['app'] = $this->session->userdata('humanid_app');
+        $this->_app = $this->getAppInfo();
+        $this->data['app'] = $this->_app;
         $this->scripts('humanid.modal()', 'embed');
         $this->render(true, 'recovery/invalid');
-
-    }
-
-    private function _app_info($new_session = FALSE)
-    {
-        $app = $this->session->userdata('humanid_app');
-        if (!$new_session && $app && !empty($app)) {
-            return $app;
-        } else {
-            $appId = $this->input->get('a', TRUE);
-            if ($appId) {
-                $res = $this->humanid->app_info($appId, $this->source);
-                if ($res['send']) {
-                    $result = $res['result'];
-                    if ($result['success']) {
-                        $app = $res['result']['data']['app'];
-                        $app['id'] = $appId;
-                        $this->session->set_userdata(array('humanid_app' => $app));
-                        return $app;
-                    } else {
-                        $this->session->set_flashdata('error_message', $result['message']);
-                        redirect(site_url('error'));
-                    }
-                } else {
-                    $this->session->set_flashdata('error_message', $this->lg->error->try);
-                    redirect(site_url('error'));
-                }
-            } else {
-                $this->session->set_flashdata('error_message', $this->lg->error->appId);
-                redirect(site_url('error'));
-            }
-        }
-        return null;
     }
 
     private function _login()
@@ -601,26 +579,6 @@ class Recovery extends MY_Controller
         redirect($redirectUrl);
     }
 
-    private function _check_session()
-    {
-        $hasUserLogin = $this->session->has_userdata('humanId__userLogin');
-        if (!$hasUserLogin) {
-            $code = 'WSDK_01';
-            $message = $this->lg->error->sessionExpired;
-            $error_url = $this->_app['redirectUrlFail'] . '?code=' . $code . '&message=' . urlencode($message);
-            $modal = (object) [
-                'title' => $this->lg->errorPage,
-                'code' => $code,
-                'message' => $message,
-                'url' => $error_url
-            ];
-            $this->session->unset_userdata('humanId__phone');
-            $this->session->set_flashdata('modal', $modal);
-            $this->session->set_flashdata('error_message', $message);
-            redirect(site_url('error'));
-        }
-    }
-
     private function handleErrorRequestOtp($requestOtpResponse)
     {
         $code = $requestOtpResponse->code;
@@ -653,14 +611,5 @@ class Recovery extends MY_Controller
         $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
         $redirectUrl = site_url('error');
         redirect($redirectUrl);
-    }
-
-    private function _first_error_msg()
-    {
-        $error = validation_errors();
-        $error = preg_split('/\r\n|\r|\n/', $error);
-        if (count($error) > 0 && !empty($error[0])) {
-            $this->data['error_message'] = trim($error[0]);
-        }
     }
 }

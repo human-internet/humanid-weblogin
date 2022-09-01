@@ -1,49 +1,13 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-/**
- * @property Humanid $humanid
- * @property CI_Form_validation $form_validation
- * @property CI_Session $session
- */
-class Login extends MY_Controller
+require_once 'BaseController.php';
+
+class Login extends BaseController
 {
-
-    var $_app;
-
-    function __construct()
-    {
-        parent::__construct();
-        $this->load->library('humanid');
-        $this->load->library('form_validation');
-    }
-
-    public function checkWebLoginToken()
-    {
-        // Get from query param
-        $token = $this->input->get('t', TRUE);
-        $hasLoginToken = $this->session->has_userdata('humanId__webLoginToken');
-        if (!$hasLoginToken) {
-            $this->session->set_userdata('humanId__webLoginToken', $token);
-        }
-        $webLoginToken = $this->session->userdata('humanId__webLoginToken');
-        if ($webLoginToken !== $token) {
-            $modal = (object)array(
-                'title' => $this->lg->errorPage,
-                'code' => '400',
-                'message' => $this->lg->error->tokenExpired,
-                'url' => $this->_app['redirectUrlFail'] ?? site_url('demo')
-            );
-            $this->session->set_flashdata('modal', $modal);
-            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-            redirect(site_url('error'));
-        }
-    }
-
     public function index()
     {
-        $this->_app = $this->_app_info(TRUE);
-        $this->checkWebLoginToken();
+        $this->_app = $this->getAppInfo(true);
         $this->form_validation->set_rules('phone', $this->lg->phone, 'required|numeric|min_length[4]|max_length[14]', array(
             'required' => $this->lg->form->phoneRequired,
             'numeric' => $this->lg->form->phoneNumeric,
@@ -59,22 +23,11 @@ class Login extends MY_Controller
         $dialcode = $this->input->post('dialcode', TRUE);
 
         if ($this->form_validation->run() == TRUE) {
-            $webLoginToken = $this->session->userdata('humanId__webLoginToken');
+            $webLoginToken = $this->session->userdata('humanId__sessionToken');
             // Request OTP
-            $result = $this->humanid->userRequestOTP($dialcode, $phone, $webLoginToken, $this->source, $this->lg->id);
-            if ($result->success === false) {
-                if ($result->message == "jwt expired") {
-                    $modal = (object)array(
-                        'title' => $this->lg->errorPage,
-                        'code' => $result->code,
-                        'message' => $this->lg->error->tokenExpired,
-                        'url' => $this->_app['redirectUrlFail'] ?? site_url('demo'),
-                    );
-                    $this->session->set_flashdata('modal', $modal);
-                    $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-                } else {
-                    $this->data['error_message'] = $result->message;
-                }
+            $response = $this->humanid->userRequestOTP($dialcode, $phone, $webLoginToken, $this->source, $this->lg->id);
+            if (!$response->success) {
+                $this->handleErrorRequestOTPLogin($response);
             }
             // Save phone and dial code to userdata
             $this->session->set_userdata([
@@ -83,8 +36,8 @@ class Login extends MY_Controller
                     'dialcode' => $dialcode,
                 ],
             ]);
-            $this->session->set_userdata('humanId__requestOtp', $result->data);
-            redirect(site_url('verify?a=' . $this->_app['id'] . '&t=' . $webLoginToken . '&lang=' . $this->lg->id . "&s=" . $this->source));
+            $this->session->set_userdata('humanId__requestOtpLogin', $response->data);
+            redirect(site_url('verify?a=' . $this->_app->id . '&t=' . $webLoginToken . '&lang=' . $this->lg->id . "&s=" . $this->source));
         } else {
             $this->_first_error_msg();
         }
@@ -112,14 +65,15 @@ class Login extends MY_Controller
     public function verify()
     {
         // Load App info
-        $this->_app = $this->_app_info();
-        // Check session login
+        $this->_app = $this->getAppInfo();
+        $this->checkWebLoginToken();
+        $this->data['app'] = $this->_app;
+        $sessionToken = $this->session->userdata('humanId__sessionToken');
         $remaining = $this->input->post('remaining', TRUE);
         $remaining = ($remaining == '') ? 60 : intval($remaining);
-        $webLoginToken = $this->session->userdata('humanId__webLoginToken');
         if ($remaining <= 0) {
             $this->init_logs(array('error' => $this->lg->error->verify));
-            redirect(site_url('login?a=' . $this->_app['id'] . '&t=' . $webLoginToken . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->source));
+            redirect(site_url('login?a=' . $this->_app->id . '&t=' . $this->session->userdata('humanId__sessionToken') . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->source));
         }
         $modal = $this->session->flashdata('modal');
         if ($modal) {
@@ -131,7 +85,10 @@ class Login extends MY_Controller
         }
         $success = 0;
         $login = $this->session->userdata('humanId__phone');
-        $login['token'] = $webLoginToken;
+        $login['token'] = $sessionToken;
+        $this->data['row'] = $login;
+        $this->data['display_phone'] = $this->_display_phone($login['phone']);
+
         $this->form_validation->set_rules('code_1', 'Code', 'required|numeric', array('required' => $this->lg->form->codeRequired, 'numeric' => $this->lg->form->codeNumeric));
         $this->form_validation->set_rules('code_2', 'Code', 'required|numeric', array('required' => $this->lg->form->codeRequired, 'numeric' => $this->lg->form->codeNumeric));
         $this->form_validation->set_rules('code_3', 'Code', 'required|numeric', array('required' => $this->lg->form->codeRequired, 'numeric' => $this->lg->form->codeNumeric));
@@ -144,19 +101,18 @@ class Login extends MY_Controller
             $otp_code = $code_1 . $code_2 . $code_3 . $code_4;
 
             // Verify the otp code
-            $fromRequestOtp = $this->session->userdata('humanId__requestOtp');
-            $sessionToken = $fromRequestOtp->session->token;
+            $requestOtpLogin = $this->session->userdata('humanId__requestOtpLogin');
+            $token = $requestOtpLogin->session->token;
             $login = $this->session->userdata('humanId__phone');
-            $result = $this->humanid->userLogin($login['dialcode'], $login['phone'], $otp_code, $sessionToken, $this->source);
-            if ($result->success) {
+            $response = $this->humanid->userLogin($login['dialcode'], $login['phone'], $otp_code, $token, $this->source);
+            if ($response->success) {
                 $success = 1;
-                $this->session->unset_userdata(['humanid_login']);
                 $this->session->set_userdata(['humanId__phone' => [
                     'phone' => $login['phone'],
                     'dialcode' => $login['dialcode'],
                 ]]);
-                $data = $result->data;
-                $resultVerifyData = [
+                $data = $response->data;
+                $resultVerifyData = (object)[
                     'exchangeToken' => $data->exchangeToken,
                     'redirectUrl' => $data->redirectUrl,
                     'expiredAt' => $data->expiredAt,
@@ -173,24 +129,35 @@ class Login extends MY_Controller
 
                 redirect('redirect_app');
             } else {
-                if ($result->code == 'ERR_13') {
-                    $this->init_logs(array('error' => 'ERR_13 - ' . $result->message));
-                    redirect(site_url('login?a=' . $this->_app['id'] . '&t=' . $webLoginToken . '&lang=' . $this->lg->id . "&s=" . $this->source));
-                }
-                if ($result->message == "jwt expired") {
-                    $modal = (object)array(
+                if ($response->code == 'ERR_11') {
+                    $modal = (object) [
                         'title' => $this->lg->errorPage,
-                        'code' => $result->code,
+                        'code' => $response->code,
+                        'message' => $this->lg->error->sessionExpired,
+                        'url' => site_url('login?a=' . $this->_app->id . '&t=' . $sessionToken . '&lang=' . $this->lg->id . "&s=" . $this->source)
+                    ];
+                    $this->session->set_flashdata('modal', $modal);
+                    $this->session->set_flashdata('error_message', $this->lg->error->sessionExpired);
+                    redirect(site_url('error'));
+                }
+                if ($response->code == 'ERR_13') {
+                    $this->init_logs(array('error' => 'ERR_13 - ' . $response->message));
+                    redirect(site_url('login?a=' . $this->_app->id . '&t=' . $sessionToken . '&lang=' . $this->lg->id . "&s=" . $this->source));
+                }
+                if ($response->message == "jwt expired") {
+                    $modal = (object) [
+                        'title' => $this->lg->errorPage,
+                        'code' => $response->code,
                         'message' => $this->lg->error->tokenExpired,
                         'url' => site_url('demo')
-                    );
+                    ];
                     $this->session->set_flashdata('modal', $modal);
                     $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
                     redirect(site_url('error'));
                 }
-                $this->data['error_message'] = $result['message'];
+
+                $this->data['error_message'] = $response->message;
             }
-            $this->data['error_message'] = $this->lg->error->try;
         } else {
             $this->_first_error_msg();
         }
@@ -198,10 +165,7 @@ class Login extends MY_Controller
             $this->init_logs(array('error' => $this->data['error_message']));
         }
         $failAttemptLimit = ($success) ? 5 : $remaining;
-        $this->data['row'] = $login;
         $this->data['success'] = $success;
-        $this->data['display_phone'] = $this->_display_phone($login['phone']);
-        $this->data['app'] = $this->_app;
         $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
         $this->scripts('humanid.formLoginVeriy(' . $success . ',' . $failAttemptLimit . ');', 'embed');
         $this->render();
@@ -209,7 +173,7 @@ class Login extends MY_Controller
 
     public function redirect_app()
     {
-        $this->_app = $this->_app_info();
+        $this->_app = $this->getAppInfo();
         $this->data['app'] = $this->_app;
         // Handle from Recovery Account
         $isRecovery = $this->session->has_userdata('humanId__verifyOtpRecovery');
@@ -249,7 +213,7 @@ class Login extends MY_Controller
         // Handle from Login
         $userLogin = $this->session->userdata('humanId__userLogin');
         if (!isset($userLogin['redirectUrl'])) {
-            $this->session->unset_userdata('humanId__webLoginToken');
+            $this->session->unset_userdata('humanId__sessionToken');
             redirect($this->data['app']['redirectUrlFail']);
         }
         $this->data['redirectUrl'] = $userLogin['redirectUrl'];
@@ -263,7 +227,7 @@ class Login extends MY_Controller
 
     public function resend()
     {
-        $this->_app = $this->_app_info();
+        $this->_app = $this->getAppInfo();
         $login = $this->_login();
         $token = $this->_token($login['token']);
 
@@ -296,7 +260,7 @@ class Login extends MY_Controller
             $error_message = $this->lg->error->try;
         }
         $this->session->set_flashdata('error_message', $error_message);
-        redirect(site_url('login/verify?a=' . $this->_app['id'] . '&t=' . $token . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->source));
+        redirect(site_url('login/verify?a=' . $this->_app->id . '&t=' . $token . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->source));
     }
 
     private function _display_phone($phone = 0, $text = " ")
@@ -320,15 +284,6 @@ class Login extends MY_Controller
         return $phone;
     }
 
-    private function _first_error_msg()
-    {
-        $error = validation_errors();
-        $error = preg_split('/\r\n|\r|\n/', $error);
-        if (count($error) > 0 && !empty($error[0])) {
-            $this->data['error_message'] = $error[0];
-        }
-    }
-
     private function _login()
     {
         $login = $this->session->userdata('humanid_login');
@@ -347,38 +302,6 @@ class Login extends MY_Controller
             $this->session->set_flashdata('modal', $modal);
             $this->session->set_flashdata('error_message', $message);
             redirect(site_url('error'));
-        }
-        return null;
-    }
-
-    private function _app_info($new_session = FALSE)
-    {
-        $app = $this->session->userdata('humanid_app');
-        if (!$new_session && $app && !empty($app)) {
-            return $app;
-        } else {
-            $appId = $this->input->get('a', TRUE);
-            if ($appId) {
-                $res = $this->humanid->app_info($appId, $this->source);
-                if ($res['send']) {
-                    $result = $res['result'];
-                    if ($result['success']) {
-                        $app = $res['result']['data']['app'];
-                        $app['id'] = $appId;
-                        $this->session->set_userdata(array('humanid_app' => $app));
-                        return $app;
-                    } else {
-                        $this->session->set_flashdata('error_message', $result['message']);
-                        redirect(site_url('error'));
-                    }
-                } else {
-                    $this->session->set_flashdata('error_message', $this->lg->error->try);
-                    redirect(site_url('error'));
-                }
-            } else {
-                $this->session->set_flashdata('error_message', $this->lg->error->appId);
-                redirect(site_url('error'));
-            }
         }
         return null;
     }
@@ -471,5 +394,32 @@ class Login extends MY_Controller
         }
 
         return null;
+    }
+
+    private function handleErrorRequestOTPLogin($response)
+    {
+        $code = $response->code;
+        $modal = (object) [
+            'title' => $this->lg->errorPage,
+            'code' => $code ?? '',
+            'message' => $response->message ?? '',
+            'url' => site_url('login?a=' . $this->_app->id . '&t=' . $this->session->userdata('humanId__sessionToken') . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->source)
+        ];
+
+        if ($response->message == "jwt expired") {
+            $modal = (object)array(
+                'title' => $this->lg->errorPage,
+                'code' => $response->code,
+                'message' => $this->lg->error->tokenExpired,
+                'url' => $this->_app->redirectUrlFail ?? site_url('demo'),
+            );
+            $this->session->set_flashdata('modal', $modal);
+            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+        }
+
+        $this->session->set_flashdata('modal', $modal);
+        $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+        $redirectUrl = site_url('error');
+        redirect($redirectUrl);
     }
 }

@@ -60,7 +60,9 @@
                         id="close-popup" style="margin-bottom: 30px;">
                     login with new account
                 </a>
-                <a href="<?php echo $_SESSION['humanid_app']['redirectUrlFail'] ?>" style="display: block;padding-bottom: 15px;" data-close="modal-cannot-recovery">Cancel Login </a>
+                <a href="<?php echo $app->redirectUrlFail; ?>" style="display: block;padding-bottom: 15px;" data-close="modal-cannot-recovery">
+                    Cancel Login
+                </a>
             </div>
         </div>
     </div>

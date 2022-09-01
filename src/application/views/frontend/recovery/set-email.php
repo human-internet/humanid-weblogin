@@ -1,7 +1,7 @@
 <form method="post" action="<?php echo base_url("recovery/confirmation")?>">
     <div class="humanid-logo">
         <div class="humanid-logo__placement">
-            <img src="<?php echo $app['logoUrls']['thumbnail']; ?>" alt="<?php echo $app['name']; ?>">
+            <img src="<?php echo $app->logoUrls->thumbnail; ?>" alt="<?php echo $app->name; ?>">
         </div>
     </div>
 
@@ -23,6 +23,12 @@
         </div>
     </div>
 
+    <div class="humanid-content-text">
+        <div class="humanid-text-info humanid-text-info-danger">
+            <?php if(isset($error_message)):?><p><?php echo $error_message;?></p><?php endif;?>
+        </div>
+    </div>
+
     <div class="humanid-form-placement">
         <div class="humanid-form-placement__email-form">
             <div class="humanid-form-placement__email-main">
@@ -36,9 +42,8 @@
         <div class="humanid-form-placement__email-form">
             <div class="humanid-form-placement__email-main">
                 <div class="humanid-button humanid-button-vertical">
-                    <!-- TODO Changes-->
-                    <button class="btn-humanid btn-humanid-primary"
-                            type="submit">Save
+                    <button class="btn-humanid btn-humanid-primary" type="submit">
+                        Save
                     </button>
                 </div>
             </div>

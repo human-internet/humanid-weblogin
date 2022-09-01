@@ -37,6 +37,28 @@ class Humanid
         ]);
     }
 
+    public function getAppInfo($appId, $source = 'w')
+    {
+        $uri = $this->url . "web-login/apps/$appId";
+        try {
+            $opt = [
+                'headers' => [
+                    'client-id' => $this->webLoginClientId,
+                    'client-secret' => $this->webLoginClientSecret,
+                ],
+                'query' => [
+                    's' => $source
+                ]
+            ];
+            $response = $this->client->get($uri, $opt);
+            $response = $response->getBody()->getContents();
+        } catch (RequestException $e) {
+            $response = $e->getResponse()->getBody()->getContents();
+        }
+
+        return json_decode($response);
+    }
+
     public function app_info($appId, $source = "w")
     {
         $res = array(
@@ -132,7 +154,7 @@ class Humanid
         return $this->internalWebLogin($url, $body, $param);
     }
 
-    private function internalWebLogin($url, $body, $queryParam = [])
+    private function internalWebLogin($url, $body = [], $queryParam = [])
     {
         try {
             $opt = [
