@@ -17,7 +17,6 @@ class MY_Controller extends AppMaster
         parent::__construct(array(
             'folder' => 'frontend'
         ));
-        $this->load->library('session');
 
         $lang = $this->input->get('lang', TRUE) ?? 'en_US';
         $lang = $lang== 'en' ? 'en_US' : $lang;

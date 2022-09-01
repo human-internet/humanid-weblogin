@@ -11,7 +11,7 @@
     </div>
 
     <div class="humanid-content-text humanid-fw-normal">
-        <p> Please enter the 4 digit code you received as SMS to <strong><?php echo $phone ?? ''; ?></strong> </p>
+        <p> Please enter the 4 digit code you received as SMS to <strong>+<?php echo $dialcode ?? ''; ?><?php echo $phone ?? ''; ?></strong> </p>
     </div>
 
     <div class="humanid-content-text humanid-fz-18">
@@ -33,8 +33,9 @@
                 <?php echo $this->session->flashdata('error_otp');?>
             </div>
         <?php } ?>
-        <span class="timer-text verify-area timer"
-              style="display: none;"><?php echo str_replace("{TIME}", '<strong>00:60</strong>', $lang->text->resend); ?></span>
+        <span class="timer-text verify-area timer" style="display: none;">
+            <?php echo str_replace("{TIME}", '<strong>00:60</strong>', $lang->text->resend); ?>
+        </span>
         <input type="hidden" name="remaining" id="remaining">
     </div>
     <div class="humanid-form-placement__otp-resend humanid-content-link">

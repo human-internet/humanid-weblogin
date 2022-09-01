@@ -190,7 +190,7 @@ class Login extends BaseController
             $data = $recoveryLogin->data;
             $verify = $this->humanid->userExchange($data->exchangeToken);
             if (!$verify->success) {
-                redirect($this->data['app']['redirectUrlFail']);
+                redirect($this->_app->redirectUrlFail);
             }
             $this->session->set_userdata('humanId__userLogin', $data);
             if ($data->user->isActive === false) {
@@ -214,7 +214,7 @@ class Login extends BaseController
         $userLogin = $this->session->userdata('humanId__userLogin');
         if (!isset($userLogin['redirectUrl'])) {
             $this->session->unset_userdata('humanId__sessionToken');
-            redirect($this->data['app']['redirectUrlFail']);
+            redirect($this->_app->redirectUrlFail);
         }
         $this->data['redirectUrl'] = $userLogin['redirectUrl'];
 
@@ -228,8 +228,8 @@ class Login extends BaseController
     public function resend()
     {
         $this->_app = $this->getAppInfo();
-        $login = $this->_login();
-        $token = $this->_token($login['token']);
+        $token = $this->session->userdata('humanId__sessionToken');
+        $login = $this->session->userdata('humanId__phone');
 
         $error_message = '';
         $res = $this->humanid->request_otp($login['dialcode'], $login['phone'], $token, $this->source);
@@ -246,7 +246,7 @@ class Login extends BaseController
                 );
                 $this->session->set_userdata($data);
             } else {
-                $error_url = $this->_app['redirectUrlFail'] . '?code=' . $result['code'] . '&message=' . urlencode($result['message']);
+                $error_url = $this->_app->redirectUrlFail . '?code=' . $result['code'] . '&message=' . urlencode($result['message']);
                 $modal = (object)array(
                     'title' => $this->lg->errorPage,
                     'code' => $result['code'],
@@ -292,7 +292,7 @@ class Login extends BaseController
         } else {
             $code = 'WSDK_01';
             $message = $this->lg->error->sessionExpired;
-            $error_url = $this->_app['redirectUrlFail'] . '?code=' . $code . '&message=' . urlencode($message);
+            $error_url = $this->_app->redirectUrlFail . '?code=' . $code . '&message=' . urlencode($message);
             $modal = (object)array(
                 'title' => $this->lg->errorPage,
                 'code' => $code,
@@ -350,7 +350,7 @@ class Login extends BaseController
                 'title' => $this->lg->errorPage,
                 'code' => $code ?? '',
                 'message' => $this->lg->error->tokenExpired,
-                'url' => $this->data['app']['redirectUrlFail'] ?? site_url('demo')
+                'url' => $this->data->redirectUrlFail ?? site_url('demo')
             ];
             $this->session->unset_userdata('humanId__phone');
             $this->session->set_flashdata('modal', $modal);

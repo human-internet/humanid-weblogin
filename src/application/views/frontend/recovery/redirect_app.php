@@ -14,7 +14,7 @@
 
     <div class="humanid-button humanid-button-vertical">
         <button class="btn-humanid btn-humanid-primary directed-now" type="button"><?php echo $lang->redirect;?></button>
-        <button class="btn-humanid btn-humanid-secondary" type="button"><?php echo str_replace(array("{TIMER}","{APPNAME}"),array('<span class="timer-text"></span>',$app->name,$lang->text->timer);?></button>
+        <button class="btn-humanid btn-humanid-secondary" type="button"><?php echo str_replace(array("{TIMER}","{APPNAME}"),array('<span class="timer-text"></span>',$app->name), $lang->text->timer);?></button>
         <input type="hidden" class="directed-link" value="<?php echo $redirectUrl;?>">
     </div>
     <div class="humanid-content-link center">
