@@ -157,6 +157,8 @@ class Humanid
     private function internalWebLogin($url, $body = [], $queryParam = [])
     {
         try {
+            log_message('debug', "START Request: '$url' ");
+            log_message('debug', " > Request Body : ". json_encode($body));
             $opt = [
                 'headers' => [
                     'client-id' => $this->webLoginClientId,
@@ -171,7 +173,18 @@ class Humanid
             $response = $e->getResponse()->getBody()->getContents();
         }
 
-        return json_decode($response);
+        $response = json_decode($response);
+
+        $success = $response->success ? 'TRUE' : 'FALSE';
+        log_message('debug', " > Success : " . $success);
+        log_message('debug', " > Code    : ". $response->code);
+        log_message('debug', " > Message : ". $response->message);
+        if ($response->success) {
+            log_message('debug', " > Data    : ". json_encode($response->data));
+        }
+        log_message('debug', "END Request: '$url'");
+
+        return $response;
     }
 
     public function request_otp($countryCode, $phone, $token, $source = "w", $lang = 'en_US', $debug = false)

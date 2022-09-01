@@ -7,7 +7,7 @@
  */
 class BaseController extends MY_Controller
 {
-    public $_app;
+    protected $_app;
 
     function __construct()
     {
@@ -49,11 +49,9 @@ class BaseController extends MY_Controller
         }
         $appInfo = $result->data->app;
         $appInfo->id = $appId;
-        $token = $this->input->get('t', TRUE);
         // Save App Info to session
+        log_message('debug', ' > set_userdata humanId__appInfo: '. json_encode($appInfo));
         $this->session->set_userdata('humanId__appInfo', $appInfo);
-        // Save token to session
-        $this->session->set_userdata('humanId__sessionToken', $token);
     }
 
     protected function checkUserLogin()
