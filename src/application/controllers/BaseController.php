@@ -16,16 +16,6 @@ class BaseController extends MY_Controller
         $this->load->library('form_validation');
     }
 
-    protected function checkWebLoginToken()
-    {
-        // Get from query param
-        $token = $this->input->get('t', TRUE);
-        $hasLoginToken = $this->session->has_userdata('humanId__sessionToken');
-        if (!$hasLoginToken !== $token) {
-            $this->getAppInfo(true);
-        }
-    }
-
     protected function getAppInfo($new = false)
     {
         $hasAppInfo = $this->session->has_userdata('humanId__appInfo');
