@@ -8,6 +8,8 @@ class Login extends BaseController
     public function index()
     {
         $this->_app = $this->getAppInfo(true);
+        $webLoginToken = $this->input->get('t', true);
+        $this->session->set_userdata('humanId__loginRequestOtpToken', $webLoginToken);
         $this->form_validation->set_rules('phone', $this->lg->phone, 'required|numeric|min_length[4]|max_length[14]', array(
             'required' => $this->lg->form->phoneRequired,
             'numeric' => $this->lg->form->phoneNumeric,
@@ -23,8 +25,6 @@ class Login extends BaseController
         $dialcode = $this->input->post('dialcode', TRUE);
 
         if ($this->form_validation->run() == TRUE) {
-            $webLoginToken = $this->input->get('t');
-            $this->session->set_userdata('humanId__loginRequestOtpToken', $webLoginToken);
             // Request OTP
             $response = $this->humanid->userRequestOTP($dialcode, $phone, $webLoginToken, $this->source, $this->lg->id);
             if (!$response->success) {
@@ -67,7 +67,6 @@ class Login extends BaseController
     {
         // Load App info
         $this->_app = $this->getAppInfo();
-        $this->checkWebLoginToken();
         $this->data['app'] = $this->_app;
         $loginToken = $this->session->userdata('humanId__loginRequestOtpToken');
         $sessionToken = $this->session->userdata('humanId__requestOtpLogin');

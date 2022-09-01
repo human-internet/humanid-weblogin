@@ -10,9 +10,8 @@ class Recovery extends BaseController
 
     public function new_number()
     {
-        $webLoginToken = $this->session->userdata('humanId__sessionToken');
+        $this->_app = $this->getAppInfo();
         $this->scripts('humanid.formLogin("", ' . $this->pc->code_js . ');', 'embed');
-
         if (isset($_POST['dialcode'])) {
             $this->form_validation->set_rules('phone', $this->lg->phone, 'required|numeric|min_length[4]|max_length[14]', array(
                 'required' => $this->lg->form->phoneRequired,
@@ -38,6 +37,7 @@ class Recovery extends BaseController
                 'phone' => $phone
             ]);
 
+            $webLoginToken = $this->session->userdata('humanId__loginRequestOtpToken');
             $data = [
                 'phone' => "+{$dialcode}{$phone}",
                 'token' => $webLoginToken,
@@ -175,6 +175,7 @@ class Recovery extends BaseController
                     'source' => 'w',
                 ]);
                 $this->session->set_userdata('humanId__userLogin', $recoveryLogin->data);
+                $redirectUrl = site_url('recovery/verify_email');
             }
 
             // Redirect
@@ -203,7 +204,7 @@ class Recovery extends BaseController
 
     public function request_otp()
     {
-        $webLoginToken = $this->session->userdata('humanId__sessionToken');
+        $webLoginToken = $this->session->userdata('humanId__loginRequestOtpToken');
         $sessionPhone = $this->session->userdata('humanId__phone');
         $data = [
             'phone' => "+{$sessionPhone['dialcode']}{$sessionPhone['phone']}",
@@ -248,10 +249,7 @@ class Recovery extends BaseController
 
     public function verify_email_process()
     {
-        $phone = $this->input->post('phone', true);
-        $dialcode = $this->input->post('dialcode', true);
-        $email = $this->input->post('email', true);
-
+        // Validate
         $this->form_validation->set_rules('email', 'email', 'required|valid_email');
         $this->form_validation->set_rules('phone', $this->lg->phone, 'required|numeric|min_length[4]|max_length[14]', array(
             'required' => $this->lg->form->phoneRequired,
@@ -259,8 +257,6 @@ class Recovery extends BaseController
             'min_length' => $this->lg->form->phoneMin,
             'max_length' => $this->lg->form->phoneMax
         ));
-
-        // Validate Email
         if ($this->form_validation->run() === false) {
             $this->_first_error_msg();
             if (isset($this->data['error_message'])) {
@@ -268,21 +264,29 @@ class Recovery extends BaseController
             }
             redirect(site_url('recovery/verify_email'));
         }
+
         $redirectUrl = 'recovery/verify_email_code';
+        $phone = $this->input->post('phone', true);
+        $dialcode = $this->input->post('dialcode', true);
+        $email = $this->input->post('email', true);
 
         $recoveryVerifySession = $this->session->userdata('humanId__verifyOtpRecovery');
-        $phone = "+{$dialcode}{$phone}";
 
+        $this->session->set_userdata('humanId__otpEmail', [
+            'email' => $email,
+            'phone' => $phone,
+            'dialcode' => $dialcode
+        ]);
         $data = [
             'recoveryEmail' => $email,
-            'oldPhone' => $phone,
+            'oldPhone' => "+{$dialcode}{$phone}",
             'token' => $recoveryVerifySession->token,
             'source' => 'w',
         ];
 
         $userLogin = $this->session->userdata('humanId__userLogin');
         // Check account is inactive then login with exchange token
-        if ($userLogin !== null && $userLogin->isActive === false) {
+        if ($userLogin !== null && $userLogin->user->isActive === false) {
             $loginRecoveryResult = $this->humanid->accountLoginRecovery([
                 'exchangeToken' => $userLogin->exchangeToken,
                 'source' => 'w',
@@ -325,19 +329,19 @@ class Recovery extends BaseController
         if (isset($code) && $code[count($code) - 1] !== '') {
             $session = $this->session->userdata('humanId__userLogin');
             $verifyOtpRecovery = $this->session->userdata('humanId__verifyOtpRecovery');
-            $redirectUrl = site_url('recovery/change_number_success');
             $data = [
                 'otpCode' => implode('', $code),
                 'token' => $verifyOtpRecovery->token,
                 'source' => "w"
             ];
-            $user = $session['user'];
+            $user = $session->user;
             if ($user->isActive === false) {
                 $loginRecovery = $this->session->userdata('humanId__loginRecovery');
                 $data['token'] = $loginRecovery->token;
             }
             $response = $this->humanid->verifyOtpTransferAccount($data);
             if (!$response->success) {
+                $redirectUrl = site_url('error');
                 $code = $response->code;
                 $modal = (object) array(
                     'title' => $this->lg->errorPage,
@@ -350,74 +354,71 @@ class Recovery extends BaseController
                     $modal->url = site_url('error');
                 }
 
+                if ($response->code == 'ERR_5') {
+                    $this->session->set_flashdata('error_otp', 'Incorrect code. Please try again.');
+                    $redirectUrl = 'recovery/verify_email_code';
+                }
+
                 $this->session->set_flashdata('modal', $modal);
                 $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-                $redirectUrl = site_url('error');
-            } else {
-                $this->session->set_userdata(['success_new_recovery_account' => $response->data]);
+                redirect($redirectUrl);
             }
 
-            if ($response->code == 'ERR_5') {
-                $this->session->set_flashdata('error_otp', 'Incorrect code. Please try again.');
-                $redirectUrl = 'recovery/verify_email_code';
-            }
+            $this->session->set_userdata('humanId__verifyTransferAccount', $response->data);
 
-            redirect($redirectUrl);
+            redirect(site_url('recovery/change_number_success'));
         }
 
-        $otpLength = $this->session->userdata('humanId__otpTransferAccount');
+        $otpTransferAccount = $this->session->userdata('humanId__otpTransferAccount');
+        $otpConfig = $otpTransferAccount->config;
         $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
         $this->data['app'] = $this->_app;
-        $this->data['otpLength'] = $otpLength;
+        $this->data['otpLength'] = $otpConfig->otpCodeLength;
         $this->scripts('humanid.formLoginVeriy("", "60");', 'embed');
         $this->render(true, 'recovery/verify-email-code');
     }
 
     public function request_email()
     {
-        $phone = $this->session->userdata('humanid_email_otp')->phone;
-        $email = $this->session->userdata('humanid_email_otp')->email;
+        $sessionPhone = $this->session->userdata('humanId__otpEmail');
+        $dialcode = $sessionPhone['dialcode'];
+
+        $phone = $sessionPhone['phone'];
+        $email = $sessionPhone['email'];
+        $recoveryVerifySession = $this->session->userdata('humanId__verifyOtpRecovery');
+
         $redirectUrl = 'recovery/verify_email_code';
         $data = [
-            "recoveryEmail" => $email,
-            "oldPhone" => $phone,
-            "token" => $this->session->userdata('humanid_verification_new_phone')->token,
-            "source" => "w"
+            'recoveryEmail' => $email,
+            'oldPhone' => "+{$dialcode}{$phone}",
+            'token' => $recoveryVerifySession->token,
+            'source' => 'w'
         ];
+        // Request OTP Transfer Account
         $response = $this->humanid->requestOtpTransferAccount($data);
-        if (!$response->success) {
-            $code = $response->code;
-            $modal = (object) array(
-                'title' => $this->lg->errorPage,
-                'code' => $code ?? '',
-                'message' => $response->message ?? '',
-                'url' => site_url($redirectUrl)
-            );
-
-            if ($response->code == 500) {
-                $modal->url = site_url('error');
-            }
-
-            $this->session->set_flashdata('modal', $modal);
-            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-            $redirectUrl = site_url('error');
-        } else {
-            $response->data->phone = $phone;
-            $response->data->email = $email;
-            $this->session->set_userdata(['humanid_email_otp' => $response->data]);
+        if ($response->code === self::WRONG_NUMBER || $response->code === self::WRONG_EMAIL) {
+            $this->session->set_flashdata('email_or_phone_not_found', true);
+            redirect(site_url('recovery/verify_email'));
         }
+        if (!$response->success) {
+            $this->handleErrorRequestOtpTransferAccount($response);
+        }
+
+        $this->session->set_userdata('humanId__otpTransferAccount', $response->data);
+
         redirect($redirectUrl);
     }
 
     public function change_number_success()
     {
-        if ($this->input->post('redirect')) {
-            session_destroy();
-            redirect($this->session->userdata('success_new_recovery_account')->redirectUrl);
-        }
+        $transferAccountData = $this->session->userdata('humanId__verifyTransferAccount');
         $this->_app = $this->getAppInfo();
+        $this->data['app'] = $this->_app;
+        if ($this->input->post('redirect')) {
+            redirect($transferAccountData->redirectUrl);
+        }
+        $this->data['appName'] = $transferAccountData->app->name;
         $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
-        $this->data['appName'] = $this->session->userdata('success_new_recovery_account')->app->name;
         $this->render(true, 'recovery/change-number-success');
     }
 
@@ -531,23 +532,22 @@ class Recovery extends BaseController
         redirect($redirectUrl);
     }
 
-    private function handleErrorRequestOtp($requestOtpResponse)
+    private function handleErrorRequestOtp($response)
     {
-        $code = $requestOtpResponse->code;
+        $code = $response->code;
         $modal = (object) [
             'title' => $this->lg->errorPage,
             'code' => $code ?? '',
-            'message' => $requestOtpResponse->message ?? '',
+            'message' => $response->message ?? '',
             'url' => site_url('recovery/new_number')
         ];
 
-        if ($requestOtpResponse->code == "ERR_10") {
-            $this->data['error_message'] = $requestOtpResponse->message;
-            $this->render(true, 'recovery/new-number');
-            return;
+
+        if ($response->code == "ERR_10") {
+            $this->data['error_message'] = $response->message;
         }
 
-        if ($requestOtpResponse->message == "jwt expired") {
+        if ($response->message == "jwt expired") {
             $modal = (object) [
                 'title' => $this->lg->errorPage,
                 'code' => $code ?? '',
