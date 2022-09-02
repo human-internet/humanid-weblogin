@@ -415,12 +415,7 @@ class Recovery extends BaseController
         $this->_app = $this->getAppInfo();
         $this->data['app'] = $this->_app;
         if ($this->input->post('redirect')) {
-            $result = $this->humanid->userExchange($transferAccountData->exchangeToken);
-            if (!$result->success) {
-                $redirectUrl = $this->_app->redirectUrlFail;
-            } else {
-                $redirectUrl = $transferAccountData->redirectUrl;
-            }
+            $redirectUrl = $transferAccountData->redirectUrl;
             session_destroy();
             redirect($redirectUrl);
         }
