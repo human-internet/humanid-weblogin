@@ -9,6 +9,7 @@ class Demo extends MY_Controller
     function __construct()
     {
         parent::__construct();
+        $this->load->library('humanid');
     }
 
     public function success()
