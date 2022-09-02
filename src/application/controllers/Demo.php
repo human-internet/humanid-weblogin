@@ -15,7 +15,7 @@ class Demo extends MY_Controller
     public function success()
     {
         $exchangeToken = $this->input->get('et');
-        $response = $this->humanid->exchange($exchangeToken);
+        $response = $this->humanid->userExchange($exchangeToken);
         if (!$response->success) {
             redirect(base_url('demo'));
         }
