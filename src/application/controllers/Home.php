@@ -12,7 +12,6 @@ class Home extends BaseController
 
     public function error()
     {
-        $this->_app = $this->getAppInfo();
         $modal = $this->session->flashdata('modal');
         if ($modal) {
             $this->data['modal'] = $modal;
@@ -22,6 +21,12 @@ class Home extends BaseController
             $this->data['error_message'] = $error_message;
         }
 
+        if ($this->session->userdata('humanId__appInfo') === null) {
+            $this->render();
+            return;
+        }
+
+        $this->_app = $this->getAppInfo();
         if (empty($modal) && empty($error_message)) {
             redirect($this->_app->redirectUrlFail);
         }

@@ -28,7 +28,7 @@ class BaseController extends MY_Controller
 
     private function getApp() {
         $appId = $this->input->get('a', TRUE);
-        if (!$appId) {
+        if ($appId === null) {
             $this->session->set_flashdata('error_message', $this->lg->error->appId);
             redirect(site_url('error'));
         }

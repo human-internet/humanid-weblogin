@@ -85,16 +85,18 @@ class Recovery extends BaseController
     public function confirmation()
     {
         $this->_app = $this->getAppInfo();
+        $this->checkUserLogin();
         $this->data['app'] = $this->_app;
         $this->data['email'] = $this->input->post('email');
         $this->form_validation->set_rules('email', 'email', 'required|valid_email');
         if ($this->form_validation->run() == false) {
             $this->_first_error_msg();
-            $this->session->set_flashdata('error_message', $this->data['error_message']);
+            if (isset($this->data['error_message'])) {
+                $this->session->set_flashdata('error_message', $this->data['error_message']);
+            }
             redirect(base_url('recovery/create'));
         }
         // Set email recovery flow
-
         $this->data['redirectSetRecoveryEmail'] = base_url('recovery/create');
 
         $this->render(true, 'recovery/confirmation');
@@ -105,40 +107,18 @@ class Recovery extends BaseController
         $this->_app = $this->getAppInfo();
         $this->checkUserLogin();
         $userLogin = $this->session->userdata('humanId__userLogin');
-        $redirectUrl = $userLogin->redirectUrl;
         $data = [
             'recoveryEmail' => $this->input->post('email'),
             'exchangeToken' => $userLogin->exchangeToken,
             'source' => 'w',
         ];
-        $setEmailRecovery = $this->humanid->setEmailRecovery($data);
-        if (!$setEmailRecovery->success) {
-            $code = $setEmailRecovery->code;
-            $modal = (object) array(
-                'title' => $this->lg->errorPage,
-                'code' => $code ?? '',
-                'message' => $setEmailRecovery->message ?? '',
-                'url' => $this->_app->redirectUrlFail ?? site_url('demo'),
-            );
-            $this->session->set_flashdata('modal', $modal);
-            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-            redirect(site_url('error'));
-        }
-        // Verify exchange token
-        $response = $this->humanid->userExchange($setEmailRecovery->data->exchangeToken);
+        $response = $this->humanid->setEmailRecovery($data);
         if (!$response->success) {
-            $modal = (object)array(
-                'title' => $this->lg->errorPage,
-                'code' => $response->code,
-                'message' => $this->lg->error->tokenExpired,
-                'url' => $this->_app->redirectUrlFail ?? site_url('demo'),
-            );
-            $this->session->set_flashdata('modal', $modal);
-            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-            redirect(site_url('error'));
+            $this->handleErrorSetEmailRecovery($response);
         }
-
-        redirect($redirectUrl);
+        $this->session->unset_userdata('humanId__requestOtpRecovery');
+        $this->session->unset_userdata('humanId__verifyOtpRecovery');
+        redirect($response->data->redirectUrl);
     }
 
     public function verify_otp()
@@ -598,5 +578,33 @@ class Recovery extends BaseController
         $this->session->set_flashdata('modal', $modal);
         $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
         redirect(site_url('error'));
+    }
+
+    private function handleErrorSetEmailRecovery($response)
+    {
+        $code = $response->code;
+        $redirectUrl = site_url('error');
+        $modal = (object) [
+            'title' => $this->lg->errorPage,
+            'code' => $code ?? '',
+            'message' => $response->message ?? '',
+            'url' => $this->_app->redirectUrlFail,
+        ];
+
+        if ($response->code === "500") {
+            $modal->url = site_url('error');
+        }
+
+        if ($response->message === "jwt expired") {
+            $modal->message = $this->lg->error->tokenExpired;
+            $this->session->unset_userdata('humanId__appInfo');
+            $redirectUrl = site_url('error');
+        }
+
+        $this->session->unset_userdata('humanId__appInfo');
+        $this->session->unset_userdata('humanId__phone');
+        $this->session->set_flashdata('modal', $modal);
+        $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+        redirect($redirectUrl);
     }
 }

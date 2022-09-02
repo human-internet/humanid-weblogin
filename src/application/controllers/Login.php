@@ -189,10 +189,6 @@ class Login extends BaseController
                 $this->handleErrorRecoveryLogin($recoveryLogin);
             }
             $data = $recoveryLogin->data;
-            $verify = $this->humanid->userExchange($data->exchangeToken);
-            if (!$verify->success) {
-                redirect($this->_app->redirectUrlFail);
-            }
             $this->session->set_userdata('humanId__userLogin', $data);
             if ($data->user->isActive === false) {
                 redirect(base_url('recovery-exist/instead-login'));
