@@ -57,6 +57,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['redirect_app'] = 'login/redirect_app';
 $route['confirmation-login'] = 'recovery/confirmation_login';
 $route['verify'] = 'login/verify';
+$route['redirect_now'] = 'login/redirect_now';
 
 $route['recovery/instead-login'] = 'recovery_exist/instead_login';
 $route['recovery-exist/recovery_process'] = 'recovery_exist/recovery_process';
