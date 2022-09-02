@@ -198,11 +198,8 @@ class Login extends BaseController
             }
 
             $this->data['redirectUrl'] = $data->redirectUrl;
-
-            $success = 1;
-            $failAttemptLimit = 5;
             $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
-            $this->scripts('humanid.formLoginVeriy(' . $success . ',' . $failAttemptLimit . ');', 'embed');
+            $this->scripts('humanid.countdownFormSubmit(5, ".timer-text", "#redirect-app");', 'embed');
             $this->render(true, 'recovery/redirect_app');
             return;
         }
@@ -213,14 +210,22 @@ class Login extends BaseController
             $this->session->unset_userdata('humanId__sessionToken');
             redirect($this->_app->redirectUrlFail);
         }
+
         $this->data['redirectUrl'] = $userLogin->redirectUrl;
-        $this->session->unset_userdata('humanId__phone');
-        $this->session->unset_userdata('humanId__appInfo');
-        $success = 1;
-        $failAttemptLimit = 5;
         $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
-        $this->scripts('humanid.formLoginVeriy(' . $success . ',' . $failAttemptLimit . ');', 'embed');
+        $this->scripts('humanid.countdownFormSubmit(5, ".timer-text", "#redirect-app");', 'embed');
         $this->render(true, 'recovery/redirect_app');
+    }
+
+    public function redirect_now()
+    {
+        if ($post = $this->input->post()) {
+            $this->session->unset_userdata('humanId__phone');
+            $this->session->unset_userdata('humanId__appInfo');
+            redirect($post['redirectUrl']);
+        }
+
+        redirect('redirect_app');
     }
 
     public function resend()
@@ -282,7 +287,7 @@ class Login extends BaseController
                 'title' => $this->lg->errorPage,
                 'code' => $code ?? '',
                 'message' => $this->lg->error->tokenExpired,
-                'url' => $this->data->redirectUrlFail ?? site_url('demo')
+                'url' => $this->data->redirectUrlFail ?? site_url('error')
             ];
             $this->session->unset_userdata('humanId__phone');
             $this->session->set_flashdata('modal', $modal);

@@ -274,7 +274,7 @@ class Recovery extends BaseController
                     'title' => $this->lg->errorPage,
                     'code' => $loginRecoveryResult->code,
                     'message' => $this->lg->error->tokenExpired,
-                    'url' => $this->_app->redirectUrlFail ?? site_url('demo'),
+                    'url' => $this->_app->redirectUrlFail ?? site_url('error'),
                 );
                 $this->session->set_flashdata('modal', $modal);
                 $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
@@ -468,7 +468,7 @@ class Recovery extends BaseController
                 'title' => $this->lg->errorPage,
                 'code' => $response->code,
                 'message' => $this->lg->error->tokenExpired,
-                'url' => $this->_app->redirectUrlFail ?? site_url('demo'),
+                'url' => $this->_app->redirectUrlFail ?? site_url('error'),
             );
             $this->session->unset_userdata('humanId__phone');
             $this->session->set_flashdata('modal', $modal);
@@ -533,7 +533,7 @@ class Recovery extends BaseController
                 'title' => $this->lg->errorPage,
                 'code' => $code ?? '',
                 'message' => $this->lg->error->tokenExpired,
-                'url' => $this->_app->redirectUrlFail ?? site_url('demo')
+                'url' => $this->_app->redirectUrlFail ?? site_url('error')
             ];
             $this->session->unset_userdata('humanId__phone');
             $this->session->set_flashdata('modal', $modal);
@@ -565,7 +565,7 @@ class Recovery extends BaseController
                 'title' => $this->lg->errorPage,
                 'code' => $code ?? '',
                 'message' => $this->lg->error->tokenExpired,
-                'url' => $this->_app->redirectUrlFail ?? site_url('demo')
+                'url' => $this->_app->redirectUrlFail ?? site_url('error')
             ];
             $this->session->unset_userdata('humanId__phone');
             $this->session->set_flashdata('modal', $modal);

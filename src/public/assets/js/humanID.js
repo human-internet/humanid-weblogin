@@ -1,6 +1,18 @@
 const humanid = function () {
 
   return {
+    countdownFormSubmit: function (duration, display, target) {
+      var timeleft = duration;
+      var downloadTimer = setInterval(function() {
+        if(timeleft <= 0){
+          clearInterval(downloadTimer);
+          $(target).submit();
+        } else {
+          $(display).text(timeleft);
+        }
+        timeleft -= 1;
+      }, 1000);
+    },
 
     formLogin: function (phoneNumber, priorityCountry) {
       let input = document.querySelector("#phoneDisplay");
@@ -130,13 +142,13 @@ const humanid = function () {
           }
 
           if (Number(inputs[i].getAttribute('data-id')) === inputs.length) {
-            const inputFull=[]
+            const inputFull = []
             for (let index = 0; index < inputs.length; index++) {
-              if (inputs[index].value.length>0){
+              if (inputs[index].value.length > 0) {
                 inputFull.push(true)
               }
             }
-            if (inputFull.length===inputs.length){
+            if (inputFull.length === inputs.length) {
               $('form').submit();
             }
           }
