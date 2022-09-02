@@ -155,6 +155,10 @@ class Recovery extends BaseController
                 $redirectUrl = site_url('recovery/verify_email');
             }
 
+            if ($verifyOtpResponse->data->hasAccount === true) {
+                $redirectUrl = site_url('confirmation-login');
+            }
+
             // Redirect
             redirect($redirectUrl);
         }
