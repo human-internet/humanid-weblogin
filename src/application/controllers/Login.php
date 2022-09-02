@@ -219,6 +219,7 @@ class Login extends BaseController
         }
         $this->data['redirectUrl'] = $userLogin->redirectUrl;
         $this->session->unset_userdata('humanId__phone');
+        $this->session->unset_userdata('humanId__appInfo');
         $success = 1;
         $failAttemptLimit = 5;
         $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
