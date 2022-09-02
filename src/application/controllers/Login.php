@@ -121,7 +121,7 @@ class Login extends BaseController
                 ];
                 $this->session->set_userdata('humanId__userLogin', $resultVerifyData);
                 if ($data->user->isActive === false) {
-                    redirect(base_url('recovery-exist/instead-login'));
+                    redirect(base_url('recovery/instead-login'));
                 }
 
                 if ($data->app->config->accountRecovery === true && $data->user->hasSetupRecovery === false) {
@@ -191,7 +191,7 @@ class Login extends BaseController
             $data = $recoveryLogin->data;
             $this->session->set_userdata('humanId__userLogin', $data);
             if ($data->user->isActive === false) {
-                redirect(base_url('recovery-exist/instead-login'));
+                redirect(base_url('recovery/instead-login'));
             }
             if ($data->app->config->accountRecovery === true && $data->user->hasSetupRecovery === false) {
                 redirect(base_url('recovery/create'));
@@ -311,7 +311,7 @@ class Login extends BaseController
                 'title' => $this->lg->errorPage,
                 'code' => $response->code,
                 'message' => $this->lg->error->tokenExpired,
-                'url' => $this->_app->redirectUrlFail ?? site_url('demo'),
+                'url' => $this->_app->redirectUrlFail ?? site_url('error'),
             );
             $this->session->set_flashdata('modal', $modal);
             $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);

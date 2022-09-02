@@ -18,7 +18,7 @@
     </a>
     <a href="<?php echo base_url('recovery-exist/recovery') ?>" class="btn-humanid btn-humanid-default"
        style="width: 370px; display: block;margin-bottom: 20px;">
-        Use Email recovery to LOGIN AGAIN
+        Use Email Recovery to Login Again
     </a>
 </div>
 

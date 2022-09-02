@@ -7,6 +7,9 @@
  */
 class BaseController extends MY_Controller
 {
+    protected const WRONG_NUMBER = 'ERR_33'; //User not found
+    protected const WRONG_EMAIL = 'ERR_34'; //Account Recovery has not been set-up
+
     protected $_app;
 
     function __construct()

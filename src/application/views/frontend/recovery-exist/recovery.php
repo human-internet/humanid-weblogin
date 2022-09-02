@@ -1,4 +1,4 @@
-<form action="<?php echo base_url('recovery-exist/verification')?>" method="post">
+<form action="<?php echo base_url('recovery-exist/recovery_process')?>" method="post">
     <div class="humanid-logo">
         <div class="humanid-logo__new-number">
             <img src="<?php echo base_url('assets/images/humanid-logo.svg'); ?>" alt="humanID"

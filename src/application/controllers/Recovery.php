@@ -5,9 +5,6 @@ require_once 'BaseController.php';
 
 class Recovery extends BaseController
 {
-    const WRONG_NUMBER = 'ERR_33'; //User not found
-    const WRONG_EMAIL = 'ERR_34'; //Account Recovery has not been set-up
-
     public function new_number()
     {
         $this->_app = $this->getAppInfo();
@@ -309,9 +306,10 @@ class Recovery extends BaseController
         if (isset($code) && $code[count($code) - 1] !== '') {
             $session = $this->session->userdata('humanId__userLogin');
             $verifyOtpRecovery = $this->session->userdata('humanId__verifyOtpRecovery');
+            $loginRecovery = $this->session->userdata('humanId__loginRecovery');
             $data = [
                 'otpCode' => implode('', $code),
-                'token' => $verifyOtpRecovery->token,
+                'token' => $verifyOtpRecovery->token ?? $loginRecovery->token,
                 'source' => "w"
             ];
             $user = $session->user;
