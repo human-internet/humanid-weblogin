@@ -63,61 +63,6 @@ class Recovery extends BaseController
         $this->render(true, 'recovery/new-number');
     }
 
-    public function create()
-    {
-        $this->_app = $this->getAppInfo();
-        $this->checkUserLogin();
-        $this->data['app'] = $this->_app;
-        $userLogin = $this->session->userdata('humanId__userLogin');
-        $this->data['newAccount'] = $userLogin->user->newAccount;
-        $error_message = $this->session->flashdata('error_message');
-        if ($error_message) {
-            $this->data['error_message'] = $error_message;
-        }
-
-        $this->scripts('humanid.modal()', 'embed');
-        $this->render(true, 'recovery/set-email');
-    }
-
-    public function confirmation()
-    {
-        $this->_app = $this->getAppInfo();
-        $this->checkUserLogin();
-        $this->data['app'] = $this->_app;
-        $this->data['email'] = $this->input->post('email');
-        $this->form_validation->set_rules('email', 'email', 'required|valid_email');
-        if ($this->form_validation->run() == false) {
-            $this->_first_error_msg();
-            if (isset($this->data['error_message'])) {
-                $this->session->set_flashdata('error_message', $this->data['error_message']);
-            }
-            redirect(base_url('recovery/create'));
-        }
-        // Set email recovery flow
-        $this->data['redirectSetRecoveryEmail'] = base_url('recovery/create');
-
-        $this->render(true, 'recovery/confirmation');
-    }
-
-    public function confirmation_process()
-    {
-        $this->_app = $this->getAppInfo();
-        $this->checkUserLogin();
-        $userLogin = $this->session->userdata('humanId__userLogin');
-        $data = [
-            'recoveryEmail' => $this->input->post('email'),
-            'exchangeToken' => $userLogin->exchangeToken,
-            'source' => 'w',
-        ];
-        $response = $this->humanid->setEmailRecovery($data);
-        if (!$response->success) {
-            $this->handleErrorSetEmailRecovery($response);
-        }
-        $this->session->unset_userdata('humanId__requestOtpRecovery');
-        $this->session->unset_userdata('humanId__verifyOtpRecovery');
-        redirect($response->data->redirectUrl);
-    }
-
     public function verify_otp()
     {
         $this->_app = $this->getAppInfo();
@@ -172,6 +117,61 @@ class Recovery extends BaseController
         $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
         $this->scripts('humanid.formLoginVeriy("", '. $otpConfig->nextResendDelay .');', 'embed');
         $this->render(true, 'recovery/verify');
+    }
+
+    public function create()
+    {
+        $this->_app = $this->getAppInfo();
+        $this->checkUserLogin();
+        $this->data['app'] = $this->_app;
+        $userLogin = $this->session->userdata('humanId__userLogin');
+        $this->data['newAccount'] = $userLogin->user->newAccount;
+        $error_message = $this->session->flashdata('error_message');
+        if ($error_message) {
+            $this->data['error_message'] = $error_message;
+        }
+
+        $this->scripts('humanid.modal()', 'embed');
+        $this->render(true, 'recovery/set-email');
+    }
+
+    public function confirmation()
+    {
+        $this->_app = $this->getAppInfo();
+        $this->checkUserLogin();
+        $this->data['app'] = $this->_app;
+        $this->data['email'] = $this->input->post('email');
+        $this->form_validation->set_rules('email', 'email', 'required|valid_email');
+        if ($this->form_validation->run() == false) {
+            $this->_first_error_msg();
+            if (isset($this->data['error_message'])) {
+                $this->session->set_flashdata('error_message', $this->data['error_message']);
+            }
+            redirect(base_url('recovery/create'));
+        }
+        // Set email recovery flow
+        $this->data['redirectSetRecoveryEmail'] = base_url('recovery/create');
+
+        $this->render(true, 'recovery/confirmation');
+    }
+
+    public function confirmation_process()
+    {
+        $this->_app = $this->getAppInfo();
+        $this->checkUserLogin();
+        $userLogin = $this->session->userdata('humanId__userLogin');
+        $data = [
+            'recoveryEmail' => $this->input->post('email'),
+            'exchangeToken' => $userLogin->exchangeToken,
+            'source' => 'w',
+        ];
+        $response = $this->humanid->setEmailRecovery($data);
+        if (!$response->success) {
+            $this->handleErrorSetEmailRecovery($response);
+        }
+        $this->session->unset_userdata('humanId__requestOtpRecovery');
+        $this->session->unset_userdata('humanId__verifyOtpRecovery');
+        redirect($response->data->redirectUrl);
     }
 
     public function confirmation_login()
