@@ -13,7 +13,8 @@
 </div>
 
 <div class="humanid-button humanid-button-vertical" style="display: flex;align-items: center">
-    <a href="<?php echo $hasSetupRecovery ? base_url('redirect_app') : base_url('recovery/add'); ?> " class="btn-humanid btn-humanid-primary" style="width: 370px; margin-bottom: 40px;">
+    <a href="<?php echo $hasSetupRecovery ? base_url('redirect_app') : base_url('recovery/create'); ?> "
+       class="btn-humanid btn-humanid-primary" style="width: 370px; margin-bottom: 40px;">
         I’m creating a new account
     </a>
     <a href="<?php echo base_url('recovery-exist/recovery') ?>" class="btn-humanid btn-humanid-default"

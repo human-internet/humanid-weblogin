@@ -232,7 +232,7 @@ $config['allow_get_array'] = TRUE;
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 2;
+$config['log_threshold'] = $_ENV['LOG_LEVEL'] ?? 1;
 
 /*
 |--------------------------------------------------------------------------

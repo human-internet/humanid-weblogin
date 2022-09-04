@@ -65,6 +65,7 @@ class Login extends BaseController
 
     public function verify()
     {
+        $this->_checkRequestOtpSession();
         // Load App info
         $this->_app = $this->getAppInfo();
         $this->data['app'] = $this->_app;
@@ -271,6 +272,16 @@ class Login extends BaseController
         }
 
         return $phone;
+    }
+
+    private function _checkRequestOtpSession()
+    {
+        $session = $this->session->has_userdata('humanId__requestOtpLogin');
+        $phone = $this->session->has_userdata('humanId__phone');
+        if ($session === false || $phone === false) {
+            $this->session->unset_userdata('humanId__phone');
+            redirect(site_url('recovery/new_number'));
+        }
     }
 
     private function handleErrorRecoveryLogin($response) {

@@ -141,7 +141,7 @@ class Recovery_exist extends BaseController
 
     private function handleErrorRequestOtpTransferAccount($response)
     {
-        if ($response->code === self::WRONG_NUMBER || $response->code === self::WRONG_EMAIL) {
+        if ($response->code === self::ERR_USER_NOT_FOUND || $response->code === self::ERR_EMAIL_RECOVERY_NOT_SETUP) {
             $this->session->set_flashdata('email_or_phone_not_found', true);
             redirect(site_url('recovery-exist/recovery'));
         }
