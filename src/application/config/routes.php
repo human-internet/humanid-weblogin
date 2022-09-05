@@ -78,6 +78,10 @@ $route['demo/success'] = 'demo/success/1';
 $route['demo/failed'] = 'demo/failed/1';
 $route['demo/error'] = 'demo/error/1';
 
+$route['demo1/success'] = 'demo/success/1';
+$route['demo1/failed'] = 'demo/failed/1';
+$route['demo1/error'] = 'demo/error/1';
+
 $route['demo2/success'] = 'demo/success/2';
 $route['demo2/failed'] = 'demo/failed/2';
 $route['demo2/error'] = 'demo/error/2';

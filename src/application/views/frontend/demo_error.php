@@ -26,14 +26,6 @@
             font: 14px/20px normal Helvetica, Arial, sans-serif;
             color: #343434;
             text-align: center;
-
-        }
-
-        a {
-            background: #023B60;
-            display: inline-block;
-            padding: 10px 20px 5px;
-            border-radius: 10px;
         }
 
         h1 {
@@ -59,31 +51,6 @@
             font-weight: 700;
             margin-bottom: 4%;
             color: black;
-
-
-        }
-
-        select {
-            padding: 10px 10px;
-            border-radius: 10px;
-            border: 1px solid #4F5155;
-        }
-
-        .rectangle {
-            background: #FFFFFF;
-            border: 0.1px solid #000000;
-            box-sizing: border-box;
-            border-radius: 15px;
-            margin: auto;
-            position: relative;
-            padding: 30px;
-            width: 45%;
-            box-shadow: 0 4px 2px -2px gray;
-            z-index: 1;
-        }
-
-        #rectangle * {
-            margin-bottom: 8%;
         }
 
         .logo {
@@ -92,29 +59,6 @@
 
         .login-button {
             margin-bottom: 17px;
-        }
-
-        .dummy {
-            text-align: center;
-            background-color: #C4C4C4;
-            color: black;
-            display: flex;
-            align-items: center;
-            height: 50.5px;
-            width: 379px;
-            border-radius: 7px;
-            justify-content: center;
-            margin: auto;
-            margin-top: 13px;
-            margin-bottom: 48px;
-            z-index: 2;
-
-            font-family: 'Montserrat';
-            font-style: normal;
-            font-size: 15px;
-            font-weight: 400;
-            line-height: 18px;
-            letter-spacing: 0em;
         }
 
         .or {
@@ -235,5 +179,6 @@
 </head>
 <body>
 <h2>Internal Error<h2>
+<a href="<?php echo $demoUrl ?>">Go back</a>
 </body>
 </html>

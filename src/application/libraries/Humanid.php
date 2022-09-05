@@ -264,15 +264,15 @@ class Humanid
         return $res;
     }
 
-    public function userExchange($token)
+    public function userExchange($token, $clientId, $clientSecret)
     {
         try {
             $response = $this->client->post($this->url . 'server/users/exchange', [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
-                    'client-id' => $this->server_id,
-                    'client-secret' => $this->server_secret,
+                    'client-id' => $clientId,
+                    'client-secret' => $clientSecret,
                 ],
                 'json' => [
                     'exchangeToken' => $token,
