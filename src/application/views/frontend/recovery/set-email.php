@@ -1,4 +1,4 @@
-<form method="post" action="<?php echo base_url("recovery/confirmation")?>">
+<form method="post" action="<?php echo base_url('recovery/confirmation')?>">
     <div class="humanid-logo">
         <div class="humanid-logo__placement">
             <img src="<?php echo $app->logoUrls->thumbnail; ?>" alt="<?php echo $app->name; ?>">

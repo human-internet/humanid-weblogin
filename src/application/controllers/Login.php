@@ -190,6 +190,7 @@ class Login extends BaseController
                 $this->handleErrorRecoveryLogin($recoveryLogin);
             }
             $data = $recoveryLogin->data;
+            $this->session->set_userdata('humanId__newAccount', $data->user->newAccount);
             $this->session->set_userdata('humanId__userLogin', $data);
             if ($data->user->isActive === false) {
                 redirect(base_url('recovery/instead-login'));
@@ -208,7 +209,7 @@ class Login extends BaseController
         // Handle from Login
         $userLogin = $this->session->userdata('humanId__userLogin');
         if (!isset($userLogin->redirectUrl)) {
-            $this->session->unset_userdata('humanId__sessionToken');
+            $this->clearSessions();
             redirect($this->_app->redirectUrlFail);
         }
 
@@ -221,8 +222,7 @@ class Login extends BaseController
     public function redirect_now()
     {
         if ($post = $this->input->post()) {
-            $this->session->unset_userdata('humanId__phone');
-            $this->session->unset_userdata('humanId__appInfo');
+            $this->clearSessions();
             redirect($post['redirectUrl']);
         }
 

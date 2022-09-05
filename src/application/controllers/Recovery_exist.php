@@ -110,7 +110,7 @@ class Recovery_exist extends BaseController
         // Save response Request OTP Transfer
         $this->session->set_userdata('humanId__otpTransferAccount', $response->data);
 
-        redirect('recovery/verify_email_code');
+        redirect(site_url('recovery/verify_email_code'));
     }
 
     public function verification()

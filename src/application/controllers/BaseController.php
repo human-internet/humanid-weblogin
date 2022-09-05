@@ -67,6 +67,24 @@ class BaseController extends MY_Controller
             $this->session->set_flashdata('error_message', $message);
             redirect(site_url('error'));
         }
+    }
+
+    protected function clearSessions()
+    {
+        // Login
+        $this->session->unset_userdata('humanId__appInfo');
+        $this->session->unset_userdata('humanId__phone');
+        $this->session->unset_userdata('humanId__userLogin');
+        $this->session->unset_userdata('humanId__loginRequestOtpToken');
+
+        // Recovery
+        $this->session->unset_userdata('humanId__requestOtpRecovery');
+        $this->session->unset_userdata('humanId__verifyOtpRecovery');
+        $this->session->unset_userdata('humanId__loginRequestOtpToken');
+        $this->session->unset_userdata('humanId__loginRecovery');
+        $this->session->unset_userdata('humanId__otpTransferAccount');
+        $this->session->unset_userdata('humanId__verifyTransferAccount');
+        $this->session->unset_userdata('humanId__otpEmail');
 
     }
 
