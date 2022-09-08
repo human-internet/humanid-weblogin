@@ -433,6 +433,12 @@ class Recovery extends BaseController
 
     private function _checkRequestOtpSession()
     {
+        // Check from login
+        $userLogin = $this->session->has_userdata('humanId__userLogin');
+        if ($userLogin) {
+            return;
+        }
+
         $session = $this->session->has_userdata('humanId__requestOtpRecovery');
         $phone = $this->session->has_userdata('humanId__phone');
         if ($session === false || $phone === false) {
