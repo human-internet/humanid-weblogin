@@ -165,11 +165,9 @@ class Recovery_exist extends BaseController
 
         if ($response->message === "jwt expired") {
             $modal->message = $this->lg->error->tokenExpired;
-            $this->session->unset_userdata('humanId__appInfo');
             $redirectUrl = site_url('error');
         }
 
-        $this->session->unset_userdata('humanId__appInfo');
         $this->session->unset_userdata('humanId__phone');
         $this->session->set_flashdata('modal', $modal);
         $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
@@ -193,11 +191,9 @@ class Recovery_exist extends BaseController
 
         if ($response->message === "jwt expired") {
             $modal->message = $this->lg->error->tokenExpired;
-            $this->session->unset_userdata('humanId__appInfo');
             $redirectUrl = site_url('error');
         }
 
-        $this->session->unset_userdata('humanId__appInfo');
         $this->session->unset_userdata('humanId__phone');
         $this->session->set_flashdata('modal', $modal);
         $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);

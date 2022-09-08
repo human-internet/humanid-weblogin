@@ -412,7 +412,6 @@ class Recovery extends BaseController
         if ($this->input->post('redirect')) {
             $redirectUrl = $transferAccountData->redirectUrl;
             $this->session->unset_userdata('humanId__phone');
-            $this->session->unset_userdata('humanId__appInfo');
             redirect($redirectUrl);
         }
         $this->data['appName'] = $transferAccountData->app->name;
