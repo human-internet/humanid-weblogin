@@ -296,11 +296,12 @@ class Login extends BaseController
         ];
 
         if ($response->message == "jwt expired") {
+            $message = urlencode($response->message);
             $modal = (object) [
                 'title' => $this->lg->errorPage,
                 'code' => $code ?? '',
                 'message' => $this->lg->error->tokenExpired,
-                'url' => $this->data->redirectUrlFail ?? site_url('error')
+                'url' => "{$this->data->redirectUrlFail}?code={$response->code}&message={$message}"
             ];
             $this->session->unset_userdata('humanId__phone');
             $this->session->set_flashdata('modal', $modal);
@@ -325,12 +326,13 @@ class Login extends BaseController
         ];
 
         if ($response->message == "jwt expired") {
-            $modal = (object)array(
+            $message = urlencode($response->message);
+            $modal = (object) [
                 'title' => $this->lg->errorPage,
                 'code' => $response->code,
                 'message' => $this->lg->error->tokenExpired,
-                'url' => $this->_app->redirectUrlFail ?? site_url('error'),
-            );
+                'url' => "{$this->_app->redirectUrlFail}?code={$response->code}&message={$message}"
+            ];
             $this->session->set_flashdata('modal', $modal);
             $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
         }

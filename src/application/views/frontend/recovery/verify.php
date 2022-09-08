@@ -24,7 +24,7 @@
         <div class="humanid-form-placement__otp-verification">
             <?php for($i=1; $i<=$otpLength; $i++) {?>
                 <div class="humanid-form-group">
-                    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" class="humanid-input-otp" data-id="<?php echo $i;?>" maxlength="1" name="code[]" autofocus>
+                    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" class="humanid-input-otp" data-id="<?php echo $i;?>" maxlength="1" name="code[]" autofocus autocomplete="off">
                 </div>
             <?php }?>
         </div>

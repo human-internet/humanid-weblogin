@@ -240,6 +240,7 @@ class Recovery extends BaseController
     {
         log_message('debug', "  > `Send email with verification Code` button clicked");
 
+        $this->_app = $this->getAppInfo();
         // Validate
         $this->form_validation->set_rules('email', 'email', 'required|valid_email');
         $this->form_validation->set_rules('phone', $this->lg->phone, 'required|numeric|min_length[4]|max_length[14]', array(
@@ -285,11 +286,12 @@ class Recovery extends BaseController
             ]);
 
             if (!$loginRecoveryResult->success) {
+                $message = urlencode($loginRecoveryResult->message);
                 $modal = (object) array(
                     'title' => $this->lg->errorPage,
                     'code' => $loginRecoveryResult->code,
                     'message' => $this->lg->error->tokenExpired,
-                    'url' => $this->_app->redirectUrlFail ?? site_url('error'),
+                    'url' => "{$this->_app->redirectUrlFail}?code={$loginRecoveryResult->code}&message={$message}"
                 );
                 $this->session->set_flashdata('modal', $modal);
                 $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
@@ -376,6 +378,7 @@ class Recovery extends BaseController
     {
         log_message('debug', "  > Resend otp transfer account to Email");
 
+        $this->_app = $this->getAppInfo();
         $sessionPhone = $this->session->userdata('humanId__otpEmail');
         $dialcode = $sessionPhone['dialcode'];
         $phone = $sessionPhone['phone'];
@@ -406,6 +409,7 @@ class Recovery extends BaseController
     {
         log_message('debug', "  > IM HERE - " . __METHOD__ . ' page');
 
+        $this->_app = $this->getAppInfo();
         $transferAccountData = $this->session->userdata('humanId__verifyTransferAccount');
         $this->_app = $this->getAppInfo();
         $this->data['app'] = $this->_app;
@@ -424,7 +428,6 @@ class Recovery extends BaseController
         log_message('debug', "  > Skip & Risk Losing Account button clicked");
         $userLogin = $this->session->userdata('humanId__userLogin');
         $redirectUrl = $userLogin->redirectUrl;
-        $this->clearSessions();
         redirect($redirectUrl);
     }
 
@@ -441,7 +444,7 @@ class Recovery extends BaseController
     private function handleErrorVerifyOtp($response)
     {
         // Validate if expired
-        if ($response->message == "jwt expired") {
+        if ($response->message === self::JWT_EXPIRED) {
             $modal = (object) array(
                 'title' => $this->lg->errorPage,
                 'code' => $response->code,
@@ -563,25 +566,28 @@ class Recovery extends BaseController
 
     private function handleErrorSetEmailRecovery($response)
     {
-        $code = $response->code;
+        $code = $response->code ?? '';
+        $message = $response->message ?? '';
         $redirectUrl = site_url('error');
         $modal = (object) [
             'title' => $this->lg->errorPage,
-            'code' => $code ?? '',
-            'message' => $response->message ?? '',
+            'code' => $code,
+            'message' => $message,
             'url' => $this->_app->redirectUrlFail,
         ];
 
+        $error_url = $this->_app->redirectUrlFail . '?code=' . $code . '&message=' . urlencode($message);
+
         if ($response->code === "500") {
-            $modal->url = site_url('error');
+            $modal->url = $error_url;
         }
 
-        if ($response->message === "jwt expired") {
+        if ($message === self::JWT_EXPIRED) {
             $modal->message = $this->lg->error->tokenExpired;
+            $modal->url = $error_url;
             $redirectUrl = site_url('error');
         }
 
-        $this->clearSessions();
         $this->session->set_flashdata('modal', $modal);
         $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
         redirect($redirectUrl);
@@ -589,24 +595,19 @@ class Recovery extends BaseController
 
     private function handleErrorRecoveryLogin($response)
     {
-        $code = $response->code;
+        $code = $response->code ?? '';
+        $message = $response->message ?? '';
         $modal = (object) [
             'title' => $this->lg->errorPage,
-            'code' => $code ?? '',
-            'message' => $response->message ?? '',
+            'code' => $code,
+            'message' => $message,
             'url' => site_url('recovery/new_number')
         ];
 
-        if ($response->message == "jwt expired") {
-            $modal = (object) [
-                'title' => $this->lg->errorPage,
-                'code' => $code ?? '',
-                'message' => $this->lg->error->tokenExpired,
-                'url' => $this->data->redirectUrlFail ?? site_url('error')
-            ];
+        if ($message === self::JWT_EXPIRED) {
+            $error_url = $this->_app->redirectUrlFail . '?code=' . $code . '&message=' . urlencode($message);
+            $modal->url = $error_url;
             $this->session->unset_userdata('humanId__phone');
-            $this->session->set_flashdata('modal', $modal);
-            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
             redirect(site_url('error'));
         }
 
