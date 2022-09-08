@@ -7,6 +7,7 @@ class Login extends BaseController
 {
     public function index()
     {
+        $this->clearSessions();
         $this->_app = $this->getAppInfo(true);
         $webLoginToken = $this->input->get('t', true);
         $this->session->set_userdata('humanId__loginRequestOtpToken', $webLoginToken);
