@@ -51,7 +51,7 @@
     </div>
 </form>
 <div class="humanid-content-link">
-    <a href="<?php echo base_url('recovery/new_number')?>" class="humanid-link-red">
+    <a href="<?php echo base_url('recovery/verify_email')?>" class="humanid-link-red">
         Recover an existing account instead
     </a>
     <a href="javascript:void(0)" data-target="modal-agree" class="humanid-link-red">

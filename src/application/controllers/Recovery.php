@@ -240,7 +240,6 @@ class Recovery extends BaseController
     {
         log_message('debug', "  > `Send email with verification Code` button clicked");
 
-        $this->_app = $this->getAppInfo();
         // Validate
         $this->form_validation->set_rules('email', 'email', 'required|valid_email');
         $this->form_validation->set_rules('phone', $this->lg->phone, 'required|numeric|min_length[4]|max_length[14]', array(
@@ -257,13 +256,13 @@ class Recovery extends BaseController
             redirect(site_url('recovery/verify_email'));
         }
 
+        $this->_app = $this->getAppInfo();
         $redirectUri = 'recovery/verify_email_code';
 
         $phone = $this->input->post('phone', true);
         $dialcode = $this->input->post('dialcode', true);
         $email = $this->input->post('email', true);
 
-        // TODO: Handle From Recovery Page
         $recoveryVerifySession = $this->session->userdata('humanId__verifyOtpRecovery');
 
         $this->session->set_userdata('humanId__otpEmail', [
@@ -280,8 +279,8 @@ class Recovery extends BaseController
         ];
 
         $userLogin = $this->session->userdata('humanId__userLogin');
-        // Check account is inactive then login with exchange token
-        if ($userLogin !== null && $userLogin->user->isActive === false) {
+        // Get OTP Session from Login to login recovery using exchangeToken
+        if ($userLogin !== null) {
             $loginRecoveryResult = $this->humanid->accountLoginRecovery([
                 'exchangeToken' => $userLogin->exchangeToken,
                 'source' => 'w',
@@ -289,12 +288,12 @@ class Recovery extends BaseController
 
             if (!$loginRecoveryResult->success) {
                 $message = urlencode($loginRecoveryResult->message);
-                $modal = (object) array(
+                $modal = (object) [
                     'title' => $this->lg->errorPage,
                     'code' => $loginRecoveryResult->code,
                     'message' => $this->lg->error->tokenExpired,
                     'url' => "{$this->_app->redirectUrlFail}?code={$loginRecoveryResult->code}&message={$message}"
-                );
+                ];
                 $this->session->set_flashdata('modal', $modal);
                 $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
                 redirect(site_url('error'));
