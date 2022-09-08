@@ -20,9 +20,11 @@
         </button>
         <input type="hidden" name="redirectUrl" class="directed-link" value="<?php echo $redirectUrl;?>">
     </div>
-    <div class="humanid-content-link center">
-        <a href="<?php echo base_url('recovery/create');?>" class="humanid-link-red">
-            Recover an existing account instead
-        </a>
-    </div>
+    <?php if (isset($hasSetupRecovery) && $hasSetupRecovery === false): ?>
+        <div class="humanid-content-link center">
+            <a href="<?php echo base_url('recovery/create');?>" class="humanid-link-red">
+                Add email recovery to your account
+            </a>
+        </div>
+    <?php endif; ?>
 </form>

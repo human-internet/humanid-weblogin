@@ -214,6 +214,7 @@ class Login extends BaseController
             redirect($this->_app->redirectUrlFail);
         }
 
+        $this->data['hasSetupRecovery'] = $userLogin->user->hasSetupRecovery;
         $this->data['redirectUrl'] = $userLogin->redirectUrl;
         $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
         $this->scripts('humanid.countdownFormSubmit(5, ".timer-text", "#redirect-app");', 'embed');
