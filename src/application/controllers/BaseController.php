@@ -88,6 +88,7 @@ class BaseController extends MY_Controller
         $this->session->unset_userdata('humanId__verifyTransferAccount');
         $this->session->unset_userdata('humanId__otpEmail');
 
+        $this->session->unset_userdata('humanId__newAccount');
     }
 
     protected function _first_error_msg()

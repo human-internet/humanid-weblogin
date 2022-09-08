@@ -121,6 +121,7 @@ class Login extends BaseController
                     'expiredAt' => $data->expiredAt,
                     'user' => $data->user,
                 ];
+                $this->session->set_userdata('humanId__newAccount', $data->user->newAccount);
                 $this->session->set_userdata('humanId__userLogin', $resultVerifyData);
                 if ($data->user->isActive === false) {
                     redirect(base_url('recovery/instead-login'));
