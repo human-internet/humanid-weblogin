@@ -174,8 +174,7 @@ class Recovery extends BaseController
         if (!$response->success) {
             $this->handleErrorSetEmailRecovery($response);
         }
-        $this->session->unset_userdata('humanId__requestOtpRecovery');
-        $this->session->unset_userdata('humanId__verifyOtpRecovery');
+        $this->clearSessions();
         redirect($response->data->redirectUrl);
     }
 
