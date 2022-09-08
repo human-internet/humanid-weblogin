@@ -93,7 +93,7 @@ class Recovery extends BaseController
             // Save to session
             $this->session->set_userdata('humanId__verifyOtpRecovery', $verifyOtpResponse->data);
             if ($verifyOtpResponse->data->hasAccount === false) {
-                // When OTP Verified then recovery login with exchange token
+                // When OTP Verified then recovery login with exchange token (Login From Recovery)
                 $recoveryLogin = $this->humanid->accountRecoveryLogin([
                     'token' => $verifyOtpResponse->data->token,
                     'source' => 'w',
@@ -319,7 +319,6 @@ class Recovery extends BaseController
         $this->_app = $this->getAppInfo();
         $code = $this->input->post('code');
         if (isset($code) && $code[count($code) - 1] !== '') {
-            $session = $this->session->userdata('humanId__userLogin');
             $verifyOtpRecovery = $this->session->userdata('humanId__verifyOtpRecovery');
             $loginRecovery = $this->session->userdata('humanId__loginRecovery');
             $data = [
@@ -327,8 +326,8 @@ class Recovery extends BaseController
                 'token' => $verifyOtpRecovery->token ?? $loginRecovery->token,
                 'source' => 'w'
             ];
-            $user = $session->user;
-            if ($user->isActive === false) {
+            $userLogin = $this->session->userdata('humanId__userLogin');
+            if ($userLogin !== null && $userLogin->user->isActive === false) {
                 $data['token'] = $loginRecovery->token;
             }
             $response = $this->humanid->verifyOtpTransferAccount($data);
