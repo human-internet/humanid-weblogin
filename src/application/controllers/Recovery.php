@@ -526,7 +526,8 @@ class Recovery extends BaseController
     {
         if (
             $response->code === self::ERR_USER_NOT_FOUND ||
-            $response->code === self::ERR_EMAIL_RECOVERY_NOT_SETUP
+            $response->code === self::ERR_EMAIL_RECOVERY_NOT_SETUP ||
+            $response->code === self::ERR_INVALID_EMAIL
         ) {
             $this->session->set_flashdata('email_or_phone_not_found', true);
             redirect(site_url('recovery/verify_email'));

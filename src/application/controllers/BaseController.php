@@ -9,6 +9,7 @@ class BaseController extends MY_Controller
 {
     protected const ERR_USER_NOT_FOUND = 'ERR_33'; //User not found
     protected const ERR_EMAIL_RECOVERY_NOT_SETUP = 'ERR_34'; // Account Recovery has not been set-up
+    protected const ERR_INVALID_EMAIL = 'ERR_35'; // Invalid email for account recovery
 
     protected $_app;
 
