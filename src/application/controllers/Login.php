@@ -115,7 +115,7 @@ class Login extends BaseController
                     'dialcode' => $login['dialcode'],
                 ]]);
                 $data = $response->data;
-                $resultVerifyData = (object)[
+                $resultVerifyData = (object) [
                     'exchangeToken' => $data->exchangeToken,
                     'redirectUrl' => $data->redirectUrl,
                     'expiredAt' => $data->expiredAt,
@@ -126,7 +126,11 @@ class Login extends BaseController
                     redirect(base_url('recovery/instead-login'));
                 }
 
-                if ($data->app->config->accountRecovery === true && $data->user->hasSetupRecovery === false) {
+                if (
+                    $data->app->config->accountRecovery === true &&
+                    $data->user->hasSetupRecovery === false &&
+                    $data->user->newAccount === true
+                ) {
                     redirect(base_url('recovery/create'));
                 }
 
@@ -286,7 +290,8 @@ class Login extends BaseController
         }
     }
 
-    private function handleErrorRecoveryLogin($response) {
+    private function handleErrorRecoveryLogin($response)
+    {
         $code = $response->code;
         $modal = (object) [
             'title' => $this->lg->errorPage,
