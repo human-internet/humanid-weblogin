@@ -263,6 +263,7 @@ class Recovery extends BaseController
         $dialcode = $this->input->post('dialcode', true);
         $email = $this->input->post('email', true);
 
+        // TODO: Handle From Recovery Page
         $recoveryVerifySession = $this->session->userdata('humanId__verifyOtpRecovery');
 
         $this->session->set_userdata('humanId__otpEmail', [
@@ -270,11 +271,12 @@ class Recovery extends BaseController
             'phone' => $phone,
             'dialcode' => $dialcode
         ]);
-        $data = [
+
+        $payloadTransferAccount = [
             'recoveryEmail' => $email,
             'oldPhone' => "+{$dialcode}{$phone}",
-            'token' => $recoveryVerifySession->token,
             'source' => 'w',
+            'token' => $recoveryVerifySession->token ?? '',
         ];
 
         $userLogin = $this->session->userdata('humanId__userLogin');
@@ -297,12 +299,12 @@ class Recovery extends BaseController
                 $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
                 redirect(site_url('error'));
             }
-            $data['token'] = $loginRecoveryResult->data->token;
+            $payloadTransferAccount['token'] = $loginRecoveryResult->data->token;
             $this->session->set_userdata('humanId__loginRecovery', $loginRecoveryResult->data);
         }
 
         // Request OTP Transfer Account
-        $response = $this->humanid->requestOtpTransferAccount($data);
+        $response = $this->humanid->requestOtpTransferAccount($payloadTransferAccount);
         if (!$response->success) {
             $this->handleErrorRequestOtpTransferAccount($response);
         }
