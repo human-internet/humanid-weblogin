@@ -53,7 +53,10 @@ class Recovery_exist extends BaseController
             $this->data['error_message'] = $error_message;
         }
 
+        $code = self::ERR_CANCELLED;
+        $message = urlencode(self::MESSAGE_CANCELLED);
         $this->data['redirectUrl'] = site_url('redirect_app');
+        $this->data['cancelLoginUrl'] = "{$this->_app->redirectUrlFail}?code={$code}&message={$message}";
         $this->data['invalidEmail'] = false;
         $invalidEmail = $this->session->flashdata('invalid_email');
         if ($invalidEmail) {

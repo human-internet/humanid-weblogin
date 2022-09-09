@@ -12,6 +12,9 @@ class BaseController extends MY_Controller
     protected const ERR_INVALID_EMAIL = 'ERR_35'; // Invalid email for account recovery
     protected const JWT_EXPIRED = 'jwt expired';
 
+    protected const ERR_CANCELLED = 'CANCELLED';
+    protected const MESSAGE_CANCELLED = 'Log-in is cancelled by User';
+
     protected $_app;
 
     function __construct()
