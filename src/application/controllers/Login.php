@@ -307,7 +307,7 @@ class Login extends BaseController
                 'title' => $this->lg->errorPage,
                 'code' => $code ?? '',
                 'message' => $this->lg->error->tokenExpired,
-                'url' => "{$this->data->redirectUrlFail}?code={$response->code}&message={$message}"
+                'url' => "{$this->_app->redirectUrlFail}?code={$response->code}&message={$message}"
             ];
             $this->session->unset_userdata('humanId__phone');
             $this->session->set_flashdata('modal', $modal);

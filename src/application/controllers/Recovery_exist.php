@@ -53,6 +53,14 @@ class Recovery_exist extends BaseController
             $this->data['error_message'] = $error_message;
         }
 
+        $this->data['redirectUrl'] = site_url('redirect_app');
+        $this->data['invalidEmail'] = false;
+        $invalidEmail = $this->session->flashdata('invalid_email');
+        if ($invalidEmail) {
+            log_message('debug', "  > Invalid email for recovery");
+            $this->data['invalidEmail'] = $invalidEmail;
+        }
+
         $this->data['app'] = $this->_app;
         $this->scripts('humanid.modal()', 'embed');
         $this->render(true, 'recovery-exist/recovery');
@@ -60,6 +68,7 @@ class Recovery_exist extends BaseController
 
     public function recovery_process()
     {
+        $this->_app = $this->getAppInfo();
         $this->checkUserLogin();
         $this->form_validation->set_rules('email', 'email', 'required|valid_email');
         if ($this->form_validation->run() === false) {
@@ -83,24 +92,29 @@ class Recovery_exist extends BaseController
         ]);
 
         // Get user login from OTP
-        $userLogin = $this->session->userdata('humanId__userLogin');
-        // Request login recovery
-        $loginRecoveryResponse = $this->humanid->accountLoginRecovery([
-            'exchangeToken' => $userLogin->exchangeToken,
-            'source' => 'w',
-        ]);
-        if (!$loginRecoveryResponse->success) {
-            $this->handleError($loginRecoveryResponse);
+        $hasLoginRecovery = $this->session->has_userdata('humanId__loginRecovery');
+        if (!$hasLoginRecovery) {
+            $userLogin = $this->session->userdata('humanId__userLogin');
+            // Request login recovery
+            $loginRecoveryResponse = $this->humanid->accountLoginRecovery([
+                'exchangeToken' => $userLogin->exchangeToken,
+                'source' => 'w',
+            ]);
+            if (!$loginRecoveryResponse->success) {
+                $this->session->unset_userdata('humanId__loginRecovery');
+                $this->handleErrorLoginRecovery($loginRecoveryResponse);
+            }
+
+            // Save login recovery session
+            $this->session->set_userdata('humanId__loginRecovery', $loginRecoveryResponse->data);
         }
 
-        // Save login recovery session
-        $this->session->set_userdata('humanId__loginRecovery', $loginRecoveryResponse->data);
-
+        $loginRecoverySession = $this->session->userdata('humanId__loginRecovery');
         // Request OTP Transfer Account
         $response = $this->humanid->requestOtpTransferAccount([
             'recoveryEmail' => $email,
             'oldPhone' => "+{$dialcode}{$phone}",
-            'token' => $loginRecoveryResponse->data->token,
+            'token' => $loginRecoverySession->token,
             'source' => 'w',
         ]);
         if (!$response->success) {
@@ -141,60 +155,54 @@ class Recovery_exist extends BaseController
 
     private function handleErrorRequestOtpTransferAccount($response)
     {
+        $code = $response->code ?? '';
         if (
-            $response->code === self::ERR_USER_NOT_FOUND ||
-            $response->code === self::ERR_EMAIL_RECOVERY_NOT_SETUP ||
-            $response->code === self::ERR_INVALID_EMAIL
+            $code === self::ERR_USER_NOT_FOUND ||
+            $code === self::ERR_EMAIL_RECOVERY_NOT_SETUP ||
+            $code === self::ERR_INVALID_EMAIL
         ) {
-            $this->session->set_flashdata('email_or_phone_not_found', true);
+            $this->session->set_flashdata('invalid_email', true);
             redirect(site_url('recovery-exist/recovery'));
         }
 
-        $code = $response->code;
+        if ($response->message === self::JWT_EXPIRED) {
+            $response->message = $this->lg->error->sessionExpired;
+        }
+
+        $messageUrlEncoded = urlencode($response->message);
+        $redirectFail = "{$this->_app->redirectUrlFail}?code={$code}&message={$messageUrlEncoded}";
         $redirectUrl = site_url('error');
         $modal = (object) [
             'title' => $this->lg->errorPage,
-            'code' => $code ?? '',
-            'message' => $response->message ?? '',
-            'url' => $this->_app->redirectUrlFail,
+            'code' => $code,
+            'message' => $response->message,
+            'url' => $redirectFail,
         ];
 
-        if ($response->code === "500") {
-            $modal->url = site_url('error');
-        }
-
-        if ($response->message === "jwt expired") {
-            $modal->message = $this->lg->error->tokenExpired;
-            $redirectUrl = site_url('error');
-        }
-
-        $this->session->unset_userdata('humanId__phone');
         $this->session->set_flashdata('modal', $modal);
         $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
         redirect($redirectUrl);
     }
 
-    private function handleError($response)
+    private function handleErrorLoginRecovery($response)
     {
         $code = $response->code;
+        $message = $response->message;
+        if ($response->message === self::JWT_EXPIRED) {
+            $response->message = $this->lg->error->sessionExpired;
+        }
+
+        $messageUrlEncoded = urlencode($response->message);
+        $redirectFail = "{$this->_app->redirectUrlFail}?code={$code}&message={$messageUrlEncoded}";
         $redirectUrl = site_url('error');
+
         $modal = (object) [
             'title' => $this->lg->errorPage,
-            'code' => $code ?? '',
-            'message' => $response->message ?? '',
-            'url' => $this->_app->redirectUrlFail,
+            'code' => $code,
+            'message' => $message,
+            'url' => $redirectFail,
         ];
 
-        if ($response->code === "500") {
-            $modal->url = site_url('error');
-        }
-
-        if ($response->message === "jwt expired") {
-            $modal->message = $this->lg->error->tokenExpired;
-            $redirectUrl = site_url('error');
-        }
-
-        $this->session->unset_userdata('humanId__phone');
         $this->session->set_flashdata('modal', $modal);
         $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
         redirect($redirectUrl);
