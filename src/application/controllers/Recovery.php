@@ -339,12 +339,12 @@ class Recovery extends BaseController
             if (!$response->success) {
                 $redirectUrl = site_url('error');
                 $code = $response->code;
-                $modal = (object) array(
+                $modal = (object) [
                     'title' => $this->lg->errorPage,
                     'code' => $code ?? '',
                     'message' => $response->message ?? '',
                     'url' => site_url('recovery/verify_email_code')
-                );
+                ];
 
                 if ($response->code === "500") {
                     $modal->url = site_url('error');
@@ -401,6 +401,7 @@ class Recovery extends BaseController
         }
         $this->session->set_userdata('humanId__otpTransferAccount', $response->data);
 
+        $this->session->set_flashdata('resend_email_otp', 'Resend Code successfully');
         $redirectUri = 'recovery/verify_email_code';
 
         log_message('debug', "  > Resend otp transfer account to Email: Success");
@@ -536,16 +537,16 @@ class Recovery extends BaseController
 
     public function handleErrorRequestOtpTransferAccount($response)
     {
+        $code = $response->code ?? '';
         if (
-            $response->code === self::ERR_USER_NOT_FOUND ||
-            $response->code === self::ERR_EMAIL_RECOVERY_NOT_SETUP ||
-            $response->code === self::ERR_INVALID_EMAIL
+            $code === self::ERR_USER_NOT_FOUND ||
+            $code === self::ERR_EMAIL_RECOVERY_NOT_SETUP ||
+            $code === self::ERR_INVALID_EMAIL
         ) {
             $this->session->set_flashdata('email_or_phone_not_found', true);
             redirect(site_url('recovery/verify_email'));
         }
 
-        $code = $response->code;
         $modal = (object) array(
             'title' => $this->lg->errorPage,
             'code' => $code ?? '',
@@ -553,20 +554,16 @@ class Recovery extends BaseController
             'url' => site_url('recovery/verify_email')
         );
 
-        if ($response->code == 500) {
-            $modal->url = site_url('error');
+        // Common error internal message
+        if ($response->code === self::ERR_INTERNAL) {
+            $modal->message = self::MESSAGE_INTERNAL;
+            $msg = urlencode($modal->message);
+            $modal->url = "{$this->_app->redirectUrlFail}?code={$code}&message={$msg}";
         }
-
-        if ($response->message === "jwt expired") {
-            $modal = (object) [
-                'title' => $this->lg->errorPage,
-                'code' => $code ?? '',
-                'message' => $this->lg->error->tokenExpired,
-                'url' => $this->_app->redirectUrlFail ?? site_url('error')
-            ];
-            $this->session->set_flashdata('modal', $modal);
-            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-            redirect(site_url('error'));
+        if ($response->message === self::JWT_EXPIRED) {
+            $modal->message = $this->lg->error->sessionExpired;
+            $msg = urlencode($modal->message);
+            $modal->url = "{$this->_app->redirectUrlFail}?code={$code}&message={$msg}";
         }
 
         $this->session->set_flashdata('modal', $modal);

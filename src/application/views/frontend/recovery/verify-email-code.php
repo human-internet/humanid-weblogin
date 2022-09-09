@@ -23,10 +23,16 @@
             <?php }?>
         </div>
         <?php if ($this->session->flashdata('error_otp')){?>
-            <div style="width: 267px;margin: auto;padding: 4px;background: rgba(255, 75, 85, 0.29);font-weight: 500;">
+            <div style="width: 267px;margin: auto;padding: 4px;background: rgba(255, 75, 85, 0.29); font-weight: 500;">
                 <?php echo $this->session->flashdata('error_otp');?>
             </div>
         <?php } ?>
+        <?php if ($this->session->flashdata('resend_email_otp')){?>
+            <div style="width: 267px;margin: auto;padding: 4px;background: rgba(0, 230, 64, 0.29); font-weight: 500;">
+                <?php echo $this->session->flashdata('resend_email_otp');?>
+            </div>
+        <?php } ?>
+
         <span class="timer-text verify-area timer"
               style="display: none;"><?php echo str_replace("{TIME}", '<strong>00:60</strong>', $lang->text->resend); ?></span>
         <input type="hidden" name="remaining" id="remaining">
