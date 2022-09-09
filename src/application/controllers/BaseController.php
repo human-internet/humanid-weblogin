@@ -15,6 +15,9 @@ class BaseController extends MY_Controller
     protected const ERR_CANCELLED = 'CANCELLED';
     protected const MESSAGE_CANCELLED = 'Log-in is cancelled by User';
 
+    protected const ERR_INTERNAL = '500';
+    protected const MESSAGE_INTERNAL = 'Internal Error';
+
     protected $_app;
 
     function __construct()

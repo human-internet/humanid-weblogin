@@ -323,29 +323,31 @@ class Login extends BaseController
 
     private function handleErrorRequestOtpLogin($response)
     {
-        $code = $response->code;
+        $code = $response->code ?? '';
+        $redirectBack = site_url('login?a=' . $this->_app->id . '&t=' . $this->session->userdata('humanId__loginRequestOtpToken') . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->source);
+
         $modal = (object) [
             'title' => $this->lg->errorPage,
-            'code' => $code ?? '',
+            'code' => $code,
             'message' => $response->message ?? '',
-            'url' => site_url('login?a=' . $this->_app->id . '&t=' . $this->session->userdata('humanId__loginRequestOtpToken') . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->source)
+            'url' => $redirectBack
         ];
 
-        if ($response->message == "jwt expired") {
-            $message = urlencode($response->message);
-            $modal = (object) [
-                'title' => $this->lg->errorPage,
-                'code' => $response->code,
-                'message' => $this->lg->error->tokenExpired,
-                'url' => "{$this->_app->redirectUrlFail}?code={$response->code}&message={$message}"
-            ];
-            $this->session->set_flashdata('modal', $modal);
-            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+        // Common error internal message
+        if ($response->code === self::ERR_INTERNAL) {
+            $modal->message = self::MESSAGE_INTERNAL;
+            $msg = urlencode($modal->message);
+            $modal->url = "{$this->_app->redirectUrlFail}?code={$code}&message={$msg}";
+        }
+
+        if ($response->message === self::JWT_EXPIRED) {
+            $modal->message = $this->lg->error->sessionExpired;
+            $msg = urlencode($modal->message);
+            $modal->url = "{$this->_app->redirectUrlFail}?code={$code}&message={$msg}";
         }
 
         $this->session->set_flashdata('modal', $modal);
         $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-        $redirectUrl = site_url('error');
-        redirect($redirectUrl);
+        redirect(site_url('error'));
     }
 }
