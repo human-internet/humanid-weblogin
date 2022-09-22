@@ -43,7 +43,6 @@
     </div>
     <div class="humanid-content-text">
         No personal information is ever stored beyond this recovery process.
-        <a href="javascript:void(0)"><b>Learn More</b></a>
     </div>
     <div class="humanid-button humanid-button-vertical" style="display: flex;align-items: center">
         <button class="btn-humanid btn-humanid-primary" type="submit" style="width: 250px">Login</button>
