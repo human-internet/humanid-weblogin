@@ -91,7 +91,6 @@
             <option value="hr_HR">Croatian</option>
             <option value="en_US" selected>English US</option>
             <option value="fr_FR">French</option>
-            <option value="de_DE">German</option>
             <option value="el_GR">Greek</option>
             <option value="hi_IN">Hindi</option>
             <option value="in_ID">Indonesian</option>
