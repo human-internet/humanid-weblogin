@@ -131,7 +131,9 @@ class Recovery extends BaseController
         $this->checkUserLogin();
         $this->data['app'] = $this->_app;
         $newAccount = $this->session->userdata('humanId__newAccount');
-        $this->data['newAccount'] = $newAccount ?? false;
+        $userLogin = $this->session->userdata('humanId__userLogin');
+        $mustSetupRecovery = $this->_app->config->accountRecovery === true && $userLogin->user->hasSetupRecovery === false;
+        $this->data['newAccount'] = ($newAccount || $mustSetupRecovery) ?? false;
         $error_message = $this->session->flashdata('error_message');
         if ($error_message) {
             $this->data['error_message'] = $error_message;
