@@ -299,7 +299,7 @@ $demo2__loginUrl = getLoginUrl($demo2__clientId, $demo2__clientSecret);
 			<div class="ortext">or</div>
 			<div class="line2"></div>
 		</div>
-		<div class="dummy">Other forms of log in</div>
+		<div class="dummy">Other forms of login</div>
 		<div class="message">
             humanID is an alternative to Single-Sign-Ons like "Login with Facebook".
             For this demonstration, please try humanID above
