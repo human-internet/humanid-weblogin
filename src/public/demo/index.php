@@ -305,18 +305,5 @@ $demo2__loginUrl = getLoginUrl($demo2__clientId, $demo2__clientSecret);
             For this demonstration, please try humanID above
         </div>
 	</div>
-
-
-	<script>
-		function changeLang() {
-			var x = document.getElementById("changeLang");
-			document.getElementById("login").setAttribute("href", "login.php?lang=" + x.value);
-		}
-
-		$('.rectangle').hover(function(){
-          $('.message').css("opacity", "1");
-        }
-    )
-	</script>
 </body>
 </html>
