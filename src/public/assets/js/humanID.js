@@ -126,22 +126,24 @@ const humanid = function () {
 
       const inputs = document.querySelectorAll('.humanid-input-otp');
       for (let i = 0; i < inputs.length; i++) {
-        inputs[i].addEventListener('keydown', function (event) {
+        inputs[i].addEventListener('keyup', function (event) {
+          let inputId = Number(inputs[i].getAttribute('data-id'));
+
           if (event.key === "Backspace") {
             inputs[i].value = '';
-            if (i !== 0)
+            if (i !== 0) {
               inputs[i - 1].focus();
+            }
+          }
 
-          } else if (i === inputs.length - 1 && inputs[i].value !== '') {
-            return true;
-          } else if (event.keyCode > 47 && event.keyCode < 58) {
-            inputs[i].value = event.key;
-            if (i !== inputs.length - 1)
+          if (/\d/i.test(inputs[i].value)) {
+            if (i !== inputs.length - 1) {
               inputs[i + 1].focus();
+            }
             event.preventDefault();
           }
 
-          if (Number(inputs[i].getAttribute('data-id')) === inputs.length) {
+          if (inputId === inputs.length) {
             const inputFull = []
             for (let index = 0; index < inputs.length; index++) {
               if (inputs[index].value.length > 0) {
