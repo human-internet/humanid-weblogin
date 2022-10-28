@@ -129,9 +129,13 @@ $demo2__loginUrl = getLoginUrl($demo2__clientId, $demo2__clientSecret);
 			margin-bottom: 30px;
 		}
 
-		.login-button{
-			margin-bottom: 17px;
-		}
+        .login-button {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            flex-wrap: wrap;
+        }
+
 		.dummy{
 			text-align: center;
 			background-color:#C4C4C4;
