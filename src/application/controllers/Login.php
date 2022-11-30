@@ -27,7 +27,7 @@ class Login extends BaseController
 
         if ($this->form_validation->run() == TRUE) {
             // Request OTP
-            $response = $this->humanid->userRequestOTP($dialcode, $phone, $webLoginToken, $this->source, $this->lg->id);
+            $response = $this->humanid->userRequestOTP($dialcode, $phone, $webLoginToken, $this->_app->source, $this->lg->id);
             if (!$response->success) {
                 $this->handleErrorRequestOtpLogin($response);
             }
@@ -39,7 +39,7 @@ class Login extends BaseController
                 ],
             ]);
             $this->session->set_userdata('humanId__requestOtpLogin', $response->data);
-            redirect(site_url('verify?a=' . $this->_app->id . '&t=' . $webLoginToken . '&lang=' . $this->lg->id . "&s=" . $this->source));
+            redirect(site_url('verify?a=' . $this->_app->id . '&t=' . $webLoginToken . '&lang=' . $this->lg->id . "&s=" . $this->_app->source));
         } else {
             $this->_first_error_msg();
         }
@@ -76,7 +76,7 @@ class Login extends BaseController
         $remaining = ($remaining == '') ? 60 : intval($remaining);
         if ($remaining <= 0) {
             $this->init_logs(array('error' => $this->lg->error->verify));
-            redirect(site_url('login?a=' . $this->_app->id . '&t=' . $loginToken . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->source));
+            redirect(site_url('login?a=' . $this->_app->id . '&t=' . $loginToken . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->_app->source));
         }
         $modal = $this->session->flashdata('modal');
         if ($modal) {
@@ -107,7 +107,7 @@ class Login extends BaseController
             $requestOtpLogin = $this->session->userdata('humanId__requestOtpLogin');
             $token = $requestOtpLogin->session->token;
             $login = $this->session->userdata('humanId__phone');
-            $response = $this->humanid->userLogin($login['dialcode'], $login['phone'], $otp_code, $token, $this->source);
+            $response = $this->humanid->userLogin($login['dialcode'], $login['phone'], $otp_code, $token, $this->_app->source);
             if ($response->success) {
                 $success = 1;
                 $this->session->set_userdata(['humanId__phone' => [
@@ -142,7 +142,7 @@ class Login extends BaseController
                         'title' => $this->lg->errorPage,
                         'code' => $response->code,
                         'message' => $this->lg->error->sessionExpired,
-                        'url' => site_url('login?a=' . $this->_app->id . '&t=' . $sessionToken . '&lang=' . $this->lg->id . "&s=" . $this->source)
+                        'url' => site_url('login?a=' . $this->_app->id . '&t=' . $sessionToken . '&lang=' . $this->lg->id . "&s=" . $this->_app->source)
                     ];
                     $this->session->set_flashdata('modal', $modal);
                     $this->session->set_flashdata('error_message', $this->lg->error->sessionExpired);
@@ -150,7 +150,7 @@ class Login extends BaseController
                 }
                 if ($response->code == 'ERR_13') {
                     $this->init_logs(array('error' => 'ERR_13 - ' . $response->message));
-                    redirect(site_url('login?a=' . $this->_app->id . '&t=' . $loginToken . '&lang=' . $this->lg->id . "&s=" . $this->source));
+                    redirect(site_url('login?a=' . $this->_app->id . '&t=' . $loginToken . '&lang=' . $this->lg->id . "&s=" . $this->_app->source));
                 }
                 if ($response->message == "jwt expired") {
                     $modal = (object) [
@@ -190,7 +190,7 @@ class Login extends BaseController
             $sessionOtpRecovery = $this->session->userdata('humanId__verifyOtpRecovery');
             $recoveryLogin = $this->humanid->accountRecoveryLogin([
                 'token' => $sessionOtpRecovery->token,
-                'source' => 'w',
+                'source' => $this->_app->source,
             ]);
             if (!$recoveryLogin->success) {
                 $this->handleErrorRecoveryLogin($recoveryLogin);
@@ -244,7 +244,7 @@ class Login extends BaseController
         $phone = $session['phone'];
         $dialcode = $session['dialcode'];
         // Request OTP
-        $response = $this->humanid->userRequestOTP($dialcode, $phone, $loginToken, $this->source, $this->lg->id);
+        $response = $this->humanid->userRequestOTP($dialcode, $phone, $loginToken, $this->_app->source, $this->lg->id);
         if (!$response->success) {
             $this->handleErrorRequestOtpLogin($response);
         }
@@ -257,7 +257,7 @@ class Login extends BaseController
         ]);
         $this->session->set_userdata('humanId__requestOtpLogin', $response->data);
 
-        redirect(site_url('verify?a=' . $this->_app->id . '&t=' . $loginToken . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->source));
+        redirect(site_url('verify?a=' . $this->_app->id . '&t=' . $loginToken . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->_app->source));
     }
 
     private function _display_phone($phone = 0, $text = " ")
@@ -324,7 +324,7 @@ class Login extends BaseController
     private function handleErrorRequestOtpLogin($response)
     {
         $code = $response->code ?? '';
-        $redirectBack = site_url('login?a=' . $this->_app->id . '&t=' . $this->session->userdata('humanId__loginRequestOtpToken') . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->source);
+        $redirectBack = site_url('login?a=' . $this->_app->id . '&t=' . $this->session->userdata('humanId__loginRequestOtpToken') . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->_app->source);
 
         $modal = (object) [
             'title' => $this->lg->errorPage,

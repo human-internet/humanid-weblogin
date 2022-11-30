@@ -101,7 +101,7 @@ class Recovery_exist extends BaseController
             // Request login recovery
             $loginRecoveryResponse = $this->humanid->accountLoginRecovery([
                 'exchangeToken' => $userLogin->exchangeToken,
-                'source' => 'w',
+                'source' => $this->_app->source,
             ]);
             if (!$loginRecoveryResponse->success) {
                 $this->session->unset_userdata('humanId__loginRecovery');
@@ -118,7 +118,7 @@ class Recovery_exist extends BaseController
             'recoveryEmail' => $email,
             'oldPhone' => "+{$dialcode}{$phone}",
             'token' => $loginRecoverySession->token,
-            'source' => 'w',
+            'source' => $this->_app->source,
         ]);
         if (!$response->success) {
             $this->handleErrorRequestOtpTransferAccount($response);

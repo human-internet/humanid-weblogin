@@ -40,7 +40,7 @@ class Recovery extends BaseController
                 'phone' => "+{$dialcode}{$phone}",
                 'token' => $webLoginToken,
                 'lang' => 'en',
-                'source' => 'w',
+                'source' => $this->_app->source,
             ]);
             if (!$requestOtp->success) {
                 $this->handleErrorRequestOtp($requestOtp);
@@ -81,8 +81,8 @@ class Recovery extends BaseController
             $verifyOtpResponse = $this->humanid->verifyOtpForVerifyNewPhone([
                 'phone' => $phoneE164,
                 'otpCode' => implode('', $code),
-                'source' => 'w',
-                'token' => $sessionToken
+                'token' => $sessionToken,
+                'source' => $this->_app->source,
             ]);
             if (!$verifyOtpResponse->success) {
                 $this->handleErrorVerifyOtp($verifyOtpResponse);
@@ -96,7 +96,7 @@ class Recovery extends BaseController
                 // When OTP Verified then recovery login with exchange token (Login From Recovery)
                 $recoveryLogin = $this->humanid->accountRecoveryLogin([
                     'token' => $verifyOtpResponse->data->token,
-                    'source' => 'w',
+                    'source' => $this->_app->source,
                 ]);
                 if (!$recoveryLogin->success) {
                     $this->handleErrorRecoveryLogin($recoveryLogin);
@@ -171,7 +171,7 @@ class Recovery extends BaseController
         $response = $this->humanid->setEmailRecovery([
             'recoveryEmail' => $this->input->post('email'),
             'exchangeToken' => $userLogin->exchangeToken,
-            'source' => 'w',
+            'source' => $this->_app->source,
         ]);
         if (!$response->success) {
             $this->handleErrorSetEmailRecovery($response);
@@ -194,12 +194,13 @@ class Recovery extends BaseController
     public function request_otp()
     {
         log_message('debug', "  > Recovery > Resend OTP");
+        $this->_app = $this->getAppInfo();
         $webLoginToken = $this->session->userdata('humanId__loginRequestOtpToken');
         $sessionPhone = $this->session->userdata('humanId__phone');
         $requestOtp = $this->humanid->requestOtpForRecovery([
             'phone' => "+{$sessionPhone['dialcode']}{$sessionPhone['phone']}",
             'lang' => 'en',
-            'source' => 'w',
+            'source' => $this->_app->source,
             'token' => $webLoginToken
         ]);
         // If not success
@@ -279,7 +280,7 @@ class Recovery extends BaseController
         $payloadTransferAccount = [
             'recoveryEmail' => $email,
             'oldPhone' => "+{$dialcode}{$phone}",
-            'source' => 'w',
+            'source' => $this->_app->source,
             'token' => $recoveryVerifySession->token ?? '',
         ];
 
@@ -288,7 +289,7 @@ class Recovery extends BaseController
         if ($userLogin !== null) {
             $loginRecoveryResult = $this->humanid->accountLoginRecovery([
                 'exchangeToken' => $userLogin->exchangeToken,
-                'source' => 'w',
+                'source' => $this->_app->source,
             ]);
 
             if (!$loginRecoveryResult->success) {
@@ -331,7 +332,7 @@ class Recovery extends BaseController
             $data = [
                 'otpCode' => implode('', $code),
                 'token' => $verifyOtpRecovery->token ?? $loginRecovery->token,
-                'source' => 'w'
+                'source' => $this->_app->source,
             ];
             $userLogin = $this->session->userdata('humanId__userLogin');
             if ($userLogin !== null && $userLogin->user->isActive === false) {
@@ -396,7 +397,7 @@ class Recovery extends BaseController
             'recoveryEmail' => $email,
             'oldPhone' => "+{$dialcode}{$phone}",
             'token' => $recoveryVerifySession->token,
-            'source' => 'w'
+            'source' => $this->_app->source,
         ]);
         if (!$response->success) {
             $this->handleErrorRequestOtpTransferAccount($response);
