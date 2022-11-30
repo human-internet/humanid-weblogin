@@ -7,6 +7,16 @@ $env_path = $_SERVER['APP_DIR'] ?? __DIR__ . '/../..';
 $dotenv = Dotenv\Dotenv::createImmutable($env_path);
 $dotenv->load();
 
+$demo1__clientId = $_ENV['DEMO_1_CLIENT_ID'];
+$demo1__clientSecret = $_ENV['DEMO_1_CLIENT_SECRET'];
+$demo1__appName = 'FilmReview (Demo)';
+$demo1__appLogo = 'https://s3.human-id.org/s/apps/upQ8Fny2fXIDuLz1.png';
+
+$demo2__clientId = $_ENV['DEMO_2_CLIENT_ID'];
+$demo2__clientSecret = $_ENV['DEMO_2_CLIENT_SECRET'];
+$demo2__appName = 'HelloStranger (Demo)';
+$demo2__appLogo = 'https://s3.human-id.org/s/apps/L6emv1Yau9KPLLpC.png';
+
 function getBaseUrl($isProduction) {
     if ($isProduction) {
         return 'https://api.human-id.org/v1';
@@ -35,16 +45,7 @@ function getLoginUrl($clientId, $clientSecret): string
     }
 }
 
-$demo1__clientId = $_ENV['DEMO_1_CLIENT_ID'];
-$demo1__clientSecret = $_ENV['DEMO_1_CLIENT_SECRET'];
-$demo1__appName = 'FilmReview (Demo)';
-$demo1__appLogo = 'https://s3.human-id.org/s/apps/upQ8Fny2fXIDuLz1.png';
 $demo1__loginUrl = getLoginUrl($demo1__clientId, $demo1__clientSecret);
-
-$demo2__clientId = $_ENV['DEMO_2_CLIENT_ID'];
-$demo2__clientSecret = $_ENV['DEMO_2_CLIENT_SECRET'];
-$demo2__appName = 'HelloStranger (Demo)';
-$demo2__appLogo = 'https://s3.human-id.org/s/apps/L6emv1Yau9KPLLpC.png';
 $demo2__loginUrl = getLoginUrl($demo2__clientId, $demo2__clientSecret);
 
 ?>
