@@ -43,13 +43,19 @@ class BaseController extends MY_Controller
             $this->session->set_flashdata('error_message', $this->lg->error->appId);
             redirect(site_url('error'));
         }
-        $result = $this->humanid->getAppInfo($appId);
+        $s = $this->input->get('s', TRUE);
+        $source = $s;
+        if (!in_array($s, ['m', 'w'])) {
+            $source = 'w';
+        }
+        $result = $this->humanid->getAppInfo($appId, $source);
         if (!$result->success) {
             $this->session->set_flashdata('error_message', $result->message);
             redirect(site_url('error'));
         }
         $appInfo = $result->data->app;
         $appInfo->id = $appId;
+        $appInfo->source = $source;
         // Save App Info to session
         log_message('debug', ' > set_userdata humanId__appInfo: '. json_encode($appInfo));
         $this->session->set_userdata('humanId__appInfo', $appInfo);
