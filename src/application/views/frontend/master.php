@@ -25,6 +25,24 @@
         .humanid-form-placement__otp-resend a{
             font-weight: 600;
         }
+
+        .humanid-modal__overlay {
+            position: fixed;
+        }
+
+        .humanid-modal__modal {
+            position: fixed;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+        }
+
+        .humanid-modal__modal.active {
+            display: flex;
+            align-items: center;
+        }
+
         .humanid-modal {
             display: block; /* Hidden by default */
             position: fixed; /* Stay in place */
@@ -70,6 +88,14 @@
             }
             .humanid-modal .modal-content {
                 width: 80%;
+            }
+            .humanid-header select {
+                top: auto;
+                right: auto;
+                position: relative;
+                display: block;
+                width: 100%;
+                max-width: 100%;
             }
         }
     </style>
