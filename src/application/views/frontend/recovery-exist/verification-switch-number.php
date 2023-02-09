@@ -17,16 +17,16 @@
     <div class="humanid-form-placement">
         <div class="humanid-form-placement__otp-verification">
             <div class="humanid-form-group">
-                <input type="number" class="humanid-input-otp" data-id="1" maxlength="1" name="code_1" autofocus>
+                <input type="tel" pattern="[0-9]*" class="humanid-input-otp" data-id="1" maxlength="1" name="code_1" autofocus>
             </div>
             <div class="humanid-form-group">
-                <input type="number" class="humanid-input-otp" data-id="2" maxlength="1" name="code_2">
+                <input type="tel" pattern="[0-9]*" class="humanid-input-otp" data-id="2" maxlength="1" name="code_2">
             </div>
             <div class="humanid-form-group">
-                <input type="number" class="humanid-input-otp" data-id="3" maxlength="1" name="code_3">
+                <input type="tel" pattern="[0-9]*" class="humanid-input-otp" data-id="3" maxlength="1" name="code_3">
             </div>
             <div class="humanid-form-group">
-                <input type="number" class="humanid-input-otp" data-id="4" maxlength="1" name="code_4">
+                <input type="tel" pattern="[0-9]*" class="humanid-input-otp" data-id="4" maxlength="1" name="code_4">
             </div>
         </div>
         <span class="timer-text verify-area timer"

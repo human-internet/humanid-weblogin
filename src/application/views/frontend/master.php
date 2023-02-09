@@ -36,6 +36,7 @@
             align-items: center;
             justify-content: center;
             top: 0;
+            padding: 16px;
         }
 
         .humanid-modal__modal.active {
@@ -79,6 +80,9 @@
             border-radius: 10px;
             cursor: pointer;
         }
+        .humanid-header {
+            text-align: center;
+        }
         @media only screen and (max-width: 768px) {
             .humanid-form-placement__otp-resend .timer{
                 margin-right:2rem;
@@ -96,6 +100,7 @@
                 display: block;
                 width: 100%;
                 max-width: 100%;
+                margin: 12px 0;
             }
         }
     </style>

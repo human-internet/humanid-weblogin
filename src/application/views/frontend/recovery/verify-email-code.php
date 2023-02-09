@@ -18,7 +18,7 @@
         <div class="humanid-form-placement__otp-verification">
             <?php for($i=1; $i<=$otpLength; $i++) {?>
                 <div class="humanid-form-group">
-                    <input type="number" class="humanid-input-otp" data-id="<?php echo $i;?>" maxlength="1" name="code[]" autofocus>
+                    <input type="tel" pattern="[0-9]*" class="humanid-input-otp" data-id="<?php echo $i;?>" maxlength="1" name="code[]" autofocus>
                 </div>
             <?php }?>
         </div>

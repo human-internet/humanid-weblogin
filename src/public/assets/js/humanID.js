@@ -144,10 +144,11 @@ const humanid = function () {
           }
 
           if (inputId === inputs.length) {
-            const inputFull = []
+            const inputFull = [];
+            inputs[i].blur();
             for (let index = 0; index < inputs.length; index++) {
               if (inputs[index].value.length > 0) {
-                inputFull.push(true)
+                inputFull.push(true);
               }
             }
             if (inputFull.length === inputs.length) {
