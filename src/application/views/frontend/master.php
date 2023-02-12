@@ -121,6 +121,7 @@
     </script>
 </head>
 <body>
+    <img src="<?php echo base_url('assets/images/bg-finger-print.svg');?>" alt="bg" class="humanid-background">
     <div class="humanid-header">
         <img src="<?php echo base_url('assets/images/anonymous-login.svg');?>" alt="Anonymous Login with humanID">
         <select id="changeLang">
