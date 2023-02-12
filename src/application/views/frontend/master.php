@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css');?>">
     <link rel="icon" href="<?php echo base_url('assets/images/favicon.png');?>">
     <style>
+        body {
+            background-image: none;
+        }
         .humanid-input-default{
             font-size:1rem;
         }
@@ -83,6 +86,10 @@
         .humanid-header {
             text-align: center;
         }
+        .humanid-background {
+            position: absolute;
+            right: -190.34px;
+        }
         @media only screen and (max-width: 768px) {
             .humanid-form-placement__otp-resend .timer{
                 margin-right:2rem;
@@ -101,6 +108,9 @@
                 width: 100%;
                 max-width: 100%;
                 margin: 12px 0;
+            }
+            .humanid-background {
+                top: 39px;
             }
         }
     </style>
