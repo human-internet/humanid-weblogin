@@ -87,7 +87,7 @@
             text-align: center;
         }
         .humanid-background {
-            position: absolute;
+            position: fixed;
             right: -190.34px;
         }
         @media only screen and (max-width: 768px) {
