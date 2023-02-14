@@ -28,7 +28,6 @@
         .humanid-form-placement__otp-resend a{
             font-weight: 600;
         }
-
         .humanid-modal__overlay {
             position: fixed;
         }
@@ -83,12 +82,100 @@
             border-radius: 10px;
             cursor: pointer;
         }
-        .humanid-header {
-            text-align: center;
-        }
+
         .humanid-background {
             position: fixed;
             right: -190.34px;
+        }
+
+        .humanid-header {
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .humanid-header select {
+            display: block;
+            position: relative;
+            top: auto;
+            right: auto;
+            float: right;
+        }
+
+        .humanid-select {
+            place-self: end;
+            flex: 1;
+        }
+        .humanid-lang-logo {
+            display: none;
+            text-align: right;
+        }
+
+        .humanid-lang-logo img {
+            width: 22px;
+            height: 20px;
+        }
+
+        .humanid-lang-container {
+            position: fixed;
+            right: 0;
+            top: 48px;
+            display: none;
+            z-index: 9;
+            width: 100vh;
+            height: 100vh;
+        }
+
+        .humanid-lang-options {
+            position: fixed;
+            right: 0;
+            top: 49px;
+            background-color: lightgray;
+            list-style-type: none;
+            padding: 0 4px;
+            margin: 0;
+            overflow: auto;
+            width: fit-content;
+            height: fit-content;
+            max-height: calc(100vh - 49px);
+        }
+
+        .humanid-lang-options li {
+            text-align: left;
+            text-decoration: none;
+            padding: 4px 16px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .humanid-lang-options li:hover {
+            background-color: gray;
+            color: white;
+            border-radius: 8px;
+        }
+
+        .humanid-lang-options li::before {
+            content: "\2713";
+            display: none;
+            position:absolute;
+            top: 0;
+            left: 0;
+            padding: 4px;
+        }
+
+        .humanid-lang-options .show-selected::before {
+            display: block;
+        }
+
+        .humanid-lang-options .show-selected {
+            background-color: gray;
+            color: white;
+            border-radius: 8px;
+        }
+
+        .humanid-header-image {
+            flex: 1;
         }
         @media only screen and (max-width: 768px) {
             .humanid-form-placement__otp-resend .timer{
@@ -100,17 +187,18 @@
             .humanid-modal .modal-content {
                 width: 80%;
             }
-            .humanid-header select {
-                top: auto;
-                right: auto;
-                position: relative;
-                display: block;
-                width: 100%;
-                max-width: 100%;
-                margin: 12px 0;
+            .humanid-header::before {
+                width: calc(100% - 40px);
             }
-            .humanid-background {
-                top: 39px;
+            .humanid-header select {
+                display: none;
+            }
+            .humanid-lang-logo {
+                display: block;
+            }
+            .humanid-header-image{
+                max-width: 264px;
+                padding: 0 8px;
             }
         }
     </style>
@@ -123,34 +211,71 @@
 <body>
     <img src="<?php echo base_url('assets/images/bg-finger-print.svg');?>" alt="bg" class="humanid-background">
     <div class="humanid-header">
-        <img src="<?php echo base_url('assets/images/anonymous-login.svg');?>" alt="Anonymous Login with humanID">
-        <select id="changeLang">
-            <option value="ar_SA">Arabic</option>
-            <option value="bn_IN">Bengali</option>
-            <option value="en_rGB">British English</option>
-            <option value="zh_TW">Chinese, Taiwan</option>
-            <option value="zh_CN">Chinese, China</option>
-            <option value="hr_HR">Croatian</option>
-            <option value="en_US" selected>English US</option>
-            <option value="fr_FR">French</option>
-            <option value="el_GR">Greek</option>
-            <option value="hi_IN">Hindi</option>
-            <option value="in_ID">Indonesian</option>
-            <option value="it_IT">Italian</option>
-            <option value="ja_JP">Japanese</option>
-            <option value="ko_KR">Korean</option>
-            <option value="ms_MY">Malay</option>
-            <option value="pl_PL">Polish</option>
-            <option value="pt_PT">Portuguese</option>
-            <option value="ru_RU">Russian</option>
-            <option value="ro_RO">Romanian, Romania</option>
-            <option value="sv_SE">Swedish, Sweden</option>
-            <option value="es_ES">Spanish</option>
-            <option value="tr_TR">Turkish</option>
-            <option value="tl_PH">Tagalog</option>
-            <option value="th_TH">Thai</option>
-            <option value="vi_VN">Vietnamese</option>
-    </select>
+        <div style="flex: 1"></div>
+        <img src="<?php echo base_url('assets/images/anonymous-login.svg');?>" alt="Anonymous Login with humanID" class="humanid-header-image">
+        <div class="humanid-select">
+            <select id="changeLang">
+                <option value="ar_SA">Arabic</option>
+                <option value="bn_IN">Bengali</option>
+                <option value="en_rGB">British English</option>
+                <option value="zh_TW">Chinese, Taiwan</option>
+                <option value="zh_CN">Chinese, China</option>
+                <option value="hr_HR">Croatian</option>
+                <option value="en_US" selected>English US</option>
+                <option value="fr_FR">French</option>
+                <option value="el_GR">Greek</option>
+                <option value="hi_IN">Hindi</option>
+                <option value="in_ID">Indonesian</option>
+                <option value="it_IT">Italian</option>
+                <option value="ja_JP">Japanese</option>
+                <option value="ko_KR">Korean</option>
+                <option value="ms_MY">Malay</option>
+                <option value="pl_PL">Polish</option>
+                <option value="pt_PT">Portuguese</option>
+                <option value="ru_RU">Russian</option>
+                <option value="ro_RO">Romanian, Romania</option>
+                <option value="sv_SE">Swedish, Sweden</option>
+                <option value="es_ES">Spanish</option>
+                <option value="tr_TR">Turkish</option>
+                <option value="tl_PH">Tagalog</option>
+                <option value="th_TH">Thai</option>
+                <option value="vi_VN">Vietnamese</option>
+            </select>
+
+            <div class="humanid-lang-logo" id="selectLang">
+                <img src="<?php echo base_url('assets/images/select-language.svg');?>" alt="Select Language Logo" id="selectLangLogo">
+                <div class="humanid-lang-container" id="humanidLangContainer">
+                    <ul class="humanid-lang-options" id="humanidLangOptions">
+                        <li data-lang="ar_SA">Arabic</li>
+                        <li data-lang="bn_IN">Bengali</li>
+                        <li data-lang="en_rGB">British English</li>
+                        <li data-lang="zh_TW">Chinese, Taiwan</li>
+                        <li data-lang="zh_CN">Chinese, China</li>
+                        <li data-lang="hr_HR">Croatian</li>
+                        <li data-lang="en_US">English US</li>
+                        <li data-lang="fr_FR">French</li>
+                        <li data-lang="de_DE">German</li>
+                        <li data-lang="el_GR">Greek</li>
+                        <li data-lang="hi_IN">Hindi</li>
+                        <li data-lang="in_ID">Indonesian</li>
+                        <li data-lang="it_IT">Italian</li>
+                        <li data-lang="ja_JP">Japanese</li>
+                        <li data-lang="ko_KR">Korean</li>
+                        <li data-lang="ms_MY">Malay</li>
+                        <li data-lang="pl_PL">Polish</li>
+                        <li data-lang="pt_PT">Portuguese</li>
+                        <li data-lang="ru_RU">Russian</li>
+                        <li data-lang="ro_RO">Romanian, Romania</li>
+                        <li data-lang="sv_SE">Swedish, Sweden</li>
+                        <li data-lang="es_ES">Spanish</li>
+                        <li data-lang="tr_TR">Turkish</li>
+                        <li data-lang="tl_PH">Tagalog</li>
+                        <li data-lang="th_TH">Thai</li>
+                        <li data-lang="vi_VN">Vietnamese</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="humanid-container">
         <?php echo $view;?>
@@ -184,7 +309,35 @@
             $('#changeLang').change(function (){
                 var currentUrl = new URL(window.location.href);
                 currentUrl.searchParams.set('lang', $(this).val());
-                url = currentUrl.href;
+                let url = currentUrl.href;
+                window.location.href=url;
+            })
+
+            $("#selectLangLogo").click(function (e) {
+                var options = $("#humanidLangContainer");
+                if (options.is(":visible")) {
+                    options.hide();
+                } else {
+                    options.show();
+                }
+            })
+
+            $("#humanidLangContainer").click(function (e) {
+                var container = $("#humanidLangContainer");
+                container.hide();
+            }).children().click(function (e) {
+                return false;
+            })
+
+            $("[data-lang]").each(function () {
+                if($(this).data('lang') == "<?php echo isset($_GET['lang'])? $_GET['lang'] : 'en_US'; ?>") {
+                    $(this).addClass('show-selected')
+                }
+            })
+            $("[data-lang]").click(function (e) {
+                var currentUrl = new URL(window.location.href);
+                currentUrl.searchParams.set('lang', $(this).data('lang'));
+                let url = currentUrl.href;
                 window.location.href=url;
             })
         });
