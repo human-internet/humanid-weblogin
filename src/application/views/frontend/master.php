@@ -8,7 +8,21 @@
     <title>Anonymous Login with humanID</title>
     <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css');?>">
     <link rel="icon" href="<?php echo base_url('assets/images/favicon.png');?>">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
+        .material-symbols-outlined {
+            color: white;
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+
+        :root {
+            --headerHeight: 0;
+        }
+
         body {
             background-image: none;
         }
@@ -103,10 +117,6 @@
             float: right;
         }
 
-        .humanid-select {
-            place-self: end;
-            flex: 1;
-        }
         .humanid-lang-logo {
             display: none;
             text-align: right;
@@ -117,20 +127,27 @@
             height: 20px;
         }
 
+        .humanid-select {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            flex: 1;
+        }
+
         .humanid-lang-container {
             position: fixed;
             right: 0;
-            top: 48px;
+            top: 0;
             display: none;
             z-index: 9;
             width: 100vh;
-            height: 100vh;
+            height: calc(100vh - var(--headerHeight, 40px));
         }
 
         .humanid-lang-options {
-            position: fixed;
+            position: absolute;
             right: 0;
-            top: 49px;
+            top: var(--headerHeight, 40px);
             background-color: lightgray;
             list-style-type: none;
             padding: 0 4px;
@@ -138,7 +155,7 @@
             overflow: auto;
             width: fit-content;
             height: fit-content;
-            max-height: calc(100vh - 49px);
+            max-height: calc(100vh - var(--headerHeight, 40px));
         }
 
         .humanid-lang-options li {
@@ -177,28 +194,75 @@
         .humanid-header-image {
             flex: 1;
         }
+
+        .humanid-back-button {
+            color: white;
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
         @media only screen and (max-width: 768px) {
-            .humanid-form-placement__otp-resend .timer{
-                margin-right:2rem;
+            .humanid-form-placement__otp-resend .timer {
+                margin-right: 2rem;
             }
-            .humanid-form-placement__otp-resend a{
+
+            .humanid-form-placement__otp-resend a {
                 font-size: 0.75rem;
             }
+
             .humanid-modal .modal-content {
                 width: 80%;
             }
-            .humanid-header::before {
-                width: calc(100% - 40px);
+
+            .humanid-header {
+                padding: 0.5rem;
             }
+
+            .humanid-header::before {
+                width: 0px;
+            }
+
             .humanid-header select {
                 display: none;
             }
+
             .humanid-lang-logo {
-                display: block;
+                display: flex;
             }
-            .humanid-header-image{
+
+            .humanid-header img {
                 max-width: 264px;
-                padding: 0 8px;
+                min-width: 0;
+            }
+
+            .humanid-header-image {
+                padding: 0 1rem;
+            }
+
+            .humanid-select {
+                flex: 0;
+            }
+
+            .humanid-back-button {
+                flex: 0;
+            }
+
+            .humanid-container {
+                padding-top: var(--headerHeight, 40px);
+
+            }
+
+            .humanid-logo {
+                padding: 1.5rem;
+            }
+
+            .humanid-logo__placement {
+                margin: 0;
+            }
+
+            .humanid-logo__placement img {
+                margin: 0;
             }
         }
     </style>
@@ -210,8 +274,16 @@
 </head>
 <body>
     <img src="<?php echo base_url('assets/images/bg-finger-print.svg');?>" alt="bg" class="humanid-background">
-    <div class="humanid-header">
-        <div style="flex: 1"></div>
+    <div id="humanidHeader" class="humanid-header">
+        <div class="humanid-back-button">
+            <?php if (isset($_GET['s']) && $_GET['s'] == 'm') { ?>
+                <a href="<?= base_url('/back') ?>" style="display: flex;">
+                    <span class="material-symbols-outlined">arrow_back_ios_new</span>
+                </a>
+            <?php } else { ?>
+                <span class="material-symbols-outlined" style="opacity: 0;">arrow_back_ios_new</span>
+            <?php } ?>
+        </div>
         <img src="<?php echo base_url('assets/images/anonymous-login.svg');?>" alt="Anonymous Login with humanID" class="humanid-header-image">
         <div class="humanid-select">
             <select id="changeLang">
@@ -244,38 +316,39 @@
 
             <div class="humanid-lang-logo" id="selectLang">
                 <img src="<?php echo base_url('assets/images/select-language.svg');?>" alt="Select Language Logo" id="selectLangLogo">
-                <div class="humanid-lang-container" id="humanidLangContainer">
-                    <ul class="humanid-lang-options" id="humanidLangOptions">
-                        <li data-lang="ar_SA">Arabic</li>
-                        <li data-lang="bn_IN">Bengali</li>
-                        <li data-lang="en_rGB">British English</li>
-                        <li data-lang="zh_TW">Chinese, Taiwan</li>
-                        <li data-lang="zh_CN">Chinese, China</li>
-                        <li data-lang="hr_HR">Croatian</li>
-                        <li data-lang="en_US">English US</li>
-                        <li data-lang="fr_FR">French</li>
-                        <li data-lang="de_DE">German</li>
-                        <li data-lang="el_GR">Greek</li>
-                        <li data-lang="hi_IN">Hindi</li>
-                        <li data-lang="in_ID">Indonesian</li>
-                        <li data-lang="it_IT">Italian</li>
-                        <li data-lang="ja_JP">Japanese</li>
-                        <li data-lang="ko_KR">Korean</li>
-                        <li data-lang="ms_MY">Malay</li>
-                        <li data-lang="pl_PL">Polish</li>
-                        <li data-lang="pt_PT">Portuguese</li>
-                        <li data-lang="ru_RU">Russian</li>
-                        <li data-lang="ro_RO">Romanian, Romania</li>
-                        <li data-lang="sv_SE">Swedish, Sweden</li>
-                        <li data-lang="es_ES">Spanish</li>
-                        <li data-lang="tr_TR">Turkish</li>
-                        <li data-lang="tl_PH">Tagalog</li>
-                        <li data-lang="th_TH">Thai</li>
-                        <li data-lang="vi_VN">Vietnamese</li>
-                    </ul>
-                </div>
             </div>
         </div>
+    </div>
+
+    <div class="humanid-lang-container" id="humanidLangContainer">
+        <ul class="humanid-lang-options" id="humanidLangOptions">
+            <li data-lang="ar_SA">Arabic</li>
+            <li data-lang="bn_IN">Bengali</li>
+            <li data-lang="en_rGB">British English</li>
+            <li data-lang="zh_TW">Chinese, Taiwan</li>
+            <li data-lang="zh_CN">Chinese, China</li>
+            <li data-lang="hr_HR">Croatian</li>
+            <li data-lang="en_US">English US</li>
+            <li data-lang="fr_FR">French</li>
+            <li data-lang="de_DE">German</li>
+            <li data-lang="el_GR">Greek</li>
+            <li data-lang="hi_IN">Hindi</li>
+            <li data-lang="in_ID">Indonesian</li>
+            <li data-lang="it_IT">Italian</li>
+            <li data-lang="ja_JP">Japanese</li>
+            <li data-lang="ko_KR">Korean</li>
+            <li data-lang="ms_MY">Malay</li>
+            <li data-lang="pl_PL">Polish</li>
+            <li data-lang="pt_PT">Portuguese</li>
+            <li data-lang="ru_RU">Russian</li>
+            <li data-lang="ro_RO">Romanian, Romania</li>
+            <li data-lang="sv_SE">Swedish, Sweden</li>
+            <li data-lang="es_ES">Spanish</li>
+            <li data-lang="tr_TR">Turkish</li>
+            <li data-lang="tl_PH">Tagalog</li>
+            <li data-lang="th_TH">Thai</li>
+            <li data-lang="vi_VN">Vietnamese</li>
+        </ul>
     </div>
     <div class="humanid-container">
         <?php echo $view;?>
@@ -339,6 +412,11 @@
                 currentUrl.searchParams.set('lang', $(this).data('lang'));
                 let url = currentUrl.href;
                 window.location.href=url;
+            })
+
+            $(document).ready(function() {
+                const h = $("#humanidHeader").height();
+                document.documentElement.style.setProperty("--headerHeight", `${h + 16}px`);
             })
         });
     </script>
