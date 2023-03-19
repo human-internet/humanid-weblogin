@@ -127,13 +127,13 @@ class Login extends BaseController
                     redirect(base_url('recovery/instead-login'));
                 }
 
-                if (
-                    $data->app->config->accountRecovery === true &&
-                    $data->user->hasSetupRecovery === false &&
-                    $data->user->newAccount === true
-                ) {
-                    redirect(base_url('recovery/create'));
-                }
+//                if (
+//                    $data->app->config->accountRecovery === true &&
+//                    $data->user->hasSetupRecovery === false &&
+//                    $data->user->newAccount === true
+//                ) {
+//                    redirect(base_url('recovery/create'));
+//                }
 
                 redirect('redirect_app');
             } else {
@@ -184,7 +184,8 @@ class Login extends BaseController
         $this->_app = $this->getAppInfo();
         $this->data['app'] = $this->_app;
         // Handle from Recovery Account
-        $isRecovery = $this->session->has_userdata('humanId__verifyOtpRecovery');
+//        $isRecovery = $this->session->has_userdata('humanId__verifyOtpRecovery');
+        $isRecovery = false; // Temporarily disable recovery
         if ($isRecovery) {
             // "Yes, Log me in instead" button clicked
             $sessionOtpRecovery = $this->session->userdata('humanId__verifyOtpRecovery');
