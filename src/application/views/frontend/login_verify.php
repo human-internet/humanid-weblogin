@@ -38,19 +38,22 @@
                 <div class="humanid-form-group">
                     <input type="tel" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                            maxlength="1" pattern="[0-9]*" class="humanid-input-otp" data-id="1" name="code_1" autofocus
-                           autocomplete="off">
+                           id="single-factor-code-text-field" autocomplete="one-time-code">
                 </div>
                 <div class="humanid-form-group">
                     <input type="tel" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                           maxlength="1" pattern="[0-9]*" class="humanid-input-otp" data-id="2" name="code_2" autocomplete="off">
+                           maxlength="1" pattern="[0-9]*" class="humanid-input-otp" data-id="2" name="code_2"
+                           id="single-factor-code-text-field" autocomplete="one-time-code">
                 </div>
                 <div class="humanid-form-group">
                     <input type="tel" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                           maxlength="1" pattern="[0-9]*" class="humanid-input-otp" data-id="3" name="code_3" autocomplete="off">
+                           maxlength="1" pattern="[0-9]*" class="humanid-input-otp" data-id="3" name="code_3"
+                           id="single-factor-code-text-field" autocomplete="one-time-code">
                 </div>
                 <div class="humanid-form-group">
                     <input type="tel" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                           maxlength="1" pattern="[0-9]*" class="humanid-input-otp" data-id="4" name="code_4" autocomplete="off">
+                           maxlength="1" pattern="[0-9]*" class="humanid-input-otp" data-id="4" name="code_4"
+                           id="single-factor-code-text-field" autocomplete="one-time-code">
                 </div>
             </div>
             <span class="timer-text verify-area timer" style="display: none;"><?php echo str_replace("{TIME}",'<strong>00:60</strong>',$lang->text->resend);?></span>
