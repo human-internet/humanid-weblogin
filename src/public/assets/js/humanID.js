@@ -158,6 +158,7 @@ const humanid = function () {
         });
         inputs[i].addEventListener('paste', async function (event) {
           const paste = (event.clipboardData || window.clipboardData).getData('text');
+          console.log("Paste: " + paste);
           const setTimeoutPromise = new Promise((resolve) => {
             setTimeout(() => {
               for (let index = 0; index < inputs.length; index++) {
