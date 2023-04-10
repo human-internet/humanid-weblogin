@@ -124,59 +124,26 @@ const humanid = function () {
       var setTime = parseInt(failAttemptLimit);
       timer(setTime);
 
-      const inputs = document.querySelectorAll('.humanid-input-otp');
-      for (let i = 0; i < inputs.length; i++) {
-        inputs[i].addEventListener('keyup', function (event) {
-          let inputId = Number(inputs[i].getAttribute('data-id'));
+      const inputs = document.querySelector('.humanid-input-otp');
+      // Handle on manually input
+      inputs.addEventListener('keyup', function (event) {
+        event.preventDefault();
+        let otp = inputs.value;
+        if (otp.length === 4) {
+          $('form').submit();
+        }
+      });
 
-          if (event.key === "Backspace") {
-            inputs[i].value = '';
-            if (i !== 0) {
-              inputs[i - 1].focus();
-            }
-          }
-
-          if (/\d/i.test(inputs[i].value)) {
-            if (i !== inputs.length - 1) {
-              inputs[i + 1].focus();
-            }
-            event.preventDefault();
-          }
-
-          if (inputId === inputs.length) {
-            const inputFull = [];
-            inputs[i].blur();
-            for (let index = 0; index < inputs.length; index++) {
-              if (inputs[index].value.length > 0) {
-                inputFull.push(true);
-              }
-            }
-            if (inputFull.length === inputs.length) {
-              $('form').submit();
-            }
-          }
-        });
-        inputs[i].addEventListener('paste', async function (event) {
-          const paste = (event.clipboardData || window.clipboardData).getData('text');
-          console.log("Paste: " + paste);
-          const setTimeoutPromise = new Promise((resolve) => {
-            setTimeout(() => {
-              for (let index = 0; index < inputs.length; index++) {
-                inputs[index].value = '';
-                if (paste[index]) {
-                  inputs[index].value = paste[index];
-                }
-              }
-              resolve(true);
-            }, 1);
-          });
-          setTimeoutPromise.then(function () {
-            if (paste.length === inputs.length) {
-              $('form').submit();
-            }
-          });
-        })
-      }
+      // Handle on Paste input
+      inputs.addEventListener('paste', function (event) {
+        event.preventDefault();
+        // get the OTP Code from clipboard
+        let clipboardData = (event.clipboardData || window.clipboardData).getData('text');
+        if (clipboardData.length === 4) {
+          inputs.value = clipboardData;
+          $('form').submit();
+        }
+      });
 
       $('.directed-now').click(function () {
         if (hasRedirected == false) {

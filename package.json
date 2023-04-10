@@ -6,7 +6,7 @@
   "scripts": {
     "build-css": "node-sass --include-path scss scss/style.scss src/public/assets/css/style.css",
     "watch-css": "nodemon -e scss -x \"npm run build-css\"",
-    "prod": "node-sass -include-path scss/style.scss src/public/assets/css/style.css --output-style compressed"
+    "prod": "node-sass --include-path scss scss/style.scss src/public/assets/css/style.css --output-style compressed"
   },
   "repository": {
     "type": "git",

@@ -37,22 +37,7 @@
             <div class="humanid-form-placement__otp-verification">
                 <div class="humanid-form-group">
                     <input type="tel" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                           maxlength="1" pattern="[0-9]*" class="humanid-input-otp" data-id="1" name="code_1" autofocus
-                           id="single-factor-code-text-field" autocomplete="one-time-code">
-                </div>
-                <div class="humanid-form-group">
-                    <input type="tel" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                           maxlength="1" pattern="[0-9]*" class="humanid-input-otp" data-id="2" name="code_2"
-                           id="single-factor-code-text-field" autocomplete="one-time-code">
-                </div>
-                <div class="humanid-form-group">
-                    <input type="tel" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                           maxlength="1" pattern="[0-9]*" class="humanid-input-otp" data-id="3" name="code_3"
-                           id="single-factor-code-text-field" autocomplete="one-time-code">
-                </div>
-                <div class="humanid-form-group">
-                    <input type="tel" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                           maxlength="1" pattern="[0-9]*" class="humanid-input-otp" data-id="4" name="code_4"
+                           maxlength="4" pattern="[0-9]*" class="humanid-input-otp" name="code"
                            id="single-factor-code-text-field" autocomplete="one-time-code">
                 </div>
             </div>

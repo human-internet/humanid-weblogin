@@ -92,16 +92,9 @@ class Login extends BaseController
         $this->data['row'] = $login;
         $this->data['display_phone'] = $this->_display_phone($login['phone']);
 
-        $this->form_validation->set_rules('code_1', 'Code', 'required|numeric', array('required' => $this->lg->form->codeRequired, 'numeric' => $this->lg->form->codeNumeric));
-        $this->form_validation->set_rules('code_2', 'Code', 'required|numeric', array('required' => $this->lg->form->codeRequired, 'numeric' => $this->lg->form->codeNumeric));
-        $this->form_validation->set_rules('code_3', 'Code', 'required|numeric', array('required' => $this->lg->form->codeRequired, 'numeric' => $this->lg->form->codeNumeric));
-        $this->form_validation->set_rules('code_4', 'Code', 'required|numeric', array('required' => $this->lg->form->codeRequired, 'numeric' => $this->lg->form->codeNumeric));
+        $this->form_validation->set_rules('code', 'Code', 'required|numeric', array('required' => $this->lg->form->codeRequired, 'numeric' => $this->lg->form->codeNumeric));
         if ($this->form_validation->run() == TRUE) {
-            $code_1 = $this->input->post('code_1', TRUE);
-            $code_2 = $this->input->post('code_2', TRUE);
-            $code_3 = $this->input->post('code_3', TRUE);
-            $code_4 = $this->input->post('code_4', TRUE);
-            $otp_code = $code_1 . $code_2 . $code_3 . $code_4;
+            $otp_code = $this->input->post('code', TRUE);
 
             // Verify the otp code
             $requestOtpLogin = $this->session->userdata('humanId__requestOtpLogin');
