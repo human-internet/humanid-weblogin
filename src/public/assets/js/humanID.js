@@ -126,12 +126,15 @@ const humanid = function () {
 
       const inputs = document.querySelector('.humanid-input-otp');
       // Handle on manually input
-      inputs.addEventListener('keyup', function (event) {
-        event.preventDefault();
-        let otp = inputs.value;
-        if (otp.length === 4) {
-          $('form').submit();
-        }
+      ["change", "input"].forEach(eventType => {
+        inputs.addEventListener(eventType, function (event) {
+          event.preventDefault();
+          let otp = inputs.value;
+          console.log("OTP: " + otp);
+          if (otp.length === 4) {
+            $('form').submit();
+          }
+        });
       });
 
       // Handle on Paste input
