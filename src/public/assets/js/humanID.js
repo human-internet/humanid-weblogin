@@ -3,8 +3,8 @@ const humanid = function () {
   return {
     countdownFormSubmit: function (duration, display, target) {
       var timeleft = duration;
-      var downloadTimer = setInterval(function() {
-        if(timeleft <= 0){
+      var downloadTimer = setInterval(function () {
+        if (timeleft <= 0) {
           clearInterval(downloadTimer);
           $(target).submit();
         } else {
@@ -120,33 +120,8 @@ const humanid = function () {
           $('.resend-area').show();
         }
       }
-
       var setTime = parseInt(failAttemptLimit);
       timer(setTime);
-
-      const inputs = document.querySelector('.humanid-input-otp');
-      // Handle on manually input
-      ["change", "input"].forEach(eventType => {
-        inputs.addEventListener(eventType, function (event) {
-          event.preventDefault();
-          let otp = inputs.value;
-          console.log("OTP: " + otp);
-          if (otp.length === 4) {
-            $('form').submit();
-          }
-        });
-      });
-
-      // Handle on Paste input
-      inputs.addEventListener('paste', function (event) {
-        event.preventDefault();
-        // get the OTP Code from clipboard
-        let clipboardData = (event.clipboardData || window.clipboardData).getData('text');
-        if (clipboardData.length === 4) {
-          inputs.value = clipboardData;
-          $('form').submit();
-        }
-      });
 
       $('.directed-now').click(function () {
         if (hasRedirected == false) {
@@ -190,6 +165,29 @@ const humanid = function () {
         overlay.removeClass('active');
         $(`#${modalTargetClose}`).removeClass('active');
       })
-    }
+    },
+    handlePasteOtp: function (el, e) {
+      // get the OTP Code from clipboard
+      let clipboardData = (e.clipboardData || window.clipboardData).getData('text');
+      console.log("clipboard data : " + clipboardData);
+      if (clipboardData.length === 4) {
+        el.value = clipboardData;
+        // $('form').submit();
+      }
+    },
+    handleInputOtp: function (el, manually = false) {
+      let otp = el.value
+      otp = otp.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+      el.value = otp;
+      console.log("Otp:" + otp);
+      if (el.value.length === 4) {
+        $('.btn-submit-otp').attr('disabled', false);
+        if (!manually) {
+          $('form').submit();
+        }
+      } else {
+        $('.btn-submit-otp').attr('disabled', true);
+      }
+    },
   };
 }();

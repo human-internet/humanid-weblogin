@@ -92,7 +92,7 @@ class Login extends BaseController
         $this->data['row'] = $login;
         $this->data['display_phone'] = $this->_display_phone($login['phone']);
 
-        $this->form_validation->set_rules('code', 'Code', 'required|numeric', array('required' => $this->lg->form->codeRequired, 'numeric' => $this->lg->form->codeNumeric));
+        $this->form_validation->set_rules('code', 'Code', 'required|numeric|min_length[4]|max_length[4]', array('required' => $this->lg->form->codeRequired, 'numeric' => $this->lg->form->codeNumeric));
         if ($this->form_validation->run() == TRUE) {
             $otp_code = $this->input->post('code', TRUE);
 

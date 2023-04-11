@@ -35,11 +35,21 @@
         </div>
         <div class="humanid-form-placement">
             <div class="humanid-form-placement__otp-verification">
-                <div class="humanid-form-group">
-                    <input type="tel" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                           maxlength="4" pattern="[0-9]*" class="humanid-input-otp" name="code"
-                           id="single-factor-code-text-field" autocomplete="one-time-code">
-                </div>
+                <?php if (isset($_GET['s']) && $_GET['s'] == 'm') { ?>
+                    <div class="humanid-form-group" style="flex: 3">
+                        <input type="tel" oninput="humanid.handleInputOtp(this, true)"
+                               maxlength="4" pattern="[0-9]*" class="humanid-input-otp" name="code"
+                               id="single-factor-code-text-field" autocomplete="one-time-code">
+                    </div>
+                    <button class="btn-humanid btn-humanid-primary btn-submit-otp" disabled type="submit" style="flex: 1">Submit</button>
+                <?php } else { ?>
+                    <div class="humanid-form-group">
+                        <input type="tel" oninput="humanid.handleInputOtp(this, false)"
+                               onpaste="humanid.handlePasteOtp(this, event)"
+                               maxlength="4" pattern="[0-9]*" class="humanid-input-otp" name="code"
+                               id="single-factor-code-text-field" autocomplete="one-time-code">
+                    </div>
+                <?php } ?>
             </div>
             <span class="timer-text verify-area timer" style="display: none;"><?php echo str_replace("{TIME}",'<strong>00:60</strong>',$lang->text->resend);?></span>
             <input type="hidden" name="remaining" id="remaining">
