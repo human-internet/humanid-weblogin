@@ -121,7 +121,7 @@ class Humanid
         return $res;
     }
 
-    public function userRequestOTP($countryCode, $phone, $requestOtpToken, $source, $lang = 'en')
+    public function userRequestOTP($countryCode, $phone, $requestOtpToken, $source, $lang = 'en', $requestId = null)
     {
         $url = $this->url. 'web-login/users/request-otp';
         $body = [
@@ -133,6 +133,9 @@ class Humanid
             'lang' => $lang,
             's' => $source,
         ];
+        if ($requestId) {
+            $param['requestId'] = $requestId;
+        }
 
         return $this->internalWebLogin($url, $body, $param);
     }

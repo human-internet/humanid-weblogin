@@ -10,7 +10,9 @@ class Login extends BaseController
         $this->clearSessions();
         $this->_app = $this->getAppInfo(true);
         $webLoginToken = $this->input->get('t', true);
+        $requestId = $this->input->get('id', true);
         $this->session->set_userdata('humanId__loginRequestOtpToken', $webLoginToken);
+        $this->session->set_userdata('humanId__requestId', $requestId);
         $this->form_validation->set_rules('phone', $this->lg->phone, 'required|numeric|min_length[4]|max_length[14]', array(
             'required' => $this->lg->form->phoneRequired,
             'numeric' => $this->lg->form->phoneNumeric,
@@ -27,7 +29,7 @@ class Login extends BaseController
 
         if ($this->form_validation->run() == TRUE) {
             // Request OTP
-            $response = $this->humanid->userRequestOTP($dialcode, $phone, $webLoginToken, $this->_app->source, $this->lg->id);
+            $response = $this->humanid->userRequestOTP($dialcode, $phone, $webLoginToken, $this->_app->source, $this->lg->id, $requestId);
             if (!$response->success) {
                 $this->handleErrorRequestOtpLogin($response);
             }
@@ -39,7 +41,7 @@ class Login extends BaseController
                 ],
             ]);
             $this->session->set_userdata('humanId__requestOtpLogin', $response->data);
-            redirect(site_url('verify?a=' . $this->_app->id . '&t=' . $webLoginToken . '&lang=' . $this->lg->id . "&s=" . $this->_app->source));
+            redirect(site_url('verify?a=' . $this->_app->id . '&t=' . $webLoginToken . '&lang=' . $this->lg->id . "&s=" . $this->_app->source . "&id=" . $requestId));
         } else {
             $this->_first_error_msg();
         }
@@ -235,10 +237,11 @@ class Login extends BaseController
         $this->_app = $this->getAppInfo();
         $session = $this->session->userdata('humanId__phone');
         $loginToken = $this->session->userdata('humanId__loginRequestOtpToken');
+        $requestId = $this->input->get('id', true);
         $phone = $session['phone'];
         $dialcode = $session['dialcode'];
         // Request OTP
-        $response = $this->humanid->userRequestOTP($dialcode, $phone, $loginToken, $this->_app->source, $this->lg->id);
+        $response = $this->humanid->userRequestOTP($dialcode, $phone, $loginToken, $this->_app->source, $this->lg->id, $requestId);
         if (!$response->success) {
             $this->handleErrorRequestOtpLogin($response);
         }
@@ -317,8 +320,10 @@ class Login extends BaseController
 
     private function handleErrorRequestOtpLogin($response)
     {
+        $t = $this->session->userdata('humanId__loginRequestOtpToken');
+        $id = $this->session->userdata('humanId__requestId');
         $code = $response->code ?? '';
-        $redirectBack = site_url('login?a=' . $this->_app->id . '&t=' . $this->session->userdata('humanId__loginRequestOtpToken') . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->_app->source);
+        $redirectBack = site_url('login?a=' . $this->_app->id . '&t=' . $t  . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->_app->source . "&id=" . $id);
 
         $modal = (object) [
             'title' => $this->lg->errorPage,

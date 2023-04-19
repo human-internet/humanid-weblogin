@@ -90,6 +90,7 @@ class BaseController extends MY_Controller
         $this->session->unset_userdata('humanId__phone');
         $this->session->unset_userdata('humanId__userLogin');
         $this->session->unset_userdata('humanId__loginRequestOtpToken');
+        $this->session->unset_userdata('humanId__requestId');
 
         // Recovery
         $this->session->unset_userdata('humanId__requestOtpRecovery');
