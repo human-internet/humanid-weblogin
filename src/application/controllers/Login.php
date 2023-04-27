@@ -137,7 +137,7 @@ class Login extends BaseController
                         'title' => $this->lg->errorPage,
                         'code' => $response->code,
                         'message' => $this->lg->error->sessionExpired,
-                        'url' => site_url('login?a=' . $this->_app->id . '&t=' . $sessionToken . '&lang=' . $this->lg->id . "&s=" . $this->_app->source)
+                        'url' => site_url('demo'),
                     ];
                     $this->session->set_flashdata('modal', $modal);
                     $this->session->set_flashdata('error_message', $this->lg->error->sessionExpired);
