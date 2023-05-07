@@ -133,8 +133,9 @@ class Humanid
             'lang' => $lang,
             's' => $source,
         ];
-        if ($requestId) {
-            $param['requestId'] = $requestId;
+        // Handle RequestId
+        if ($requestId !== null) {
+            $body['requestId'] = $requestId;
         }
 
         return $this->internalWebLogin($url, $body, $param);
