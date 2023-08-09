@@ -1,11 +1,11 @@
 {
-    "language": "Japanese",
+    "language": "日本語",
     "phone": "電話番号",
     "countryCode": "国コード",
     "code": "コード",
     "sendCode": "確認コード付きのSMSを送信する",
     "newAccount": "新しい電話番号",
-    "redirect": "Redirect Now",
+    "redirect": "リダイレクト",
     "verify": "電話番号を認証する",
     "resend": "コードを再送信する",
     "try": "別の番号を試してください",
@@ -22,15 +22,15 @@
         "codeNumeric": "コードフィールドには数字のみを含める必要があります"
     },
     "error": {
-        "found": "Error not found.",
+        "found": "エラーが見つかりません。",
         "try": "データの送信中にエラーが発生しました。 もう一度お試しください",
         "tokenExpired": "期限が切れました-検証プロセスを再開してください",
         "sessionExpired": "セッションの有効期限が切れました。もう一度開始してください",
-        "appId": "The AppId not found",
+        "appId": "AppIdが見つかりません。",
         "verify": "Phone number verification ends"
     },
     "text": {
-        "pageTitle": "Websites and Apps があなたの個人情報を収集することはありません。",
+        "pageTitle": "ウエブおよびアプリがあなたの個人情報を収集することはありません。",
         "pageTitleApp": "{APPNAME} があなたの個人情報を収集することはありません。",
         "phone": "電話番号は、認証後に削除されます。",
         "privacy": "<a href=\"{LINK}\" target=\"_blank\">プライバシーを回復する私たちのミッションの詳細はこちら</a>",
