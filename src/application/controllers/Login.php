@@ -130,7 +130,8 @@ class Login extends BaseController
 //                    redirect(base_url('recovery/create'));
 //                }
 
-                redirect('redirect_app');
+                redirect('redirect_app?lang=' . $this->lg->id);
+
             } else {
                 if ($response->code == 'ERR_11') {
                     $modal = (object) [
@@ -229,7 +230,7 @@ class Login extends BaseController
             redirect($post['redirectUrl']);
         }
 
-        redirect('redirect_app');
+        redirect('redirect_app?lang=' . $this->lg->id);
     }
 
     public function resend()
