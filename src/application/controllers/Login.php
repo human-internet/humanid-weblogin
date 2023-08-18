@@ -142,7 +142,7 @@ class Login extends BaseController
                     ];
                     $this->session->set_flashdata('modal', $modal);
                     $this->session->set_flashdata('error_message', $this->lg->error->sessionExpired);
-                    redirect(site_url('error'));
+                    redirect(site_url('error?lang=' . $this->lg->id));
                 }
                 if ($response->code == 'ERR_13') {
                     $this->init_logs(array('error' => 'ERR_13 - ' . $response->message));
@@ -157,7 +157,7 @@ class Login extends BaseController
                     ];
                     $this->session->set_flashdata('modal', $modal);
                     $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-                    redirect(site_url('error'));
+                    redirect(site_url('error?lang=' . $this->lg->id));
                 }
 
                 $this->data['error_message'] = $response->message;
@@ -310,12 +310,12 @@ class Login extends BaseController
             $this->session->unset_userdata('humanId__phone');
             $this->session->set_flashdata('modal', $modal);
             $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-            redirect(site_url('error'));
+            redirect(site_url('error?lang=' . $this->lg->id));
         }
 
         $this->session->set_flashdata('modal', $modal);
         $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-        $redirectUrl = site_url('error');
+        $redirectUrl = site_url('error?lang=' . $this->lg->id);
         redirect($redirectUrl);
     }
 
@@ -348,6 +348,6 @@ class Login extends BaseController
 
         $this->session->set_flashdata('modal', $modal);
         $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-        redirect(site_url('error'));
+        redirect(site_url('error?lang=' . $this->lg->id));
     }
 }

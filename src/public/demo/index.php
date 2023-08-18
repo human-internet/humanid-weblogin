@@ -283,7 +283,7 @@ $demo2__loginUrl = getLoginUrl($demo2__clientId, $demo2__clientSecret);
             <img src="logo.png" alt="Demo App" height="120">
         </div>
         <div class="login-button">
-            <p>Try the default humanID flow:</p>
+<!--            <p>Try the default humanID flow:</p>-->
             <a href="<?php echo $demo2__loginUrl ?>">
                 <img class="humanid-button" src="anonymous-login.svg" alt="Anonymous Login with humanID">
             </a>
@@ -293,9 +293,9 @@ $demo2__loginUrl = getLoginUrl($demo2__clientId, $demo2__clientSecret);
             <div class="ortext">or</div>
             <div class="line2"></div>
         </div>
-		<div class="login-button">
+	<!--	<div class="login-button">
             <p>Try humanID with account recovery mode <br> optional for both clients and users:</p>
-            <a href="<?php echo $demo1__loginUrl ?>">
+            <a href="<?php /*echo $demo1__loginUrl */?>">
                 <img class="humanid-button" src="anonymous-login.svg" alt="Anonymous Login with humanID">
             </a>
         </div>
@@ -303,7 +303,7 @@ $demo2__loginUrl = getLoginUrl($demo2__clientId, $demo2__clientSecret);
 			<div class="line1"></div>
 			<div class="ortext">or</div>
 			<div class="line2"></div>
-		</div>
+		</div>-->
 		<div class="dummy">Other forms of login</div>
 		<div class="message">
             humanID is an alternative to Single-Sign-Ons like "Login with Facebook".
