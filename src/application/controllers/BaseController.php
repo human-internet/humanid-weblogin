@@ -41,7 +41,7 @@ class BaseController extends MY_Controller
         $appId = $this->input->get('a', TRUE);
         if ($appId === null) {
             $this->session->set_flashdata('error_message', $this->lg->error->appId);
-            redirect(site_url('error'));
+            redirect(site_url('error?lang=' . $this->lg->id));
         }
         $s = $this->input->get('s', TRUE);
         $source = $s;
