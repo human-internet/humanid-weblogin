@@ -1,4 +1,23 @@
 <form method="post">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        let countdown = 60; // Set the countdown starting time in seconds
+        const countdownTime = document.getElementById('countdown-time'); // The <strong> element inside the span
+        const resendLink = document.getElementById('resend-link'); // The resend link
+
+        // Update the countdown every second
+        const timerInterval = setInterval(() => {
+            countdown -= 1; // Decrement the countdown
+
+            // Check if the countdown has finished
+            if (countdown < 0) {
+                clearInterval(timerInterval); // Stop the countdown
+                resendLink.style.display = 'inline'; // Show the resend link
+            }
+        }, 1000); // Repeat every 1000 milliseconds (1 second)
+        });
+    </script>
+
     <div class="humanid-logo">
         <div class="humanid-logo__placement">
         <img src="<?php echo $app->logoUrls->thumbnail;?>" alt="<?php echo $app->name; ?>">
@@ -51,14 +70,14 @@
                     </div>
                 <?php } ?>
             </div>
-            <span class="timer-text verify-area timer" style="display: none;"><?php echo str_replace("{TIME}",'<strong>00:60</strong>',$lang->text->resend);?></span>
+          <span class="timer-text verify-area timer"><?php echo str_replace("{TIME}",'<strong id="countdown-time">00:60</strong>',$lang->text->resend);?></span>
             <input type="hidden" name="remaining" id="remaining">
             <div class="humanid-form-placement__link">
                 <div class="humanid-form-placement__link__wrapper">
                     <a href="<?php echo site_url('login?a='.$app->id.'&t='.$row['token'].'&lang='.$lang->id.'&priority_country='.$pc->code);?>" class="humanid-link-blue-light">
                         <?php echo $lang->try;?>
                     </a>
-                    <a href="<?php echo site_url('login/resend?a='.$app->id.'&t='.$row['token'].'&lang='.$lang->id);?>" class="humanid-link-blue-light"><?php echo $lang->resend;?></a>
+                    <a href="<?php echo site_url('login/resend?a='.$app->id.'&t='.$row['token'].'&lang='.$lang->id);?>" id="resend-link" class="humanid-link-blue-light" style="display: none;"><?php echo $lang->resend;?></a>
                     <!--<a href="<?php /*echo base_url('recovery/new_number') */?>" class="humanid-link-blue-light">Recover Existing Account</a>-->
                 </div>
             </div>
