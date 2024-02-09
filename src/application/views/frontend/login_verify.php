@@ -9,12 +9,16 @@
         const timerInterval = setInterval(() => {
             countdown -= 1; // Decrement the countdown
 
-            // Check if the countdown has finished
-            if (countdown < 0) {
-                clearInterval(timerInterval); // Stop the countdown
-                resendLink.style.display = 'inline'; // Show the resend link
-            }
-        }, 1000); // Repeat every 1000 milliseconds (1 second)
+                // Check if the countdown has finished
+                if (countdown == 0) {
+                    countdownTime.textContent = "00:00"; // Set the countdown to 00:00
+                }
+                // Pause one second to let the countdown display disappear before showing resend link
+                if (countdown < 0) {
+                    clearInterval(timerInterval); // Stop the countdown
+                    resendLink.style.display = 'inline'; // Show the resend link
+                }
+            }, 1000); // Repeat every 1000 milliseconds (1 second)
         });
     </script>
 
@@ -70,7 +74,7 @@
                     </div>
                 <?php } ?>
             </div>
-          <span class="timer-text verify-area timer"><?php echo str_replace("{TIME}",'<strong id="countdown-time">00:60</strong>',$lang->text->resend);?></span>
+          <span class="timer-text verify-area timer"><?php echo str_replace("{TIME}",'<strong id="countdown-time">01:00</strong>',$lang->text->resend);?></span>
             <input type="hidden" name="remaining" id="remaining">
             <div class="humanid-form-placement__link">
                 <div class="humanid-form-placement__link__wrapper">
