@@ -84,6 +84,7 @@ if ( ! function_exists('base_url'))
 	 */
 	function base_url($uri = '', $protocol = NULL)
 	{
+        $protocol = $protocol == null?get_instance()->config->item('humanid')['protocol']:$protocol;
 		return get_instance()->config->base_url($uri, $protocol);
 	}
 }
