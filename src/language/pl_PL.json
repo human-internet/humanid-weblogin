@@ -1,44 +1,46 @@
 {
-    "language": "Polish",
-    "phone": "Numer telefonu",
-    "countryCode": "Kod pocztowy",
-    "code": "Kod",
-    "sendCode": "Wyślij SMS z kodem weryfikacyjnym",
-    "newAccount": "Nowy numer?",
-    "redirect": "Redirect Now",
-    "verify": "Potwierdź swój numer telefonu",
-    "resend": "Wyślij kod ponownie",
-    "try": "Wypróbuj inny numer",
-    "errorPage": "Błąd",
-    "ok": "W Porządku",
-    "form": {
-        "phoneRequired": "Numer telefonu jest wymagany",
-        "phoneNumeric": "Numeru telefonu może zawierać tylko cyfry",
-        "phoneMin": "Numeru telefonu musi mieć co najmniej 4 znaki",
-        "phoneMax": "Numer telefonu nie może przekraczać 14 znaków",
-        "countryCodeRequired": "Kod kraju jest wymagany",
-        "countryCodeNumeric": "Kod kraju musi zawierać tylko cyfry",
-        "codeRequired": "Kod jest wymagany",
-        "codeNumeric": "Kod musi zawierać tylko cyfry"
-    },
-    "error": {
-        "found": "Error not found.",
-        "try": "Wystąpił błąd podczas wysyłania danych. Proszę spróbuj ponownie",
-        "tokenExpired": "Czas upłynął - ponownie uruchom proces weryfikacji",
-        "sessionExpired": "Sesja skończyła się, zacznij ponownie",
-        "appId": "The AppId not found",
-        "verify": "Phone number verification ends"
-    },
-    "text": {
-        "pageTitle": "Websites and Apps nie ściągnie Twoich danych osobowych",
-        "pageTitleApp": "{APPNAME} nie ściągnie Twoich danych osobowych",
-        "phone": "Po weryfikacji Twój numer telefonu będzie skasowany",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Dowiedz się więcej o naszym celu, jakim jest przywrócenie prywatności.</a>",
-        "welcome": "Jesteś zalogowany",
-        "continue": "Zostaniesz przekierowany całkowicie anonimowo do {APPNAME}.",
-        "timer": "Za {TIMER} sekund powrócisz do aplikacji {APPNAME}",
-        "verifyCode": "Wpisz 4-cyfrowy kod wysłany SMS-em na numer <strong>+{COUNTRYCODE} {PHONE}</strong>.",
-        "afterSuccessful": "Po pomyślnej weryfikacji Twój numer zostanie trwale usunięty i przechowywany będzie tylko losowy identyfikator.",
-        "resend": "Wyślij kod ponownie za {TIME}"
-    }
+  "language": "Polish",
+  "phone": "Numer telefonu",
+  "countryCode": "Kod pocztowy",
+  "code": "Kod",
+  "sendCode": "Wyślij SMS z kodem weryfikacyjnym",
+  "newAccount": "Nowy numer?",
+  "redirect": "Redirect Now",
+  "verify": "Potwierdź swój numer telefonu",
+  "resend": "Wyślij kod ponownie",
+  "try": "Wypróbuj inny numer",
+  "errorPage": "Błąd",
+  "ok": "W Porządku",
+  "form": {
+    "phoneRequired": "Numer telefonu jest wymagany",
+    "phoneNumeric": "Numeru telefonu może zawierać tylko cyfry",
+    "phoneMin": "Numeru telefonu musi mieć co najmniej 4 znaki",
+    "phoneMax": "Numer telefonu nie może przekraczać 14 znaków",
+    "countryCodeRequired": "Kod kraju jest wymagany",
+    "countryCodeNumeric": "Kod kraju musi zawierać tylko cyfry",
+    "codeRequired": "Kod jest wymagany",
+    "codeNumeric": "Kod musi zawierać tylko cyfry"
+  },
+  "error": {
+    "found": "Error not found.",
+    "try": "Wystąpił błąd podczas wysyłania danych. Proszę spróbuj ponownie",
+    "tokenExpired": "Czas upłynął - ponownie uruchom proces weryfikacji",
+    "sessionExpired": "Sesja skończyła się, zacznij ponownie",
+    "appId": "The AppId not found",
+    "verify": "Phone number verification ends"
+  },
+  "text": {
+    "pageTitle": "Websites and Apps nie ściągnie Twoich danych osobowych",
+    "pageTitleApp": "{APPNAME} nie ściągnie Twoich danych osobowych",
+    "phone": "Po weryfikacji Twój numer telefonu będzie skasowany",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">Dowiedz się więcej o naszym celu, jakim jest przywrócenie prywatności.</a>",
+    "welcome": "Jesteś zalogowany",
+    "continue": "Zostaniesz przekierowany całkowicie anonimowo do {APPNAME}.",
+    "timer": "Za {TIMER} sekund powrócisz do aplikacji {APPNAME}",
+    "verifyCode": "Wpisz 4-cyfrowy kod wysłany SMS-em na numer <strong>+{COUNTRYCODE} {PHONE}</strong>.",
+    "afterSuccessful": "Po pomyślnej weryfikacji Twój numer zostanie trwale usunięty i przechowywany będzie tylko losowy identyfikator.",
+    "resend": "Wyślij kod ponownie za {TIME}",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }

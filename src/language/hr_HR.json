@@ -1,44 +1,46 @@
 {
-    "language": "Croatian",
-    "phone": "Telefonski broj",
-    "countryCode": "Kod države",
-    "code": "Kodirati",
-    "sendCode": "Pošaljite SMS s verifikacijskim kodom",
-    "newAccount": "Novi broj?",
-    "redirect": "Redirect Now",
-    "verify": "Potvrdite Vaš telefonski broj",
-    "resend": "Iznova pošalji kôd",
-    "try": "Pokušajte s drugim brojem",
-    "errorPage": "Pogreška",
-    "ok": "U redu",
-    "form": {
-        "phoneRequired": "Polje Telefonski broj je obavezno",
-        "phoneNumeric": "Polje Telefonski broj mora sadržavati samo brojeve",
-        "phoneMin": "Polje Telefonski broj mora imati najmanje 4 znaka",
-        "phoneMax": "Polje Telefonski broj ne smije imati više od 14 znakova",
-        "countryCodeRequired": "Polje Pozivni broj zemlje je obavezno",
-        "countryCodeNumeric": "Polje Pozivni broj države mora sadržavati samo brojeve",
-        "codeRequired": "Kodeks je obavezan",
-        "codeNumeric": "Polje koda mora sadržavati samo brojeve"
-    },
-    "error": {
-        "found": "Error not found.",
-        "try": "Došlo je do pogreške prilikom slanja podataka. Molim te pokušaj ponovno",
-        "tokenExpired": "Vrijeme je isteklo - Ponovno pokrenite postupak potvrde",
-        "sessionExpired": "Sesija je istekla, počnite iznova",
-        "appId": "The AppId not found",
-        "verify": "Phone number verification ends"
-    },
-    "text": {
-        "pageTitle": "Websites and Apps neće ni primiti ni spremiti nijedan Vaš osobni podatak",
-        "pageTitleApp": "{APPNAME} neće ni primiti ni spremiti nijedan Vaš osobni podatak",
-        "phone": "Vaš telefonski broj bit će izbrisan neposredno nakon verifikacije",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Naučite više o našoj misiji vraćanja privatnosti</a>",
-        "welcome": "Login uspješan",
-        "continue": "Sada ćete biti potpuno anonimno preusmjereni na {APPNAME}.",
-        "timer": "Vratit ćete se na {APPNAME} za {TIMER} sekundi",
-        "verifyCode": "Unesite četveroznamenksti kôd koji Vam bijaše  poslan SMS-om a <strong>+{COUNTRYCODE} {PHONE}</strong>",
-        "afterSuccessful": "Nakon uspješne verifikacije, Vaš broj će biti trajno izbrisan i samo slučajni identifikator će biti pohranjen.",
-        "resend": "Iznova pošalji kôd za {TIME}"
-    }
+  "language": "Croatian",
+  "phone": "Telefonski broj",
+  "countryCode": "Kod države",
+  "code": "Kodirati",
+  "sendCode": "Pošaljite SMS s verifikacijskim kodom",
+  "newAccount": "Novi broj?",
+  "redirect": "Redirect Now",
+  "verify": "Potvrdite Vaš telefonski broj",
+  "resend": "Iznova pošalji kôd",
+  "try": "Pokušajte s drugim brojem",
+  "errorPage": "Pogreška",
+  "ok": "U redu",
+  "form": {
+    "phoneRequired": "Polje Telefonski broj je obavezno",
+    "phoneNumeric": "Polje Telefonski broj mora sadržavati samo brojeve",
+    "phoneMin": "Polje Telefonski broj mora imati najmanje 4 znaka",
+    "phoneMax": "Polje Telefonski broj ne smije imati više od 14 znakova",
+    "countryCodeRequired": "Polje Pozivni broj zemlje je obavezno",
+    "countryCodeNumeric": "Polje Pozivni broj države mora sadržavati samo brojeve",
+    "codeRequired": "Kodeks je obavezan",
+    "codeNumeric": "Polje koda mora sadržavati samo brojeve"
+  },
+  "error": {
+    "found": "Error not found.",
+    "try": "Došlo je do pogreške prilikom slanja podataka. Molim te pokušaj ponovno",
+    "tokenExpired": "Vrijeme je isteklo - Ponovno pokrenite postupak potvrde",
+    "sessionExpired": "Sesija je istekla, počnite iznova",
+    "appId": "The AppId not found",
+    "verify": "Phone number verification ends"
+  },
+  "text": {
+    "pageTitle": "Websites and Apps neće ni primiti ni spremiti nijedan Vaš osobni podatak",
+    "pageTitleApp": "{APPNAME} neće ni primiti ni spremiti nijedan Vaš osobni podatak",
+    "phone": "Vaš telefonski broj bit će izbrisan neposredno nakon verifikacije",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">Naučite više o našoj misiji vraćanja privatnosti</a>",
+    "welcome": "Login uspješan",
+    "continue": "Sada ćete biti potpuno anonimno preusmjereni na {APPNAME}.",
+    "timer": "Vratit ćete se na {APPNAME} za {TIMER} sekundi",
+    "verifyCode": "Unesite četveroznamenksti kôd koji Vam bijaše  poslan SMS-om a <strong>+{COUNTRYCODE} {PHONE}</strong>",
+    "afterSuccessful": "Nakon uspješne verifikacije, Vaš broj će biti trajno izbrisan i samo slučajni identifikator će biti pohranjen.",
+    "resend": "Iznova pošalji kôd za {TIME}",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }

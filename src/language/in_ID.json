@@ -1,44 +1,46 @@
 {
-    "language": "Indonesia",
-    "phone": "Nomor Handphone",
-    "countryCode": "Kode Negara",
-    "code": "Kode",
-    "sendCode": "Kirim SMS Dengan Kode Verifikasi",
-    "newAccount": "Nomor Baru?",
-    "redirect": "Alihkan Sekarang",
-    "verify": "Verifikasi Nomor Handphone Anda",
-    "resend": "Kirim Ulang Kode",
-    "try": "Coba Nomor Lainnya",
-    "errorPage": "Eror",
-    "ok": "OK",
-    "form": {
-        "phoneRequired": "Nomor Ponsel Wajib Diisi",
-        "phoneNumeric": "Nomor Ponsel hanya berupa angka",
-        "phoneMin": "Nomor Ponsel minimal 4 karakter",
-        "phoneMax": "Nomor Ponsel tidak bisa lebih dari 14 karakter",
-        "countryCodeRequired": "Kode negara wajib diisi",
-        "countryCodeNumeric": "Kode negara hanya berupa angka",
-        "codeRequired": "Kode wajib diisi",
-        "codeNumeric": "Kode hanya berupa angka"
-    },
-    "error": {
-        "found": "Kesalahan tidak Ditemukan.",
-        "try": "Terjadi kesalahan saat mengirim data. Silakan coba lagi",
-        "tokenExpired": "Waktu habis - Harap mulai ulang proses verifikasi",
-        "sessionExpired": "Sesi berakhir, silakan coba lagi",
-        "appId": "AppId tidak ditemukan",
-        "verify": "Verifikasi nomor handphone berakhir"
-    },
-    "text": {
-        "pageTitle": "Situs web dan Aplikasi tidak akan menerima informasi pribadi Anda.",
-        "pageTitleApp": "{APPNAME} tidak akan menerima informasi pribadi Anda.",
-        "phone": "Nomor Handphone Anda dihapus setelah verifikasi",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Pelajari lebih lanjut</a> tentang misi kami untuk memulihkan privasi.",
-        "welcome": "Anda berhasil masuk.",
-        "continue": "Anda akan dialihkan sepenuhnya secara anonim ke {APPNAME}.",
-        "timer": "Anda akan kembali ke {APPNAME} dalam {TIMER} detik ",
-        "verifyCode": "Masukkan 4 digit kode yang Anda terima sebagai SMS ke <strong>+{COUNTRYCODE} {PHONE}</strong>.",
-        "afterSuccessful": "Setelah verifikasi berhasil, nomor Anda akan dihapus sepenuhnya dan hanya kode acak yang disimpan.",
-        "resend": "Kirim ulang kode dalam {TIME}"
-    }
+  "language": "Indonesia",
+  "phone": "Nomor Handphone",
+  "countryCode": "Kode Negara",
+  "code": "Kode",
+  "sendCode": "Kirim SMS Dengan Kode Verifikasi",
+  "newAccount": "Nomor Baru?",
+  "redirect": "Alihkan Sekarang",
+  "verify": "Verifikasi Nomor Handphone Anda",
+  "resend": "Kirim Ulang Kode",
+  "try": "Coba Nomor Lainnya",
+  "errorPage": "Eror",
+  "ok": "OK",
+  "form": {
+    "phoneRequired": "Nomor Ponsel Wajib Diisi",
+    "phoneNumeric": "Nomor Ponsel hanya berupa angka",
+    "phoneMin": "Nomor Ponsel minimal 4 karakter",
+    "phoneMax": "Nomor Ponsel tidak bisa lebih dari 14 karakter",
+    "countryCodeRequired": "Kode negara wajib diisi",
+    "countryCodeNumeric": "Kode negara hanya berupa angka",
+    "codeRequired": "Kode wajib diisi",
+    "codeNumeric": "Kode hanya berupa angka"
+  },
+  "error": {
+    "found": "Kesalahan tidak Ditemukan.",
+    "try": "Terjadi kesalahan saat mengirim data. Silakan coba lagi",
+    "tokenExpired": "Waktu habis - Harap mulai ulang proses verifikasi",
+    "sessionExpired": "Sesi berakhir, silakan coba lagi",
+    "appId": "AppId tidak ditemukan",
+    "verify": "Verifikasi nomor handphone berakhir"
+  },
+  "text": {
+    "pageTitle": "Situs web dan Aplikasi tidak akan menerima informasi pribadi Anda.",
+    "pageTitleApp": "{APPNAME} tidak akan menerima informasi pribadi Anda.",
+    "phone": "Nomor Handphone Anda dihapus setelah verifikasi",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">Pelajari lebih lanjut</a> tentang misi kami untuk memulihkan privasi.",
+    "welcome": "Anda berhasil masuk.",
+    "continue": "Anda akan dialihkan sepenuhnya secara anonim ke {APPNAME}.",
+    "timer": "Anda akan kembali ke {APPNAME} dalam {TIMER} detik ",
+    "verifyCode": "Masukkan 4 digit kode yang Anda terima sebagai SMS ke <strong>+{COUNTRYCODE} {PHONE}</strong>.",
+    "afterSuccessful": "Setelah verifikasi berhasil, nomor Anda akan dihapus sepenuhnya dan hanya kode acak yang disimpan.",
+    "resend": "Kirim ulang kode dalam {TIME}",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }

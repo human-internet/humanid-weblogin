@@ -1,44 +1,46 @@
 {
-    "language": "Turkish",
-    "phone": "Telefon Numarası",
-    "countryCode": "Ülke kodu",
-    "code": "Kod",
-    "sendCode": "Doğrulama kodunu SMS ile gönder",
-    "newAccount": "Yeni numara mı aldınız?",
-    "redirect": "Redirect Now",
-    "verify": "Telefon Numaranızı Doğrulayın",
-    "resend": "Kodu tekrar gönder",
-    "try": "Farklı bir numara deneyin",
-    "errorPage": "Hata",
-    "ok": "Tamam",
-    "form": {
-        "phoneRequired": "Telefon Numarası alanını doldurmanız gerekmektedir",
-        "phoneNumeric": "Telefon Numarası alanına yalnızca sayı girilebilir",
-        "phoneMin": "Telefon Numarası en az 4 karakter uzunluğunda olmalıdır",
-        "phoneMax": "Telefon Numarasının uzunluğu 14 karakteri geçemez",
-        "countryCodeRequired": "Ülke Kodu alanını doldurmanız gerekmektedir",
-        "countryCodeNumeric": "Ülke Kodu yalnızca rakamlardan oluşmalıdır",
-        "codeRequired": "Kod gerekmektedir",
-        "codeNumeric": "Kod alanına yalnızca rakam girilebilir"
-    },
-    "error": {
-        "found": "Error not found.",
-        "try": "Veri gönderilirken bir hata oluştu. Lütfen tekrar deneyin",
-        "tokenExpired": "Süre doldu - Lütfen doğrulama sürecini yeniden başlatın",
-        "sessionExpired": "Oturum süresi doldu, lütfen tekrar başlayın",
-        "appId": "The AppId not found",
-        "verify": "Phone number verification ends"
-    },
-    "text": {
-        "pageTitle": "Websites and Apps sizin herhangi bir kişisel bilginizi almayacaktır.",
-        "pageTitleApp": "{APPNAME} sizin herhangi bir kişisel bilginizi almayacaktır.",
-        "phone": "Telefon numaranız doğrulama sonrası silinecektir",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Gizliliği sağlama misyonumuz hakkında daha fazla bilgi edinin.</a>",
-        "welcome": "Başarıyla giriş yaptınız.",
-        "continue": "Şimdi tamamen anonim olarak {APPNAME} uygulamasına yönlendirileceksiniz.",
-        "timer": "{TIMER} saniye içinde {APPNAME} uygulamasına geri götürüleceksiniz",
-        "verifyCode": "Lütfen <strong>+{COUNTRYCODE} {PHONE}</strong>'e SMS ile gönderilen 4 haneli kodu girin",
-        "afterSuccessful": "Başarılı bir doğrulamadan sonra, numaranız kalıcı olarak silinecek ve yalnızca rastgele bir tanımlayıcı saklanacaktır.",
-        "resend": "{TIME} içinde kodu tekrar gönder"
-    }
+  "language": "Turkish",
+  "phone": "Telefon Numarası",
+  "countryCode": "Ülke kodu",
+  "code": "Kod",
+  "sendCode": "Doğrulama kodunu SMS ile gönder",
+  "newAccount": "Yeni numara mı aldınız?",
+  "redirect": "Redirect Now",
+  "verify": "Telefon Numaranızı Doğrulayın",
+  "resend": "Kodu tekrar gönder",
+  "try": "Farklı bir numara deneyin",
+  "errorPage": "Hata",
+  "ok": "Tamam",
+  "form": {
+    "phoneRequired": "Telefon Numarası alanını doldurmanız gerekmektedir",
+    "phoneNumeric": "Telefon Numarası alanına yalnızca sayı girilebilir",
+    "phoneMin": "Telefon Numarası en az 4 karakter uzunluğunda olmalıdır",
+    "phoneMax": "Telefon Numarasının uzunluğu 14 karakteri geçemez",
+    "countryCodeRequired": "Ülke Kodu alanını doldurmanız gerekmektedir",
+    "countryCodeNumeric": "Ülke Kodu yalnızca rakamlardan oluşmalıdır",
+    "codeRequired": "Kod gerekmektedir",
+    "codeNumeric": "Kod alanına yalnızca rakam girilebilir"
+  },
+  "error": {
+    "found": "Error not found.",
+    "try": "Veri gönderilirken bir hata oluştu. Lütfen tekrar deneyin",
+    "tokenExpired": "Süre doldu - Lütfen doğrulama sürecini yeniden başlatın",
+    "sessionExpired": "Oturum süresi doldu, lütfen tekrar başlayın",
+    "appId": "The AppId not found",
+    "verify": "Phone number verification ends"
+  },
+  "text": {
+    "pageTitle": "Websites and Apps sizin herhangi bir kişisel bilginizi almayacaktır.",
+    "pageTitleApp": "{APPNAME} sizin herhangi bir kişisel bilginizi almayacaktır.",
+    "phone": "Telefon numaranız doğrulama sonrası silinecektir",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">Gizliliği sağlama misyonumuz hakkında daha fazla bilgi edinin.</a>",
+    "welcome": "Başarıyla giriş yaptınız.",
+    "continue": "Şimdi tamamen anonim olarak {APPNAME} uygulamasına yönlendirileceksiniz.",
+    "timer": "{TIMER} saniye içinde {APPNAME} uygulamasına geri götürüleceksiniz",
+    "verifyCode": "Lütfen <strong>+{COUNTRYCODE} {PHONE}</strong>'e SMS ile gönderilen 4 haneli kodu girin",
+    "afterSuccessful": "Başarılı bir doğrulamadan sonra, numaranız kalıcı olarak silinecek ve yalnızca rastgele bir tanımlayıcı saklanacaktır.",
+    "resend": "{TIME} içinde kodu tekrar gönder",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }

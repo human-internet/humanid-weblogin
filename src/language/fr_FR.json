@@ -1,44 +1,46 @@
 {
-    "language": "French",
-    "phone": "Numéro de téléphone",
-    "countryCode": "Indicatif Téléphonique International",
-    "code": "Code",
-    "sendCode": "Envoyer un SMS avec le code de vérification",
-    "newAccount": "Nouveau numéro ?",
-    "redirect": "Redirect Now",
-    "verify": "Verifiez votre numéro de téléphone",
-    "resend": "Renvoyer le code",
-    "try": "Essayez un numéro différent",
-    "errorPage": "Erreur",
-    "ok": "D'accord",
-    "form": {
-        "phoneRequired": "Le champ Numéro de téléphone est obligatoire",
-        "phoneNumeric": "Le champ Numéro de Téléphone est limité à des chifres",
-        "phoneMin": "Le champ Numéro de Téléphone doit contenir au moins 4 caractères",
-        "phoneMax": "Le champ Numéro de téléphone ne peut pas dépasser 14 caractères",
-        "countryCodeRequired": "Le champ Indicatif Téléphonique International est obligatoire",
-        "countryCodeNumeric": "Le champ Indicatif Téléphonique International ne doit contenir que des chiffres",
-        "codeRequired": "Le code est requis",
-        "codeNumeric": "Le champ Code est limité à des des chiffres"
-    },
-    "error": {
-        "found": "Error not found.",
-        "try": "Une erreur s'est produite lors de l'envoi des données. Veuillez réessayer",
-        "tokenExpired": "Temps dépassé - Veuillez redémarrer le processus de vérification",
-        "sessionExpired": "La session a expiré, veuillez recommencer",
-        "appId": "The AppId not found",
-        "verify": "Phone number verification ends"
-    },
-    "text": {
-        "pageTitle": "Websites and Apps ne recevra aucune de vos données personnelles",
-        "pageTitleApp": "{APPNAME} ne recevra aucune de vos données personnelles",
-        "phone": "Votre numero de téléphone sera supprimé apres vérification",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">En savoir plus sur notre mission pour restaurer la confidentialité</a>",
-        "welcome": "Vous êtes connecté ",
-        "continue": "Vous allez maintenant être redirigé de manière totalement anonyme vers {APPNAME}.",
-        "timer": "Vous serez ramené à {APPNAME} dans {TIMER} secondes",
-        "verifyCode": "Veuillez entrer le code reçu par SMS au <strong>+{COUNTRYCODE} {PHONE}</strong>.",
-        "afterSuccessful": "Apres vérification, votre numéro sera supprimé de manière permanente et seulement un identifiant aléatoire vous sera attribué",
-        "resend": "Renvoyer le code dans {TIME}"
-    }
+  "language": "French",
+  "phone": "Numéro de téléphone",
+  "countryCode": "Indicatif Téléphonique International",
+  "code": "Code",
+  "sendCode": "Envoyer un SMS avec le code de vérification",
+  "newAccount": "Nouveau numéro ?",
+  "redirect": "Redirect Now",
+  "verify": "Verifiez votre numéro de téléphone",
+  "resend": "Renvoyer le code",
+  "try": "Essayez un numéro différent",
+  "errorPage": "Erreur",
+  "ok": "D'accord",
+  "form": {
+    "phoneRequired": "Le champ Numéro de téléphone est obligatoire",
+    "phoneNumeric": "Le champ Numéro de Téléphone est limité à des chifres",
+    "phoneMin": "Le champ Numéro de Téléphone doit contenir au moins 4 caractères",
+    "phoneMax": "Le champ Numéro de téléphone ne peut pas dépasser 14 caractères",
+    "countryCodeRequired": "Le champ Indicatif Téléphonique International est obligatoire",
+    "countryCodeNumeric": "Le champ Indicatif Téléphonique International ne doit contenir que des chiffres",
+    "codeRequired": "Le code est requis",
+    "codeNumeric": "Le champ Code est limité à des des chiffres"
+  },
+  "error": {
+    "found": "Error not found.",
+    "try": "Une erreur s'est produite lors de l'envoi des données. Veuillez réessayer",
+    "tokenExpired": "Temps dépassé - Veuillez redémarrer le processus de vérification",
+    "sessionExpired": "La session a expiré, veuillez recommencer",
+    "appId": "The AppId not found",
+    "verify": "Phone number verification ends"
+  },
+  "text": {
+    "pageTitle": "Websites and Apps ne recevra aucune de vos données personnelles",
+    "pageTitleApp": "{APPNAME} ne recevra aucune de vos données personnelles",
+    "phone": "Votre numero de téléphone sera supprimé apres vérification",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">En savoir plus sur notre mission pour restaurer la confidentialité</a>",
+    "welcome": "Vous êtes connecté ",
+    "continue": "Vous allez maintenant être redirigé de manière totalement anonyme vers {APPNAME}.",
+    "timer": "Vous serez ramené à {APPNAME} dans {TIMER} secondes",
+    "verifyCode": "Veuillez entrer le code reçu par SMS au <strong>+{COUNTRYCODE} {PHONE}</strong>.",
+    "afterSuccessful": "Apres vérification, votre numéro sera supprimé de manière permanente et seulement un identifiant aléatoire vous sera attribué",
+    "resend": "Renvoyer le code dans {TIME}",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }
