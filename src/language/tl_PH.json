@@ -1,44 +1,46 @@
 {
-    "language": "Tagalog",
-    "phone": "Numero ng Telepono",
-    "countryCode": "Code ng Bansa",
-    "code": "Code",
-    "sendCode": "Magpadala ng SMS Na May Verification Code",
-    "newAccount": "Bagong numero?",
-    "redirect": "Redirect Now",
-    "verify": "I-verify ang numero ng iyong Telepono",
-    "resend": "I-send ulit ang Code",
-    "try": "Subukan ang  Ibang Numero",
-    "errorPage": "Error",
-    "ok": "Sige",
-    "form": {
-        "phoneRequired": "Kinakailangan ang patlang ng Numero ng Telepono",
-        "phoneNumeric": "Ang patlang ng Numero ng Telepono ay dapat maglaman lamang ng mga numero",
-        "phoneMin": "Ang patlang ng Numero ng Telepono ay dapat na hindi bababa sa 4 na character ang haba",
-        "phoneMax": "Ang patlang ng Numero ng Telepono ay hindi maaaring lumagpas sa 14 na character ang haba",
-        "countryCodeRequired": "Kinakailangan ang patlang ng Country Code",
-        "countryCodeNumeric": "Ang patlang ng Country Code ay dapat maglaman lamang ng mga numero",
-        "codeRequired": "Ang Code ay kinakailangan",
-        "codeNumeric": "Ang patlang ng Code ay dapat maglaman lamang ng mga numero"
-    },
-    "error": {
-        "found": "Error not found.",
-        "try": "May naganap na error habang nagpapadala ng data. Pakisubukang muli",
-        "tokenExpired": "Nag-expire na ang oras - Mangyaring i-restart ang proseso ng pag-verify",
-        "sessionExpired": "Nag-expire na ang sesyon, mangyaring magsimula muli",
-        "appId": "The AppId not found",
-        "verify": "Phone number verification ends"
-    },
-    "text": {
-        "pageTitle": "Anumang personal na impormasyong galing sa iyo ay hindi matatanggap ng Websites and Apps",
-        "pageTitleApp": "Anumang personal na impormasyong galing sa iyo ay hindi matatanggap ng {APPNAME}",
-        "phone": "Ang numero ng iyong telepono ay agad na mabubura pagkatapos ng verification",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Matuto pa sa misyon namin na maibalik muli ang pagkapribado</a>",
-        "welcome": "Ikaw ay matagumpay na nakalog-in",
-        "continue": "Dadalhin ka nang ganap nang hindi nagpapakilala sa {APPNAME}.",
-        "timer": "Ibabalik ka sa {APPNAME} sa {TIMER} segundo",
-        "verifyCode": "Pakilagay ang 4 didgit code na aming ipinadala sa pamamagitan ng SMS sa <strong>+{COUNTRYCODE} {PHONE}</strong>",
-        "afterSuccessful": "Pagkatapos mong matagumpay na ma-verify ang iyong numero, ito ay permaninting mabubura na at tanging random identifier lamang ang matitira.",
-        "resend": "I-send  ang code sa loob ng {TIME}"
-    }
+  "language": "Tagalog",
+  "phone": "Numero ng Telepono",
+  "countryCode": "Code ng Bansa",
+  "code": "Code",
+  "sendCode": "Magpadala ng SMS Na May Verification Code",
+  "newAccount": "Bagong numero?",
+  "redirect": "Redirect Now",
+  "verify": "I-verify ang numero ng iyong Telepono",
+  "resend": "I-send ulit ang Code",
+  "try": "Subukan ang  Ibang Numero",
+  "errorPage": "Error",
+  "ok": "Sige",
+  "form": {
+    "phoneRequired": "Kinakailangan ang patlang ng Numero ng Telepono",
+    "phoneNumeric": "Ang patlang ng Numero ng Telepono ay dapat maglaman lamang ng mga numero",
+    "phoneMin": "Ang patlang ng Numero ng Telepono ay dapat na hindi bababa sa 4 na character ang haba",
+    "phoneMax": "Ang patlang ng Numero ng Telepono ay hindi maaaring lumagpas sa 14 na character ang haba",
+    "countryCodeRequired": "Kinakailangan ang patlang ng Country Code",
+    "countryCodeNumeric": "Ang patlang ng Country Code ay dapat maglaman lamang ng mga numero",
+    "codeRequired": "Ang Code ay kinakailangan",
+    "codeNumeric": "Ang patlang ng Code ay dapat maglaman lamang ng mga numero"
+  },
+  "error": {
+    "found": "Error not found.",
+    "try": "May naganap na error habang nagpapadala ng data. Pakisubukang muli",
+    "tokenExpired": "Nag-expire na ang oras - Mangyaring i-restart ang proseso ng pag-verify",
+    "sessionExpired": "Nag-expire na ang sesyon, mangyaring magsimula muli",
+    "appId": "The AppId not found",
+    "verify": "Phone number verification ends"
+  },
+  "text": {
+    "pageTitle": "Anumang personal na impormasyong galing sa iyo ay hindi matatanggap ng Websites and Apps",
+    "pageTitleApp": "Anumang personal na impormasyong galing sa iyo ay hindi matatanggap ng {APPNAME}",
+    "phone": "Ang numero ng iyong telepono ay agad na mabubura pagkatapos ng verification",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">Matuto pa sa misyon namin na maibalik muli ang pagkapribado</a>",
+    "welcome": "Ikaw ay matagumpay na nakalog-in",
+    "continue": "Dadalhin ka nang ganap nang hindi nagpapakilala sa {APPNAME}.",
+    "timer": "Ibabalik ka sa {APPNAME} sa {TIMER} segundo",
+    "verifyCode": "Pakilagay ang 4 didgit code na aming ipinadala sa pamamagitan ng SMS sa <strong>+{COUNTRYCODE} {PHONE}</strong>",
+    "afterSuccessful": "Pagkatapos mong matagumpay na ma-verify ang iyong numero, ito ay permaninting mabubura na at tanging random identifier lamang ang matitira.",
+    "resend": "I-send  ang code sa loob ng {TIME}",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }

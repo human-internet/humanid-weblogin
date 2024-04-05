@@ -1,44 +1,46 @@
 {
-    "language": "Malay",
-    "phone": "Nombor telefon",
-    "countryCode": "Kod negara",
-    "code": "Kod",
-    "sendCode": "Hantar SMS Dengan Kod Pengesahan",
-    "newAccount": "Nombor baharu?",
-    "redirect": "Redirect Now",
-    "verify": "Sila sahkan nombor telefon anda",
-    "resend": "Hantar semula kod",
-    "try": "Cuba Nombor Berbeza",
-    "errorPage": "Ralat",
-    "ok": "Baik",
-    "form": {
-        "phoneRequired": "Medan Nombor Telefon diperlukan",
-        "phoneNumeric": "Medan Nombor Telefon mesti mengandungi nombor sahaja",
-        "phoneMin": "Panjang medan Nombor Telefon mestilah sekurang-kurangnya 4 aksara",
-        "phoneMax": "Medan Nombor Telefon tidak boleh melebihi 14 aksara",
-        "countryCodeRequired": "Medan Kod Negara diperlukan",
-        "countryCodeNumeric": "Medan Kod Negara mesti mengandungi nombor sahaja",
-        "codeRequired": "Kod diperlukan",
-        "codeNumeric": "Medan Kod mesti mengandungi nombor sahaja"
-    },
-    "error": {
-        "found": "Error not found.",
-        "try": "Ralat berlaku semasa menghantar data. Sila cuba lagi",
-        "tokenExpired": "Masa tamat - Sila mulakan semula proses pengesahan",
-        "sessionExpired": "Sesi telah tamat, mulakan sekali lagi",
-        "appId": "The AppId not found",
-        "verify": "Phone number verification ends"
-    },
-    "text": {
-        "pageTitle": "Websites and Apps tidak akan menerima maklumat peribadi anda.",
-        "pageTitleApp": "{APPNAME} tidak akan menerima maklumat peribadi anda.",
-        "phone": "Nombor telefon anda akan dipadam selepas pengesahan",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Ketahui lebih lanjut</a> mengenai misi penyimpanan privasi kami.",
-        "welcome": "Log masuk berjaya.",
-        "continue": "Anda sekarang akan diarahkan sepenuhnya tanpa nama ke {APPNAME}.",
-        "timer": "Anda akan dibawa kembali ke {APPNAME} dalam {TIMER} saat",
-        "verifyCode": "Masukkan kod 4 digit yang dihantar melalui sms ke <strong>+{COUNTRYCODE} {PHONE}</strong>.",
-        "afterSuccessful": "Selepas pengesahan sudah berjaya, nombor anda akan dipadam dan disimpan menggunakan pengecam rawak",
-        "resend": "Hantar semula kod dalam {TIME}"
-    }
+  "language": "Malay",
+  "phone": "Nombor telefon",
+  "countryCode": "Kod negara",
+  "code": "Kod",
+  "sendCode": "Hantar SMS Dengan Kod Pengesahan",
+  "newAccount": "Nombor baharu?",
+  "redirect": "Redirect Now",
+  "verify": "Sila sahkan nombor telefon anda",
+  "resend": "Hantar semula kod",
+  "try": "Cuba Nombor Berbeza",
+  "errorPage": "Ralat",
+  "ok": "Baik",
+  "form": {
+    "phoneRequired": "Medan Nombor Telefon diperlukan",
+    "phoneNumeric": "Medan Nombor Telefon mesti mengandungi nombor sahaja",
+    "phoneMin": "Panjang medan Nombor Telefon mestilah sekurang-kurangnya 4 aksara",
+    "phoneMax": "Medan Nombor Telefon tidak boleh melebihi 14 aksara",
+    "countryCodeRequired": "Medan Kod Negara diperlukan",
+    "countryCodeNumeric": "Medan Kod Negara mesti mengandungi nombor sahaja",
+    "codeRequired": "Kod diperlukan",
+    "codeNumeric": "Medan Kod mesti mengandungi nombor sahaja"
+  },
+  "error": {
+    "found": "Error not found.",
+    "try": "Ralat berlaku semasa menghantar data. Sila cuba lagi",
+    "tokenExpired": "Masa tamat - Sila mulakan semula proses pengesahan",
+    "sessionExpired": "Sesi telah tamat, mulakan sekali lagi",
+    "appId": "The AppId not found",
+    "verify": "Phone number verification ends"
+  },
+  "text": {
+    "pageTitle": "Websites and Apps tidak akan menerima maklumat peribadi anda.",
+    "pageTitleApp": "{APPNAME} tidak akan menerima maklumat peribadi anda.",
+    "phone": "Nombor telefon anda akan dipadam selepas pengesahan",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">Ketahui lebih lanjut</a> mengenai misi penyimpanan privasi kami.",
+    "welcome": "Log masuk berjaya.",
+    "continue": "Anda sekarang akan diarahkan sepenuhnya tanpa nama ke {APPNAME}.",
+    "timer": "Anda akan dibawa kembali ke {APPNAME} dalam {TIMER} saat",
+    "verifyCode": "Masukkan kod 4 digit yang dihantar melalui sms ke <strong>+{COUNTRYCODE} {PHONE}</strong>.",
+    "afterSuccessful": "Selepas pengesahan sudah berjaya, nombor anda akan dipadam dan disimpan menggunakan pengecam rawak",
+    "resend": "Hantar semula kod dalam {TIME}",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }

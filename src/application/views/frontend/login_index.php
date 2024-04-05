@@ -31,6 +31,10 @@
         <button class="btn-humanid btn-humanid-primary" type="submit"><?php echo $lang->sendCode;?></button>
         <!--<button class="btn-humanid btn-humanid-secondary" type="button"><?php echo $lang->newAccount;?></button>-->
     </div>
+    <div class="humanid-content-text humanid-content-link">
+        <a href="https://docs.human-id.org/privacy-policy" target="_blank"><?php echo $lang->text->policy;?></a>
+        <a href="https://docs.human-id.org/sms-terms-and-conditions" target="_blank"><?php echo $lang->text->tnc;?></a>
+    </div>
     <div>
         <!--<a href="<?php /*echo base_url('recovery/new_number') */?>">Got a New Number? Recover Account</a>-->
     </div>

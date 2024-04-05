@@ -1,44 +1,46 @@
 {
-    "language": "Tiếng Việt",
-    "phone": "Số điện thoại",
-    "countryCode": "Mã Quốc Gia",
-    "code": "Mã Xác Minh",
-    "sendCode": "Gửi mã xác minh qua tin nhắn (SMS)",
-    "newAccount": "Thay số điện thoại mới?",
-    "redirect": "Redirect Now",
-    "verify": "Xin vui lòng xác minh số điện thoại của bạn.",
-    "resend": "Gửi lại mã số.",
-    "try": "Thử số điện thoại khác",
-    "errorPage": "Lỗi",
-    "ok": "Chấp nhận",
-    "form": {
-        "phoneRequired": "Bạn cần nhập số điện thoại",
-        "phoneNumeric": "Bạn chỉ được nhập số vào ô Số điện thoại",
-        "phoneMin": "Ô Số Điện Thoại phải dài ít nhất 4 ký tự.",
-        "phoneMax": "Ô số điện thoại không được dài hơn 14 ký tự.",
-        "countryCodeRequired": "Bạn cần phải nhập Mã quốc gia",
-        "countryCodeNumeric": "Bạn chỉ được nhập số vào ô Mã quốc gia",
-        "codeRequired": "Bạn cần phải điền Mã xác minh",
-        "codeNumeric": "Bạn chỉ được nhập số vào ô Mã xác minh"
-    },
-    "error": {
-        "found": "Không tìm thấy lỗi.",
-        "try": "Đã xảy ra lỗi trong khi gửi dữ liệu. Xin vui lòng thử lại.",
-        "tokenExpired": "Thời hạn đã kết thúc - Xin vui lòng bắt đầu lại quá trình xác minh",
-        "sessionExpired": "Phiên đã hết hạn, xin vui lòng làm lại từ đầu.",
-        "appId": "The AppId not found",
-        "verify": "Kết thúc xác minh số điện thoại"
-    },
-    "text": {
-        "pageTitle": "Websites and Apps sẽ không lưu lại bất kỳ thông tin cá nhân nào của bạn.",
-        "pageTitleApp": "{APPNAME} sẽ không lưu lại bất kỳ thông tin cá nhân nào của bạn.",
-        "phone": "Số điện thoại của bạn sẽ được xóa sau khi xác minh.",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Tìm hiểu thêm về sứ mệnh bảo vệ quyền riêng tư.</a>",
-        "welcome": "Thành công.",
-        "continue": "Bây giờ bạn sẽ được chuyển tiếp hoàn toàn ẩn danh đến {APPNAME}.",
-        "timer": "Mở lại {APPNAME} trong vòng {TIMER} giây",
-        "verifyCode": "Xin vui lòng nhập mã 4 chữ số được gửi qua tin nhắn (SMS) tới <strong>+{COUNTRYCODE} {PHONE}</strong>.",
-        "afterSuccessful": "Sau khi thông tin được xác minh, số điện thoại của bạn sẽ được xóa đi vĩnh viễn và chúng tôi chỉ lưu lại mã số chọn lựa ngẫu nhiên.",
-        "resend": "Gửi lại mã số sau trong vòng {TIME}"
-    }
+  "language": "Tiếng Việt",
+  "phone": "Số điện thoại",
+  "countryCode": "Mã Quốc Gia",
+  "code": "Mã Xác Minh",
+  "sendCode": "Gửi mã xác minh qua tin nhắn (SMS)",
+  "newAccount": "Thay số điện thoại mới?",
+  "redirect": "Redirect Now",
+  "verify": "Xin vui lòng xác minh số điện thoại của bạn.",
+  "resend": "Gửi lại mã số.",
+  "try": "Thử số điện thoại khác",
+  "errorPage": "Lỗi",
+  "ok": "Chấp nhận",
+  "form": {
+    "phoneRequired": "Bạn cần nhập số điện thoại",
+    "phoneNumeric": "Bạn chỉ được nhập số vào ô Số điện thoại",
+    "phoneMin": "Ô Số Điện Thoại phải dài ít nhất 4 ký tự.",
+    "phoneMax": "Ô số điện thoại không được dài hơn 14 ký tự.",
+    "countryCodeRequired": "Bạn cần phải nhập Mã quốc gia",
+    "countryCodeNumeric": "Bạn chỉ được nhập số vào ô Mã quốc gia",
+    "codeRequired": "Bạn cần phải điền Mã xác minh",
+    "codeNumeric": "Bạn chỉ được nhập số vào ô Mã xác minh"
+  },
+  "error": {
+    "found": "Không tìm thấy lỗi.",
+    "try": "Đã xảy ra lỗi trong khi gửi dữ liệu. Xin vui lòng thử lại.",
+    "tokenExpired": "Thời hạn đã kết thúc - Xin vui lòng bắt đầu lại quá trình xác minh",
+    "sessionExpired": "Phiên đã hết hạn, xin vui lòng làm lại từ đầu.",
+    "appId": "The AppId not found",
+    "verify": "Kết thúc xác minh số điện thoại"
+  },
+  "text": {
+    "pageTitle": "Websites and Apps sẽ không lưu lại bất kỳ thông tin cá nhân nào của bạn.",
+    "pageTitleApp": "{APPNAME} sẽ không lưu lại bất kỳ thông tin cá nhân nào của bạn.",
+    "phone": "Số điện thoại của bạn sẽ được xóa sau khi xác minh.",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">Tìm hiểu thêm về sứ mệnh bảo vệ quyền riêng tư.</a>",
+    "welcome": "Thành công.",
+    "continue": "Bây giờ bạn sẽ được chuyển tiếp hoàn toàn ẩn danh đến {APPNAME}.",
+    "timer": "Mở lại {APPNAME} trong vòng {TIMER} giây",
+    "verifyCode": "Xin vui lòng nhập mã 4 chữ số được gửi qua tin nhắn (SMS) tới <strong>+{COUNTRYCODE} {PHONE}</strong>.",
+    "afterSuccessful": "Sau khi thông tin được xác minh, số điện thoại của bạn sẽ được xóa đi vĩnh viễn và chúng tôi chỉ lưu lại mã số chọn lựa ngẫu nhiên.",
+    "resend": "Gửi lại mã số sau trong vòng {TIME}",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }

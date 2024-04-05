@@ -1,44 +1,46 @@
 {
-    "language": "Romanian",
-    "phone": "Număr de Telefon",
-    "countryCode": "Codul tarii",
-    "code": "Cod",
-    "sendCode": "Trimiteți SMS cu cod de verificare",
-    "newAccount": "Număr de Telefon nou?",
-    "redirect": "Redirect Now",
-    "verify": "Verifică-ți Numărul de Telefon",
-    "resend": "Retrimiteți codul",
-    "try": "Încercați Număr diferit",
-    "errorPage": "Eroare",
-    "ok": "Bine",
-    "form": {
-        "phoneRequired": "Câmpul Număr de telefon este obligatoriu",
-        "phoneNumeric": "Câmpul Număr de telefon trebuie să conțină numai numere",
-        "phoneMin": "Câmpul Număr de telefon trebuie să aibă cel puțin 4 caractere în lungime",
-        "phoneMax": "Câmpul Număr de telefon nu poate depăși 14 caractere",
-        "countryCodeRequired": "Câmpul Cod țară este obligatoriu",
-        "countryCodeNumeric": "Câmpul Cod țară trebuie să conțină numai numere",
-        "codeRequired": "Codul este obligatoriu",
-        "codeNumeric": "Câmpul Cod trebuie să conțină numai numere"
-    },
-    "error": {
-        "found": "Error not found.",
-        "try": "A apărut o eroare la trimiterea datelor. Vă rugăm să încercați din nou",
-        "tokenExpired": "Timp expirat - Reporniți procesul de verificare",
-        "sessionExpired": "Sesiunea a expirat, vă rugăm să începeți din nou",
-        "appId": "The AppId not found",
-        "verify": "Phone number verification ends"
-    },
-    "text": {
-        "pageTitle": "Websites and Apps nu va primi nici una dintre informațiile dvs. personale.",
-        "pageTitleApp": "{APPNAME} nu va primi nici una dintre informațiile dvs. personale.",
-        "phone": "Numărul dvs. de telefon este șters după verificare",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Aflați mai multe despre misiunea noastră de a restabili confidențialitatea.</a>",
-        "welcome": "V-ați conectat cu succes.",
-        "continue": "Acum veți fi redirecționat complet anonim către {APPNAME}.",
-        "timer": "Veți fi readus la {APPNAME} în {TIMER} secunde",
-        "verifyCode": "Vă rugăm să introduceți codul din 4 cifre trimis prin SMS către <strong>+{COUNTRYCODE} {PHONE}</strong>.",
-        "afterSuccessful": "După verificarea cu succes, numărul dvs. va fi șters definitiv și va fi păstrat doar un identificator aleatoriu.",
-        "resend": "Retrimiteți codul în {TIME}"
-    }
+  "language": "Romanian",
+  "phone": "Număr de Telefon",
+  "countryCode": "Codul tarii",
+  "code": "Cod",
+  "sendCode": "Trimiteți SMS cu cod de verificare",
+  "newAccount": "Număr de Telefon nou?",
+  "redirect": "Redirect Now",
+  "verify": "Verifică-ți Numărul de Telefon",
+  "resend": "Retrimiteți codul",
+  "try": "Încercați Număr diferit",
+  "errorPage": "Eroare",
+  "ok": "Bine",
+  "form": {
+    "phoneRequired": "Câmpul Număr de telefon este obligatoriu",
+    "phoneNumeric": "Câmpul Număr de telefon trebuie să conțină numai numere",
+    "phoneMin": "Câmpul Număr de telefon trebuie să aibă cel puțin 4 caractere în lungime",
+    "phoneMax": "Câmpul Număr de telefon nu poate depăși 14 caractere",
+    "countryCodeRequired": "Câmpul Cod țară este obligatoriu",
+    "countryCodeNumeric": "Câmpul Cod țară trebuie să conțină numai numere",
+    "codeRequired": "Codul este obligatoriu",
+    "codeNumeric": "Câmpul Cod trebuie să conțină numai numere"
+  },
+  "error": {
+    "found": "Error not found.",
+    "try": "A apărut o eroare la trimiterea datelor. Vă rugăm să încercați din nou",
+    "tokenExpired": "Timp expirat - Reporniți procesul de verificare",
+    "sessionExpired": "Sesiunea a expirat, vă rugăm să începeți din nou",
+    "appId": "The AppId not found",
+    "verify": "Phone number verification ends"
+  },
+  "text": {
+    "pageTitle": "Websites and Apps nu va primi nici una dintre informațiile dvs. personale.",
+    "pageTitleApp": "{APPNAME} nu va primi nici una dintre informațiile dvs. personale.",
+    "phone": "Numărul dvs. de telefon este șters după verificare",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">Aflați mai multe despre misiunea noastră de a restabili confidențialitatea.</a>",
+    "welcome": "V-ați conectat cu succes.",
+    "continue": "Acum veți fi redirecționat complet anonim către {APPNAME}.",
+    "timer": "Veți fi readus la {APPNAME} în {TIMER} secunde",
+    "verifyCode": "Vă rugăm să introduceți codul din 4 cifre trimis prin SMS către <strong>+{COUNTRYCODE} {PHONE}</strong>.",
+    "afterSuccessful": "După verificarea cu succes, numărul dvs. va fi șters definitiv și va fi păstrat doar un identificator aleatoriu.",
+    "resend": "Retrimiteți codul în {TIME}",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }

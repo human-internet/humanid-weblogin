@@ -1,44 +1,46 @@
 {
-    "language": "Chinese, Taiwan",
-    "phone": "手機號碼",
-    "countryCode": "國家代碼",
-    "code": "碼",
-    "sendCode": "發送帶有驗證碼的短信",
-    "newAccount": "有新手機號碼?",
-    "redirect": "Redirect Now",
-    "verify": "認證您的手機號碼",
-    "resend": "重新傳送認證碼",
-    "try": "嘗試其他號碼",
-    "errorPage": "錯誤",
-    "ok": "好的",
-    "form": {
-        "phoneRequired": "電話號碼字段為必填項",
-        "phoneNumeric": "電話號碼字段必須僅包含數字",
-        "phoneMin": "電話號碼字段的長度必須至少為4個字符",
-        "phoneMax": "電話號碼字段的長度不能超過14個字符",
-        "countryCodeRequired": "國家/地區代碼字段為必填項",
-        "countryCodeNumeric": "國家/地區代碼字段只能包含數字",
-        "codeRequired": "該代碼為必填項",
-        "codeNumeric": "代碼字段必須僅包含數字"
-    },
-    "error": {
-        "found": "Error not found.",
-        "try": "發送數據時發生錯誤。 請再試一次",
-        "tokenExpired": "時間已過期-請重新啟動驗證過程",
-        "sessionExpired": "會話已過期，請重新開始",
-        "appId": "The AppId not found",
-        "verify": "Phone number verification ends"
-    },
-    "text": {
-        "pageTitle": "Websites and Apps 不會取得您的任何個人資料",
-        "pageTitleApp": "{APPNAME} 不會取得您的任何個人資料",
-        "phone": "您的電話號碼會在認證後移除",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">認識關於我們取回數位隱私權的使命</a>",
-        "welcome": "您已經成功登入",
-        "continue": "現在，您將完全匿名地重定向到{APPNAME}。",
-        "timer": "您將在{TIMER}秒內返回到{APPNAME}",
-        "verifyCode": "請輸入以簡訊傳送至 <strong>+{COUNTRYCODE} {PHONE}</strong> 之四位數認證碼.",
-        "afterSuccessful": "認證成功後，您的手機號碼將會被系統永久刪除，系統會以一組隨機識別碼加以儲存",
-        "resend": "在 {TIME} 秒後重新傳送認證碼"
-    }
+  "language": "Chinese, Taiwan",
+  "phone": "手機號碼",
+  "countryCode": "國家代碼",
+  "code": "碼",
+  "sendCode": "發送帶有驗證碼的短信",
+  "newAccount": "有新手機號碼?",
+  "redirect": "Redirect Now",
+  "verify": "認證您的手機號碼",
+  "resend": "重新傳送認證碼",
+  "try": "嘗試其他號碼",
+  "errorPage": "錯誤",
+  "ok": "好的",
+  "form": {
+    "phoneRequired": "電話號碼字段為必填項",
+    "phoneNumeric": "電話號碼字段必須僅包含數字",
+    "phoneMin": "電話號碼字段的長度必須至少為4個字符",
+    "phoneMax": "電話號碼字段的長度不能超過14個字符",
+    "countryCodeRequired": "國家/地區代碼字段為必填項",
+    "countryCodeNumeric": "國家/地區代碼字段只能包含數字",
+    "codeRequired": "該代碼為必填項",
+    "codeNumeric": "代碼字段必須僅包含數字"
+  },
+  "error": {
+    "found": "Error not found.",
+    "try": "發送數據時發生錯誤。 請再試一次",
+    "tokenExpired": "時間已過期-請重新啟動驗證過程",
+    "sessionExpired": "會話已過期，請重新開始",
+    "appId": "The AppId not found",
+    "verify": "Phone number verification ends"
+  },
+  "text": {
+    "pageTitle": "Websites and Apps 不會取得您的任何個人資料",
+    "pageTitleApp": "{APPNAME} 不會取得您的任何個人資料",
+    "phone": "您的電話號碼會在認證後移除",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">認識關於我們取回數位隱私權的使命</a>",
+    "welcome": "您已經成功登入",
+    "continue": "現在，您將完全匿名地重定向到{APPNAME}。",
+    "timer": "您將在{TIMER}秒內返回到{APPNAME}",
+    "verifyCode": "請輸入以簡訊傳送至 <strong>+{COUNTRYCODE} {PHONE}</strong> 之四位數認證碼.",
+    "afterSuccessful": "認證成功後，您的手機號碼將會被系統永久刪除，系統會以一組隨機識別碼加以儲存",
+    "resend": "在 {TIME} 秒後重新傳送認證碼",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }

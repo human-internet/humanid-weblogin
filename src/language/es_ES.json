@@ -1,44 +1,46 @@
 {
-    "language": "Spanish",
-    "phone": "Número de teléfono",
-    "countryCode": "Código de país",
-    "code": "Código",
-    "sendCode": "Enviar SMS con código de verificación",
-    "newAccount": "¿Nuevo número de teléfono?",
-    "redirect": "Redirect Now",
-    "verify": "Verifique su número de teléfono",
-    "resend": "Reenviar codigo",
-    "try": "Pruebe con un número diferente",
-    "errorPage": "Error",
-    "ok": "Bueno",
-    "form": {
-        "phoneRequired": "El campo Número de teléfono es obligatorio.",
-        "phoneNumeric": "El número de teléfono debe contener solamente números",
-        "phoneMin": "El número de teléfono debe tener al menos 4 caracteres",
-        "phoneMax": "El número de teléfono no puede superar los 14 caracteres.",
-        "countryCodeRequired": "El código de país es obligatorio",
-        "countryCodeNumeric": "El código de país debe contener solamente números",
-        "codeRequired": "El código es obligatorio",
-        "codeNumeric": "El código debe contener solamente números"
-    },
-    "error": {
-        "found": "Error not found.",
-        "try": "Ocurrió un error al enviar datos. Inténtalo de nuevo",
-        "tokenExpired": "Tiempo vencido: reinicia el proceso de verificación",
-        "sessionExpired": "La sesión ha expirado, comience de nuevo.",
-        "appId": "The AppId not found",
-        "verify": "Phone number verification ends"
-    },
-    "text": {
-        "pageTitle": "Websites and Apps no recibirá su información personal",
-        "pageTitleApp": "{APPNAME} no recibirá su información personal",
-        "phone": "Su número de teléfono es eliminado después de la verificación",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Obtenga más información sobre nuestra misión de restaurar la privacidad</a>",
-        "welcome": "Ha iniciado su sesión exitosamente.",
-        "continue": "Ahora será redirigido de forma completamente anónima a {APPNAME}.",
-        "timer": "Volverás a {APPNAME} en {TIMER} segundos.",
-        "verifyCode": "Ingrese el código de 4 dígitos enviado por SMS a <strong>+{COUNTRYCODE} {PHONE}</strong>",
-        "afterSuccessful": "Después de una verificación exitosa, su número se eliminará permanentemente y solo se guardará un identificador aleatorio.",
-        "resend": "Reenviar código en {TIME}"
-    }
+  "language": "Spanish",
+  "phone": "Número de teléfono",
+  "countryCode": "Código de país",
+  "code": "Código",
+  "sendCode": "Enviar SMS con código de verificación",
+  "newAccount": "¿Nuevo número de teléfono?",
+  "redirect": "Redirect Now",
+  "verify": "Verifique su número de teléfono",
+  "resend": "Reenviar codigo",
+  "try": "Pruebe con un número diferente",
+  "errorPage": "Error",
+  "ok": "Bueno",
+  "form": {
+    "phoneRequired": "El campo Número de teléfono es obligatorio.",
+    "phoneNumeric": "El número de teléfono debe contener solamente números",
+    "phoneMin": "El número de teléfono debe tener al menos 4 caracteres",
+    "phoneMax": "El número de teléfono no puede superar los 14 caracteres.",
+    "countryCodeRequired": "El código de país es obligatorio",
+    "countryCodeNumeric": "El código de país debe contener solamente números",
+    "codeRequired": "El código es obligatorio",
+    "codeNumeric": "El código debe contener solamente números"
+  },
+  "error": {
+    "found": "Error not found.",
+    "try": "Ocurrió un error al enviar datos. Inténtalo de nuevo",
+    "tokenExpired": "Tiempo vencido: reinicia el proceso de verificación",
+    "sessionExpired": "La sesión ha expirado, comience de nuevo.",
+    "appId": "The AppId not found",
+    "verify": "Phone number verification ends"
+  },
+  "text": {
+    "pageTitle": "Websites and Apps no recibirá su información personal",
+    "pageTitleApp": "{APPNAME} no recibirá su información personal",
+    "phone": "Su número de teléfono es eliminado después de la verificación",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">Obtenga más información sobre nuestra misión de restaurar la privacidad</a>",
+    "welcome": "Ha iniciado su sesión exitosamente.",
+    "continue": "Ahora será redirigido de forma completamente anónima a {APPNAME}.",
+    "timer": "Volverás a {APPNAME} en {TIMER} segundos.",
+    "verifyCode": "Ingrese el código de 4 dígitos enviado por SMS a <strong>+{COUNTRYCODE} {PHONE}</strong>",
+    "afterSuccessful": "Después de una verificación exitosa, su número se eliminará permanentemente y solo se guardará un identificador aleatorio.",
+    "resend": "Reenviar código en {TIME}",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }
