@@ -1,44 +1,46 @@
 {
-    "language": "Swedish, Sweden",
-    "phone": "Telefonnummer",
-    "countryCode": "Landskod",
-    "code": "Koda",
-    "sendCode": "Skicka SMS med verifieringskod",
-    "newAccount": "Nytt telefonnummer?",
-    "redirect": "Redirect Now",
-    "verify": "Verifiera ditt telefonnummer",
-    "resend": "Skicka koden igen",
-    "try": "Prova olika nummer",
-    "errorPage": "Fel",
-    "ok": "Okej",
-    "form": {
-        "phoneRequired": "Fältet Telefonnummer krävs",
-        "phoneNumeric": "Fältet Telefonnummer får endast innehålla nummer",
-        "phoneMin": "Fältet Telefonnummer måste innehålla minst fyra tecken",
-        "phoneMax": "Fältet Telefonnummer får inte vara längre än 14 tecken",
-        "countryCodeRequired": "Fältet Landskod krävs",
-        "countryCodeNumeric": "Fältet Landskod får endast innehålla siffror",
-        "codeRequired": "Koden krävs",
-        "codeNumeric": "Kodfältet får endast innehålla siffror"
-    },
-    "error": {
-        "found": "Error not found.",
-        "try": "Ett fel uppstod när data skickades. Var god försök igen",
-        "tokenExpired": "Tiden har gått ut - starta om verifieringsprocessen",
-        "sessionExpired": "Sessionen har gått ut, starta igen",
-        "appId": "The AppId not found",
-        "verify": "Phone number verification ends"
-    },
-    "text": {
-        "pageTitle": "Websites and Apps mottar inte din personliga information",
-        "pageTitleApp": "{APPNAME} mottar inte din personliga information",
-        "phone": "Ditt telefonnummer raderas efter verifikation",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Lär dig mer om vårt uppdrag för att återställa din integritet</a>",
-        "welcome": "Du har loggat in",
-        "continue": "Du kommer nu att omdirigeras helt anonymt till {APPNAME}.",
-        "timer": "Du kommer tillbaka till {APPNAME} om {TIMER} sekunder",
-        "verifyCode": "Skriv in din fyrsiffriga kod som är skickad via SMS till <strong>+{COUNTRYCODE} {PHONE}</strong>.",
-        "afterSuccessful": "Efter en framgångsrik verifiering raderas ditt nummer permanent och enbart en slumpmässigt vald kod sparas",
-        "resend": "Skicka koden igen om {TIME}"
-    }
+  "language": "Swedish, Sweden",
+  "phone": "Telefonnummer",
+  "countryCode": "Landskod",
+  "code": "Koda",
+  "sendCode": "Skicka SMS med verifieringskod",
+  "newAccount": "Nytt telefonnummer?",
+  "redirect": "Redirect Now",
+  "verify": "Verifiera ditt telefonnummer",
+  "resend": "Skicka koden igen",
+  "try": "Prova olika nummer",
+  "errorPage": "Fel",
+  "ok": "Okej",
+  "form": {
+    "phoneRequired": "Fältet Telefonnummer krävs",
+    "phoneNumeric": "Fältet Telefonnummer får endast innehålla nummer",
+    "phoneMin": "Fältet Telefonnummer måste innehålla minst fyra tecken",
+    "phoneMax": "Fältet Telefonnummer får inte vara längre än 14 tecken",
+    "countryCodeRequired": "Fältet Landskod krävs",
+    "countryCodeNumeric": "Fältet Landskod får endast innehålla siffror",
+    "codeRequired": "Koden krävs",
+    "codeNumeric": "Kodfältet får endast innehålla siffror"
+  },
+  "error": {
+    "found": "Error not found.",
+    "try": "Ett fel uppstod när data skickades. Var god försök igen",
+    "tokenExpired": "Tiden har gått ut - starta om verifieringsprocessen",
+    "sessionExpired": "Sessionen har gått ut, starta igen",
+    "appId": "The AppId not found",
+    "verify": "Phone number verification ends"
+  },
+  "text": {
+    "pageTitle": "Websites and Apps mottar inte din personliga information",
+    "pageTitleApp": "{APPNAME} mottar inte din personliga information",
+    "phone": "Ditt telefonnummer raderas efter verifikation",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">Lär dig mer om vårt uppdrag för att återställa din integritet</a>",
+    "welcome": "Du har loggat in",
+    "continue": "Du kommer nu att omdirigeras helt anonymt till {APPNAME}.",
+    "timer": "Du kommer tillbaka till {APPNAME} om {TIMER} sekunder",
+    "verifyCode": "Skriv in din fyrsiffriga kod som är skickad via SMS till <strong>+{COUNTRYCODE} {PHONE}</strong>.",
+    "afterSuccessful": "Efter en framgångsrik verifiering raderas ditt nummer permanent och enbart en slumpmässigt vald kod sparas",
+    "resend": "Skicka koden igen om {TIME}",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }

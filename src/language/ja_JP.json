@@ -1,44 +1,46 @@
 {
-    "language": "日本語",
-    "phone": "電話番号",
-    "countryCode": "国コード",
-    "code": "コード",
-    "sendCode": "確認コード付きのSMSを送信する",
-    "newAccount": "新しい電話番号",
-    "redirect": "リダイレクト",
-    "verify": "電話番号を認証する",
-    "resend": "コードを再送信する",
-    "try": "別の番号を試してください",
-    "errorPage": "エラー",
-    "ok": "はい",
-    "form": {
-        "phoneRequired": "電話番号フィールドは必須です",
-        "phoneNumeric": "電話番号フィールドには番号のみを含める必要があります",
-        "phoneMin": "電話番号フィールドの長さは4文字以上である必要があります",
-        "phoneMax": "電話番号フィールドの長さは14文字を超えることはできません",
-        "countryCodeRequired": "国コードフィールドは必須です",
-        "countryCodeNumeric": "国コードフィールドには数字のみを含める必要があります",
-        "codeRequired": "コードが必要です",
-        "codeNumeric": "コードフィールドには数字のみを含める必要があります"
-    },
-    "error": {
-        "found": "エラーが見つかりません。",
-        "try": "データの送信中にエラーが発生しました。 もう一度お試しください",
-        "tokenExpired": "期限が切れました-検証プロセスを再開してください",
-        "sessionExpired": "セッションの有効期限が切れました。もう一度開始してください",
-        "appId": "AppIdが見つかりません。",
-        "verify": "Phone number verification ends"
-    },
-    "text": {
-        "pageTitle": "ウエブおよびアプリがあなたの個人情報を収集することはありません。",
-        "pageTitleApp": "{APPNAME} があなたの個人情報を収集することはありません。",
-        "phone": "電話番号は、認証後に削除されます。",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">プライバシーを回復する私たちのミッションの詳細はこちら</a>",
-        "welcome": "ログインに成功しました。",
-        "continue": "これで、完全に匿名で{APPNAME}にリダイレクトされます。",
-        "timer": "{TIMER}秒で{APPNAME}に戻ります",
-        "verifyCode": "SMS経由で<strong>+{COUNTRYCODE} {PHONE}</strong>に送信された4桁の認証コードを入力してください。",
-        "afterSuccessful": "認証成功後、電話番号は完全に消去され、ランダムな識別子のみが保存されます。",
-        "resend": "{TIME}後に、コードを再送信します。"
-    }
+  "language": "日本語",
+  "phone": "電話番号",
+  "countryCode": "国コード",
+  "code": "コード",
+  "sendCode": "確認コード付きのSMSを送信する",
+  "newAccount": "新しい電話番号",
+  "redirect": "リダイレクト",
+  "verify": "電話番号を認証する",
+  "resend": "コードを再送信する",
+  "try": "別の番号を試してください",
+  "errorPage": "エラー",
+  "ok": "はい",
+  "form": {
+    "phoneRequired": "電話番号フィールドは必須です",
+    "phoneNumeric": "電話番号フィールドには番号のみを含める必要があります",
+    "phoneMin": "電話番号フィールドの長さは4文字以上である必要があります",
+    "phoneMax": "電話番号フィールドの長さは14文字を超えることはできません",
+    "countryCodeRequired": "国コードフィールドは必須です",
+    "countryCodeNumeric": "国コードフィールドには数字のみを含める必要があります",
+    "codeRequired": "コードが必要です",
+    "codeNumeric": "コードフィールドには数字のみを含める必要があります"
+  },
+  "error": {
+    "found": "エラーが見つかりません。",
+    "try": "データの送信中にエラーが発生しました。 もう一度お試しください",
+    "tokenExpired": "期限が切れました-検証プロセスを再開してください",
+    "sessionExpired": "セッションの有効期限が切れました。もう一度開始してください",
+    "appId": "AppIdが見つかりません。",
+    "verify": "Phone number verification ends"
+  },
+  "text": {
+    "pageTitle": "ウエブおよびアプリがあなたの個人情報を収集することはありません。",
+    "pageTitleApp": "{APPNAME} があなたの個人情報を収集することはありません。",
+    "phone": "電話番号は、認証後に削除されます。",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">プライバシーを回復する私たちのミッションの詳細はこちら</a>",
+    "welcome": "ログインに成功しました。",
+    "continue": "これで、完全に匿名で{APPNAME}にリダイレクトされます。",
+    "timer": "{TIMER}秒で{APPNAME}に戻ります",
+    "verifyCode": "SMS経由で<strong>+{COUNTRYCODE} {PHONE}</strong>に送信された4桁の認証コードを入力してください。",
+    "afterSuccessful": "認証成功後、電話番号は完全に消去され、ランダムな識別子のみが保存されます。",
+    "resend": "{TIME}後に、コードを再送信します。",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }

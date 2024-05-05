@@ -1,44 +1,46 @@
 {
-    "language": "Korean",
-    "phone": "전화번호",
-    "countryCode": "국가 코드",
-    "code": "암호",
-    "sendCode": "확인 코드와 함께 SMS 보내기",
-    "newAccount": "새로운 전화번호?",
-    "redirect": "Redirect Now",
-    "verify": "전화번호 인증",
-    "resend": "코드 재전송",
-    "try": "다른 번호 시도",
-    "errorPage": "오류",
-    "ok": "확인",
-    "form": {
-        "phoneRequired": "전화 번호 필드는 필수입니다.",
-        "phoneNumeric": "전화 번호 필드는 숫자 만 포함해야합니다.",
-        "phoneMin": "전화 번호 입력란은 4 자 이상이어야합니다.",
-        "phoneMax": "전화 번호 필드는 14자를 초과 할 수 없습니다.",
-        "countryCodeRequired": "국가 코드 필드는 필수입니다",
-        "countryCodeNumeric": "국가 코드 필드는 숫자 만 포함해야합니다.",
-        "codeRequired": "코드가 필요합니다",
-        "codeNumeric": "코드 필드에는 숫자 만 포함되어야합니다."
-    },
-    "error": {
-        "found": "Error not found.",
-        "try": "데이터를 보내는 동안 오류가 발생했습니다. 다시 시도하십시오",
-        "tokenExpired": "시간이 만료되었습니다. 확인 프로세스를 다시 시작하십시오.",
-        "sessionExpired": "세션이 만료되었습니다. 다시 시작하십시오.",
-        "appId": "The AppId not found",
-        "verify": "Phone number verification ends"
-    },
-    "text": {
-        "pageTitle": "Websites and Apps 은 귀하의 전하번호를 수신하지 않습니다.",
-        "pageTitleApp": "{APPNAME} 은 귀하의 전하번호를 수신하지 않습니다.",
-        "phone": "귀하의 전화번호는 인증 후 삭제됩니다",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">개인 정보를 복원하려는 우리의 역활에 대해 자세히 알아보십시오.</a>",
-        "welcome": "성공적으로 로그인되었습니다",
-        "continue": "이제 완전히 익명으로 {APPNAME}으로 리디렉션됩니다.",
-        "timer": "{TIMER} 초 후에 {APPNAME}으로 돌아갑니다.",
-        "verifyCode": "SMS를 통해 <strong>+{COUNTRYCODE} {PHONE}</strong>로 전송된 4자리 코드를 입력하세요.",
-        "afterSuccessful": "인증에 성공하면 번호가 영구적으로 삭제되고 임의의 식별자만 저장됩니다.",
-        "resend": "{TIME} 후 코드 재전송"
-    }
+  "language": "Korean",
+  "phone": "전화번호",
+  "countryCode": "국가 코드",
+  "code": "암호",
+  "sendCode": "확인 코드와 함께 SMS 보내기",
+  "newAccount": "새로운 전화번호?",
+  "redirect": "Redirect Now",
+  "verify": "전화번호 인증",
+  "resend": "코드 재전송",
+  "try": "다른 번호 시도",
+  "errorPage": "오류",
+  "ok": "확인",
+  "form": {
+    "phoneRequired": "전화 번호 필드는 필수입니다.",
+    "phoneNumeric": "전화 번호 필드는 숫자 만 포함해야합니다.",
+    "phoneMin": "전화 번호 입력란은 4 자 이상이어야합니다.",
+    "phoneMax": "전화 번호 필드는 14자를 초과 할 수 없습니다.",
+    "countryCodeRequired": "국가 코드 필드는 필수입니다",
+    "countryCodeNumeric": "국가 코드 필드는 숫자 만 포함해야합니다.",
+    "codeRequired": "코드가 필요합니다",
+    "codeNumeric": "코드 필드에는 숫자 만 포함되어야합니다."
+  },
+  "error": {
+    "found": "Error not found.",
+    "try": "데이터를 보내는 동안 오류가 발생했습니다. 다시 시도하십시오",
+    "tokenExpired": "시간이 만료되었습니다. 확인 프로세스를 다시 시작하십시오.",
+    "sessionExpired": "세션이 만료되었습니다. 다시 시작하십시오.",
+    "appId": "The AppId not found",
+    "verify": "Phone number verification ends"
+  },
+  "text": {
+    "pageTitle": "Websites and Apps 은 귀하의 전하번호를 수신하지 않습니다.",
+    "pageTitleApp": "{APPNAME} 은 귀하의 전하번호를 수신하지 않습니다.",
+    "phone": "귀하의 전화번호는 인증 후 삭제됩니다",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">개인 정보를 복원하려는 우리의 역활에 대해 자세히 알아보십시오.</a>",
+    "welcome": "성공적으로 로그인되었습니다",
+    "continue": "이제 완전히 익명으로 {APPNAME}으로 리디렉션됩니다.",
+    "timer": "{TIMER} 초 후에 {APPNAME}으로 돌아갑니다.",
+    "verifyCode": "SMS를 통해 <strong>+{COUNTRYCODE} {PHONE}</strong>로 전송된 4자리 코드를 입력하세요.",
+    "afterSuccessful": "인증에 성공하면 번호가 영구적으로 삭제되고 임의의 식별자만 저장됩니다.",
+    "resend": "{TIME} 후 코드 재전송",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }

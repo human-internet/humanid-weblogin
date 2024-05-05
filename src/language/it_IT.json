@@ -1,44 +1,46 @@
 {
-    "language": "Italian",
-    "phone": "Numero di telefono",
-    "countryCode": "Prefisso internazionale",
-    "code": "Codice",
-    "sendCode": "Invia SMS con codice di verifica",
-    "newAccount": "Nuovo numero?",
-    "redirect": "Redirect Now",
-    "verify": "Verifica il tuo numero di telefono",
-    "resend": "Invia nuovamente il codice",
-    "try": "Prova un numero diverso",
-    "errorPage": "Errore",
-    "ok": "Va bene",
-    "form": {
-        "phoneRequired": "Il campo Numero di telefono è obbligatorio",
-        "phoneNumeric": "Il campo Numero di telefono deve contenere solo numeri",
-        "phoneMin": "Il campo Numero di telefono deve contenere almeno 4 caratteri",
-        "phoneMax": "Il campo Numero di telefono non può superare i 14 caratteri",
-        "countryCodeRequired": "Il campo Country Code è obbligatorio",
-        "countryCodeNumeric": "Il campo Country Code deve contenere solo numeri",
-        "codeRequired": "Il codice è obbligatorio",
-        "codeNumeric": "Il campo Codice deve contenere solo numeri"
-    },
-    "error": {
-        "found": "Error not found.",
-        "try": "Si è verificato un errore durante l'invio dei dati. Per favore riprova",
-        "tokenExpired": "Tempo scaduto: riavvia il processo di verifica",
-        "sessionExpired": "La sessione è scaduta, ricomincia",
-        "appId": "The AppId not found",
-        "verify": "Phone number verification ends"
-    },
-    "text": {
-        "pageTitle": "Websites and Apps non riceverà i tuoi dati personali",
-        "pageTitleApp": "{APPNAME} non riceverà i tuoi dati personali",
-        "phone": "Il tuo numero di telefono è cancellato dopo la verifica",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Scopri di più sulla nostra missione di ripristino della privacy</a>",
-        "welcome": "Hai completato l'accesso",
-        "continue": "Ora verrai reindirizzato in modo completamente anonimo a {APPNAME}.",
-        "timer": "Verrai riportato a {APPNAME} tra {TIMER} secondi",
-        "verifyCode": "Inserici il codice di 4 cifre inviato via SMS a <strong>+{COUNTRYCODE} {PHONE}</strong>",
-        "afterSuccessful": "Dopo esser stato verificato con successo, il Suo numero sarà cancellato permanentemente. Verrà unicamente salvato un codice di identificazione casuale.",
-        "resend": "Invia nuovamente il codice in {TIME}"
-    }
+  "language": "Italian",
+  "phone": "Numero di telefono",
+  "countryCode": "Prefisso internazionale",
+  "code": "Codice",
+  "sendCode": "Invia SMS con codice di verifica",
+  "newAccount": "Nuovo numero?",
+  "redirect": "Redirect Now",
+  "verify": "Verifica il tuo numero di telefono",
+  "resend": "Invia nuovamente il codice",
+  "try": "Prova un numero diverso",
+  "errorPage": "Errore",
+  "ok": "Va bene",
+  "form": {
+    "phoneRequired": "Il campo Numero di telefono è obbligatorio",
+    "phoneNumeric": "Il campo Numero di telefono deve contenere solo numeri",
+    "phoneMin": "Il campo Numero di telefono deve contenere almeno 4 caratteri",
+    "phoneMax": "Il campo Numero di telefono non può superare i 14 caratteri",
+    "countryCodeRequired": "Il campo Country Code è obbligatorio",
+    "countryCodeNumeric": "Il campo Country Code deve contenere solo numeri",
+    "codeRequired": "Il codice è obbligatorio",
+    "codeNumeric": "Il campo Codice deve contenere solo numeri"
+  },
+  "error": {
+    "found": "Error not found.",
+    "try": "Si è verificato un errore durante l'invio dei dati. Per favore riprova",
+    "tokenExpired": "Tempo scaduto: riavvia il processo di verifica",
+    "sessionExpired": "La sessione è scaduta, ricomincia",
+    "appId": "The AppId not found",
+    "verify": "Phone number verification ends"
+  },
+  "text": {
+    "pageTitle": "Websites and Apps non riceverà i tuoi dati personali",
+    "pageTitleApp": "{APPNAME} non riceverà i tuoi dati personali",
+    "phone": "Il tuo numero di telefono è cancellato dopo la verifica",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">Scopri di più sulla nostra missione di ripristino della privacy</a>",
+    "welcome": "Hai completato l'accesso",
+    "continue": "Ora verrai reindirizzato in modo completamente anonimo a {APPNAME}.",
+    "timer": "Verrai riportato a {APPNAME} tra {TIMER} secondi",
+    "verifyCode": "Inserici il codice di 4 cifre inviato via SMS a <strong>+{COUNTRYCODE} {PHONE}</strong>",
+    "afterSuccessful": "Dopo esser stato verificato con successo, il Suo numero sarà cancellato permanentemente. Verrà unicamente salvato un codice di identificazione casuale.",
+    "resend": "Invia nuovamente il codice in {TIME}",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }

@@ -1,44 +1,46 @@
 {
-    "language": "German",
-    "phone": "Telefonnummer",
-    "countryCode": "Landesvorwahl",
-    "code": "Code",
-    "sendCode": "SMS mit Bestätigungscode senden",
-    "newAccount": "Neue Nummer?",
-    "redirect": "Redirect Now",
-    "verify": "Bestätigen Sie Ihre Telefonnummer",
-    "resend": "Code erneut senden",
-    "try": "Versuchen Sie eine andere Nummer",
-    "errorPage": "Fehler",
-    "ok": "OK",
-    "form": {
-        "phoneRequired": "Die Telefonnummer wird erfordert",
-        "phoneNumeric": "Das Feld Telefonnummer darf nur Nummern enthalten",
-        "phoneMin": "Die eingegebene Telefonnummer ist zu kurz",
-        "phoneMax": "Die eingegebene Telefonnummer ist zu lang",
-        "countryCodeRequired": "Die Ländervorwahl wird erfordert",
-        "countryCodeNumeric": "Die Ländervorwahl darf nur Zahlen enthalten",
-        "codeRequired": "Der Verifizierungscode wird erfordert",
-        "codeNumeric": "Der Verifizierungscode darf nur Zahlen enthalten"
-    },
-    "error": {
-        "found": "Error not found.",
-        "try": "Beim Senden der Daten ist ein Fehler aufgetreten. Bitte versuche es erneut",
-        "tokenExpired": "Zeit abgelaufen - Bitte starten Sie den Verifizierungsprozess neu",
-        "sessionExpired": "Die Sitzung ist abgelaufen, bitte versuchen Sie es erneut",
-        "appId": "The AppId not found",
-        "verify": "Phone number verification ends"
-    },
-    "text": {
-        "pageTitle": "Websites and Apps wird keinerlei persönliche Daten von Ihnen erhalten.",
-        "pageTitleApp": "{APPNAME} wird keinerlei persönliche Daten von Ihnen erhalten.",
-        "phone": "Ihre Telefonnummer wird nach der Verifizierung unwiderruflich gelöscht",
-        "privacy": "<a href=\"{LINK}\" target=\"_blank\">Erfahren Sie mehr über unseren Einsatz für Datenschutz und Privatsphäre.</a>",
-        "welcome": "Sie haben sich erfolgreich angemeldet.",
-        "continue": "Sie werden nun vollständig anonym zu {APPNAME} weitergeleitet.",
-        "timer": "Sie werden in {TIMER} Sekunden zu {APPNAME} zurückgebracht.",
-        "verifyCode": "Bitte geben Sie den 4-stelligen Code ein, der per SMS an <strong>+{COUNTRYCODE} {PHONE}</strong> gesendet wurde.",
-        "afterSuccessful": "Nach erfolgreicher Bestätigung wird Ihre Nummer unwiderruflich gelöscht und nur eine anonyme Kennung gespeichert.",
-        "resend": "Sende Code erneut in {TIME}"
-    }
+  "language": "German",
+  "phone": "Telefonnummer",
+  "countryCode": "Landesvorwahl",
+  "code": "Code",
+  "sendCode": "SMS mit Bestätigungscode senden",
+  "newAccount": "Neue Nummer?",
+  "redirect": "Redirect Now",
+  "verify": "Bestätigen Sie Ihre Telefonnummer",
+  "resend": "Code erneut senden",
+  "try": "Versuchen Sie eine andere Nummer",
+  "errorPage": "Fehler",
+  "ok": "OK",
+  "form": {
+    "phoneRequired": "Die Telefonnummer wird erfordert",
+    "phoneNumeric": "Das Feld Telefonnummer darf nur Nummern enthalten",
+    "phoneMin": "Die eingegebene Telefonnummer ist zu kurz",
+    "phoneMax": "Die eingegebene Telefonnummer ist zu lang",
+    "countryCodeRequired": "Die Ländervorwahl wird erfordert",
+    "countryCodeNumeric": "Die Ländervorwahl darf nur Zahlen enthalten",
+    "codeRequired": "Der Verifizierungscode wird erfordert",
+    "codeNumeric": "Der Verifizierungscode darf nur Zahlen enthalten"
+  },
+  "error": {
+    "found": "Error not found.",
+    "try": "Beim Senden der Daten ist ein Fehler aufgetreten. Bitte versuche es erneut",
+    "tokenExpired": "Zeit abgelaufen - Bitte starten Sie den Verifizierungsprozess neu",
+    "sessionExpired": "Die Sitzung ist abgelaufen, bitte versuchen Sie es erneut",
+    "appId": "The AppId not found",
+    "verify": "Phone number verification ends"
+  },
+  "text": {
+    "pageTitle": "Websites and Apps wird keinerlei persönliche Daten von Ihnen erhalten.",
+    "pageTitleApp": "{APPNAME} wird keinerlei persönliche Daten von Ihnen erhalten.",
+    "phone": "Ihre Telefonnummer wird nach der Verifizierung unwiderruflich gelöscht",
+    "privacy": "<a href=\"{LINK}\" target=\"_blank\">Erfahren Sie mehr über unseren Einsatz für Datenschutz und Privatsphäre.</a>",
+    "welcome": "Sie haben sich erfolgreich angemeldet.",
+    "continue": "Sie werden nun vollständig anonym zu {APPNAME} weitergeleitet.",
+    "timer": "Sie werden in {TIMER} Sekunden zu {APPNAME} zurückgebracht.",
+    "verifyCode": "Bitte geben Sie den 4-stelligen Code ein, der per SMS an <strong>+{COUNTRYCODE} {PHONE}</strong> gesendet wurde.",
+    "afterSuccessful": "Nach erfolgreicher Bestätigung wird Ihre Nummer unwiderruflich gelöscht und nur eine anonyme Kennung gespeichert.",
+    "resend": "Sende Code erneut in {TIME}",
+    "policy": "Privacy policy",
+    "tnc": "SMS Terms & Conditions"
+  }
 }
