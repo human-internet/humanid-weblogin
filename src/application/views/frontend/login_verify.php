@@ -1,21 +1,21 @@
 <form method="post">
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        let countdown = 60; // Set the countdown starting time in seconds
-        const countdownTime = document.getElementById('countdown-time'); // The <strong> element inside the span
-        const resendLink = document.getElementById('resend-link'); // The resend link
+            let countdown = 60; // Set the countdown starting time in seconds
+            const countdownTime = document.getElementById('countdown-time'); // The <strong> element inside the span
+            const resendLink = document.getElementById('resend-link'); // The resend link
 
-        // Update the countdown every second
-        const timerInterval = setInterval(() => {
-            countdown -= 1; // Decrement the countdown
+            // Update the countdown every second
+            const timerInterval = setInterval(() => {
+                countdown -= 1; // Decrement the countdown
 
-                // Check if the countdown has finished
-                if (countdown == 0) {
-                    countdownTime.textContent = "00:00"; // Set the countdown to 00:00
-                }
-                // Pause one second to let the countdown display disappear before showing resend link
-                if (countdown < 0) {
+                if (countdown > 0) {
+                    const minutes = String(Math.floor(countdown / 60)).padStart(2, '0');
+                    const seconds = String(countdown % 60).padStart(2, '0');
+                    countdownTime.textContent = `${minutes}:${seconds}`;
+                } else {
                     clearInterval(timerInterval); // Stop the countdown
+                    countdownTime.textContent = "00:00"; // Set the countdown to 00:00
                     resendLink.style.display = 'inline'; // Show the resend link
                 }
             }, 1000); // Repeat every 1000 milliseconds (1 second)
