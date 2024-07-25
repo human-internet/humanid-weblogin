@@ -533,7 +533,7 @@ if ( ! function_exists('redirect'))
 	 */
 	function redirect($uri = '', $method = 'auto', $code = NULL)
 	{
-		if ( ! preg_match('#^(\w+:)?//#i', $uri))
+		if ( ! preg_match('#^([a-zA-Z0-9_-]+:)?//#i', $uri))
 		{
 			$uri = site_url($uri);
 		}
