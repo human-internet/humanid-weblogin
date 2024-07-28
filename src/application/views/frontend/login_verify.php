@@ -78,10 +78,10 @@
             <input type="hidden" name="remaining" id="remaining">
             <div class="humanid-form-placement__link">
                 <div class="humanid-form-placement__link__wrapper">
-                    <a href="<?php echo site_url('login?a='.$app->id.'&t='.$row['token'].'&lang='.$lang->id.'&priority_country='.$pc->code);?>" class="humanid-link-blue-light">
+                    <a href="<?php echo site_url('login?a='.$app->id.'&t='.$row['token'].'&lang='.$lang->id.'&priority_country='.$pc->code.'&s='.$app->source);?>" class="humanid-link-blue-light">
                         <?php echo $lang->try;?>
                     </a>
-                    <a href="<?php echo site_url('login/resend?a='.$app->id.'&t='.$row['token'].'&lang='.$lang->id);?>" id="resend-link" class="humanid-link-blue-light" style="display: none;"><?php echo $lang->resend;?></a>
+                    <a href="<?php echo site_url('login/resend?a='.$app->id.'&t='.$row['token'].'&lang='.$lang->id.'&s='.$app->source);?>" id="resend-link" class="humanid-link-blue-light" style="display: none;"><?php echo $lang->resend;?></a>
                     <!--<a href="<?php /*echo base_url('recovery/new_number') */?>" class="humanid-link-blue-light">Recover Existing Account</a>-->
                 </div>
             </div>
