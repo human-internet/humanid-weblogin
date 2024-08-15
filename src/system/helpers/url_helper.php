@@ -533,7 +533,14 @@ if ( ! function_exists('redirect'))
 	 */
 	function redirect($uri = '', $method = 'auto', $code = NULL)
 	{
-		if ( ! preg_match('#^([a-zA-Z0-9_-]+:)?//#i', $uri))
+        $web_login_version = isset($_GET['v']) ? html_escape($_GET['v']) : 'v1';
+
+        if ($web_login_version == 'v1' && ! preg_match('#^(\w+:)?//#i', $uri))
+		{
+			$uri = site_url($uri);
+		}
+
+        if ($web_login_version == 'v2' && ! preg_match('#^([a-zA-Z0-9_-]+:)?//#i', $uri))
 		{
 			$uri = site_url($uri);
 		}
