@@ -533,7 +533,8 @@ if ( ! function_exists('redirect'))
 	 */
 	function redirect($uri = '', $method = 'auto', $code = NULL)
 	{
-        $web_login_version = isset($_GET['v']) ? html_escape($_GET['v']) : 'v1';
+        $allowed_versions = ['v1', 'v2'];
+        $web_login_version = isset($_GET['v']) && in_array($_GET['v'], $allowed_versions) ? html_escape($_GET['v']) : 'v1';
 
         if ($web_login_version == 'v1' && ! preg_match('#^(\w+:)?//#i', $uri))
 		{
