@@ -1,3 +1,5 @@
+<?php $version = $_GET['v'] ?? 'v1'; ?>
+
 <form method="post" id="redirect-app" action="<?php echo site_url('redirect_now') . '?v=' . $version ?>">
     <div class="humanid-logo">
         <div class="humanid-logo__placement">
