@@ -533,10 +533,17 @@ if ( ! function_exists('redirect'))
 	 */
 	function redirect($uri = '', $method = 'auto', $code = NULL)
 	{
-		if ( ! preg_match('#^([a-zA-Z0-9_-]+:)?//#i', $uri))
-		{
-			$uri = site_url($uri);
-		}
+        $allowed_versions = ['v1', 'v2'];
+        $web_login_version = isset($_GET['v']) && in_array($_GET['v'], $allowed_versions) ? html_escape($_GET['v']) : 'v1';
+
+        $regex_patterns = [
+            'v1' => '#^(\w+:)?//#i',
+            'v2' => '#^([a-zA-Z0-9_-]+:)?//#i'
+        ];
+
+        if (!preg_match($regex_patterns[$web_login_version], $uri)) {
+            $uri = site_url($uri);
+        }
 
 		// IIS environment likely? Use 'refresh' for better compatibility
 		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== FALSE)

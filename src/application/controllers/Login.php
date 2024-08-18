@@ -7,6 +7,7 @@ class Login extends BaseController
 {
     public function index()
     {
+        $version = $_GET['v'] ?? 'v1';
         $this->clearSessions();
         $this->_app = $this->getAppInfo(true);
         $webLoginToken = $this->input->get('t', true);
@@ -41,7 +42,7 @@ class Login extends BaseController
                 ],
             ]);
             $this->session->set_userdata('humanId__requestOtpLogin', $response->data);
-            redirect(site_url('verify?a=' . $this->_app->id . '&t=' . $webLoginToken . '&lang=' . $this->lg->id . "&s=" . $this->_app->source . "&id=" . $requestId));
+            redirect(site_url('verify?a=' . $this->_app->id . '&t=' . $webLoginToken . '&lang=' . $this->lg->id . "&s=" . $this->_app->source . "&id=" . $requestId . "&v=" . $version));
         } else {
             $this->_first_error_msg();
         }
@@ -66,8 +67,63 @@ class Login extends BaseController
         $this->render();
     }
 
+    private function handleErrorRequestOtpLogin($response)
+    {
+        $version = $_GET['v'] ?? 'v1';
+        $t = $this->session->userdata('humanId__loginRequestOtpToken');
+        $id = $this->session->userdata('humanId__requestId');
+        $code = $response->code ?? '';
+        $redirectBack = site_url('login?a=' . $this->_app->id . '&t=' . $t . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->_app->source . "&id=" . $id . "&v=" . $version);
+
+        $modal = (object)[
+            'title' => $this->lg->errorPage,
+            'code' => $code,
+            'message' => $response->message ?? '',
+            'url' => $redirectBack
+        ];
+
+        // Common error internal message
+        if ($response->code === self::ERR_INTERNAL) {
+            $modal->message = self::MESSAGE_INTERNAL;
+            $msg = urlencode($modal->message);
+            $modal->url = "{$this->_app->redirectUrlFail}?code={$code}&message={$msg}";
+        }
+
+        if ($response->message === self::JWT_EXPIRED) {
+            $modal->message = $this->lg->error->sessionExpired;
+            $msg = urlencode($modal->message);
+            $modal->url = "{$this->_app->redirectUrlFail}?code={$code}&message={$msg}";
+        }
+
+        $this->session->set_flashdata('modal', $modal);
+        $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+        redirect(site_url('error?lang=' . $this->lg->id));
+    }
+
+    private function _display_phone($phone = 0, $text = " ")
+    {
+        $length = strlen($phone);
+        if ($length > 3 && $length <= 7) {
+            $last = $length - 3;
+            $phone = preg_replace("/^(\d{3})(\d{" . $last . "})$/", "$1" . $text . "$2", $phone);
+        } else if ($length > 7 && $length <= 10) {
+            $last = $length - 6;
+            $phone = preg_replace("/^(\d{3})(\d{3})(\d{" . $last . "})$/", "$1" . $text . "$2" . $text . "$3", $phone);
+        } else if ($length > 10 && $length <= 14) {
+            if ($length == 11) {
+                $phone = preg_replace("/^(\d{3})(\d{4})(\d{4})$/", "$1" . $text . "$2" . $text . "$3", $phone);
+            } else {
+                $last = $length - 11;
+                $phone = preg_replace("/^(\d{3})(\d{4})(\d{4})(\d{" . $last . "})$/", "$1" . $text . "$2" . $text . "$3" . $text . "$4", $phone);
+            }
+        }
+
+        return $phone;
+    }
+
     public function verify()
     {
+        $version = $_GET['v'] ?? 'v1';
         $this->_checkRequestOtpSession();
         // Load App info
         $this->_app = $this->getAppInfo();
@@ -78,7 +134,7 @@ class Login extends BaseController
         $remaining = ($remaining == '') ? 60 : intval($remaining);
         if ($remaining <= 0) {
             $this->init_logs(array('error' => $this->lg->error->verify));
-            redirect(site_url('login?a=' . $this->_app->id . '&t=' . $loginToken . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->_app->source));
+            redirect(site_url('login?a=' . $this->_app->id . '&t=' . $loginToken . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->_app->source . '&v=' . $version));
         }
         $modal = $this->session->flashdata('modal');
         if ($modal) {
@@ -110,7 +166,7 @@ class Login extends BaseController
                     'dialcode' => $login['dialcode'],
                 ]]);
                 $data = $response->data;
-                $resultVerifyData = (object) [
+                $resultVerifyData = (object)[
                     'exchangeToken' => $data->exchangeToken,
                     'redirectUrl' => $data->redirectUrl,
                     'expiredAt' => $data->expiredAt,
@@ -129,12 +185,12 @@ class Login extends BaseController
 //                ) {
 //                    redirect(base_url('recovery/create'));
 //                }
-
-                redirect('redirect_app?lang=' . $this->lg->id);
+                $version = $_GET['v'] ?? 'v1';
+                redirect('redirect_app?lang=' . $this->lg->id . "&v=" . $version);
 
             } else {
                 if ($response->code == 'ERR_11') {
-                    $modal = (object) [
+                    $modal = (object)[
                         'title' => $this->lg->errorPage,
                         'code' => $response->code,
                         'message' => $this->lg->error->sessionExpired,
@@ -146,10 +202,10 @@ class Login extends BaseController
                 }
                 if ($response->code == 'ERR_13') {
                     $this->init_logs(array('error' => 'ERR_13 - ' . $response->message));
-                    redirect(site_url('login?a=' . $this->_app->id . '&t=' . $loginToken . '&lang=' . $this->lg->id . "&s=" . $this->_app->source));
+                    redirect(site_url('login?a=' . $this->_app->id . '&t=' . $loginToken . '&lang=' . $this->lg->id . "&s=" . $this->_app->source . '&v=' . $version));
                 }
                 if ($response->message == "jwt expired") {
-                    $modal = (object) [
+                    $modal = (object)[
                         'title' => $this->lg->errorPage,
                         'code' => $response->code,
                         'message' => $this->lg->error->tokenExpired,
@@ -173,6 +229,16 @@ class Login extends BaseController
         $this->styles('input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}input[type=number] {-moz-appearance:textfield;}', 'embed');
         $this->scripts('humanid.formLoginVeriy(' . $success . ',' . $failAttemptLimit . ');', 'embed');
         $this->render();
+    }
+
+    private function _checkRequestOtpSession()
+    {
+        $session = $this->session->has_userdata('humanId__requestOtpLogin');
+        $phone = $this->session->has_userdata('humanId__phone');
+        if ($session === false || $phone === false) {
+            $this->session->unset_userdata('humanId__phone');
+            redirect(site_url('recovery/new_number'));
+        }
     }
 
     public function redirect_app()
@@ -223,6 +289,36 @@ class Login extends BaseController
         $this->render(true, 'recovery/redirect_app');
     }
 
+    private function handleErrorRecoveryLogin($response)
+    {
+        $code = $response->code;
+        $modal = (object)[
+            'title' => $this->lg->errorPage,
+            'code' => $code ?? '',
+            'message' => $response->message ?? '',
+            'url' => site_url('recovery/new_number')
+        ];
+
+        if ($response->message == "jwt expired") {
+            $message = urlencode($response->message);
+            $modal = (object)[
+                'title' => $this->lg->errorPage,
+                'code' => $code ?? '',
+                'message' => $this->lg->error->tokenExpired,
+                'url' => "{$this->_app->redirectUrlFail}?code={$response->code}&message={$message}"
+            ];
+            $this->session->unset_userdata('humanId__phone');
+            $this->session->set_flashdata('modal', $modal);
+            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+            redirect(site_url('error?lang=' . $this->lg->id));
+        }
+
+        $this->session->set_flashdata('modal', $modal);
+        $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+        $redirectUrl = site_url('error?lang=' . $this->lg->id);
+        redirect($redirectUrl);
+    }
+
     public function redirect_now()
     {
         if ($post = $this->input->post()) {
@@ -256,98 +352,5 @@ class Login extends BaseController
         $this->session->set_userdata('humanId__requestOtpLogin', $response->data);
 
         redirect(site_url('verify?a=' . $this->_app->id . '&t=' . $loginToken . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->_app->source));
-    }
-
-    private function _display_phone($phone = 0, $text = " ")
-    {
-        $length = strlen($phone);
-        if ($length > 3 && $length <= 7) {
-            $last = $length - 3;
-            $phone = preg_replace("/^(\d{3})(\d{" . $last . "})$/", "$1" . $text . "$2", $phone);
-        } else if ($length > 7 && $length <= 10) {
-            $last = $length - 6;
-            $phone = preg_replace("/^(\d{3})(\d{3})(\d{" . $last . "})$/", "$1" . $text . "$2" . $text . "$3", $phone);
-        } else if ($length > 10 && $length <= 14) {
-            if ($length == 11) {
-                $phone = preg_replace("/^(\d{3})(\d{4})(\d{4})$/", "$1" . $text . "$2" . $text . "$3", $phone);
-            } else {
-                $last = $length - 11;
-                $phone = preg_replace("/^(\d{3})(\d{4})(\d{4})(\d{" . $last . "})$/", "$1" . $text . "$2" . $text . "$3" . $text . "$4", $phone);
-            }
-        }
-
-        return $phone;
-    }
-
-    private function _checkRequestOtpSession()
-    {
-        $session = $this->session->has_userdata('humanId__requestOtpLogin');
-        $phone = $this->session->has_userdata('humanId__phone');
-        if ($session === false || $phone === false) {
-            $this->session->unset_userdata('humanId__phone');
-            redirect(site_url('recovery/new_number'));
-        }
-    }
-
-    private function handleErrorRecoveryLogin($response)
-    {
-        $code = $response->code;
-        $modal = (object) [
-            'title' => $this->lg->errorPage,
-            'code' => $code ?? '',
-            'message' => $response->message ?? '',
-            'url' => site_url('recovery/new_number')
-        ];
-
-        if ($response->message == "jwt expired") {
-            $message = urlencode($response->message);
-            $modal = (object) [
-                'title' => $this->lg->errorPage,
-                'code' => $code ?? '',
-                'message' => $this->lg->error->tokenExpired,
-                'url' => "{$this->_app->redirectUrlFail}?code={$response->code}&message={$message}"
-            ];
-            $this->session->unset_userdata('humanId__phone');
-            $this->session->set_flashdata('modal', $modal);
-            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-            redirect(site_url('error?lang=' . $this->lg->id));
-        }
-
-        $this->session->set_flashdata('modal', $modal);
-        $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-        $redirectUrl = site_url('error?lang=' . $this->lg->id);
-        redirect($redirectUrl);
-    }
-
-    private function handleErrorRequestOtpLogin($response)
-    {
-        $t = $this->session->userdata('humanId__loginRequestOtpToken');
-        $id = $this->session->userdata('humanId__requestId');
-        $code = $response->code ?? '';
-        $redirectBack = site_url('login?a=' . $this->_app->id . '&t=' . $t  . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->_app->source . "&id=" . $id);
-
-        $modal = (object) [
-            'title' => $this->lg->errorPage,
-            'code' => $code,
-            'message' => $response->message ?? '',
-            'url' => $redirectBack
-        ];
-
-        // Common error internal message
-        if ($response->code === self::ERR_INTERNAL) {
-            $modal->message = self::MESSAGE_INTERNAL;
-            $msg = urlencode($modal->message);
-            $modal->url = "{$this->_app->redirectUrlFail}?code={$code}&message={$msg}";
-        }
-
-        if ($response->message === self::JWT_EXPIRED) {
-            $modal->message = $this->lg->error->sessionExpired;
-            $msg = urlencode($modal->message);
-            $modal->url = "{$this->_app->redirectUrlFail}?code={$code}&message={$msg}";
-        }
-
-        $this->session->set_flashdata('modal', $modal);
-        $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-        redirect(site_url('error?lang=' . $this->lg->id));
     }
 }

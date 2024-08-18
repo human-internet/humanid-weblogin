@@ -1,3 +1,6 @@
+<?php
+$version = $_GET['v'] ?? 'v1';
+?>
 <form method="post">
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -24,36 +27,40 @@
 
     <div class="humanid-logo">
         <div class="humanid-logo__placement">
-        <img src="<?php echo $app->logoUrls->thumbnail;?>" alt="<?php echo $app->name; ?>">
+            <img src="<?php echo $app->logoUrls->thumbnail; ?>" alt="<?php echo $app->name; ?>">
         </div>
     </div>
-    <?php if($success):?>
-        <div class="humanid-page-title"><?php echo str_replace("{APPNAME}",$app->name,$lang->text->pageTitleApp);?></div>
+    <?php if ($success): ?>
+        <div
+            class="humanid-page-title"><?php echo str_replace("{APPNAME}", $app->name, $lang->text->pageTitleApp); ?></div>
         <div class="humanid-content-text">
             <div class="humanid-text-info humanid-text-info-default">
-                <p><?php echo $lang->text->welcome;?></p>
-                <p><?php echo str_replace("{APPNAME}",$app->name,$lang->text->continue);?></p>
+                <p><?php echo $lang->text->welcome; ?></p>
+                <p><?php echo str_replace("{APPNAME}", $app->name, $lang->text->continue); ?></p>
             </div>
         </div>
         <div class="humanid-button humanid-button-vertical">
-            <button class="btn-humanid btn-humanid-primary directed-now" type="button"><?php echo $lang->redirect;?></button>
-            <button class="btn-humanid btn-humanid-secondary" type="button"><?php echo str_replace(array("{TIMER}","{APPNAME}"),array('<span class="timer-text"></span>',$app->name),$lang->text->timer);?></button>
-            <input type="hidden" class="directed-link" value="<?php echo $redirectUrl;?>">
+            <button class="btn-humanid btn-humanid-primary directed-now"
+                    type="button"><?php echo $lang->redirect; ?></button>
+            <button class="btn-humanid btn-humanid-secondary"
+                    type="button"><?php echo str_replace(array("{TIMER}", "{APPNAME}"), array('<span class="timer-text"></span>', $app->name), $lang->text->timer); ?></button>
+            <input type="hidden" class="directed-link" value="<?php echo $redirectUrl; ?>">
         </div>
-        <?php /*if(!$hasSetupRecovery && $accountRecovery === true) { */?><!--
+        <?php /*if(!$hasSetupRecovery && $accountRecovery === true) { */ ?><!--
                 <div class="humanid-content-link center">
-                    <a href="<?php /*echo $redirectSetRecoveryEmail;*/?>" class="humanid-link-red">Recover an existing account instead</a>
+                    <a href="<?php /*echo $redirectSetRecoveryEmail;*/ ?>" class="humanid-link-red">Recover an existing account instead</a>
                 </div>
-        --><?php /*} */?>
-    <?php else:?>
-        <div class="humanid-page-title"><?php echo $lang->verify;?></div>
+        --><?php /*} */ ?>
+    <?php else: ?>
+        <div class="humanid-page-title"><?php echo $lang->verify; ?></div>
         <div class="humanid-content-text">
             <div class="humanid-text-info humanid-text-info-default">
-                <p><?php echo str_replace(array("{COUNTRYCODE}","{PHONE}"),array($row['dialcode'], $display_phone),$lang->text->verifyCode);?></p>
-                <p><?php echo $lang->text->afterSuccessful;?></p>
+                <p><?php echo str_replace(array("{COUNTRYCODE}", "{PHONE}"), array($row['dialcode'], $display_phone), $lang->text->verifyCode); ?></p>
+                <p><?php echo $lang->text->afterSuccessful; ?></p>
             </div>
             <div class="humanid-text-info humanid-text-info-danger">
-                <?php if(isset($error_message) && !empty($error_message)):?><p><?php echo $error_message;?></p><?php endif;?>
+                <?php if (isset($error_message) && !empty($error_message)): ?>
+                    <p><?php echo $error_message; ?></p><?php endif; ?>
             </div>
         </div>
         <div class="humanid-form-placement">
@@ -64,7 +71,9 @@
                                maxlength="4" pattern="[0-9]*" class="humanid-input-otp" name="code"
                                id="single-factor-code-text-field" autocomplete="one-time-code">
                     </div>
-                    <button class="btn-humanid btn-humanid-primary btn-submit-otp" disabled type="submit" style="flex: 1">Submit</button>
+                    <button class="btn-humanid btn-humanid-primary btn-submit-otp" disabled type="submit"
+                            style="flex: 1">Submit
+                    </button>
                 <?php } else { ?>
                     <div class="humanid-form-group">
                         <input type="tel" oninput="humanid.handleInputOtp(this, false)"
@@ -74,17 +83,21 @@
                     </div>
                 <?php } ?>
             </div>
-          <span class="timer-text verify-area timer"><?php echo str_replace("{TIME}",'<strong id="countdown-time">01:00</strong>',$lang->text->resend);?></span>
+            <span
+                class="timer-text verify-area timer"><?php echo str_replace("{TIME}", '<strong id="countdown-time">01:00</strong>', $lang->text->resend); ?></span>
             <input type="hidden" name="remaining" id="remaining">
             <div class="humanid-form-placement__link">
                 <div class="humanid-form-placement__link__wrapper">
-                    <a href="<?php echo site_url('login?a='.$app->id.'&t='.$row['token'].'&lang='.$lang->id.'&priority_country='.$pc->code.'&s='.$app->source);?>" class="humanid-link-blue-light">
-                        <?php echo $lang->try;?>
+                    <a href="<?php echo site_url('login?a=' . $app->id . '&t=' . $row['token'] . '&lang=' . $lang->id . '&priority_country=' . $pc->code . '&s=' . $app->source . '&v=' . $version); ?>"
+                       class="humanid-link-blue-light">
+                        <?php echo $lang->try; ?>
                     </a>
-                    <a href="<?php echo site_url('login/resend?a='.$app->id.'&t='.$row['token'].'&lang='.$lang->id.'&s='.$app->source);?>" id="resend-link" class="humanid-link-blue-light" style="display: none;"><?php echo $lang->resend;?></a>
-                    <!--<a href="<?php /*echo base_url('recovery/new_number') */?>" class="humanid-link-blue-light">Recover Existing Account</a>-->
+                    <a href="<?php echo site_url('login/resend?a=' . $app->id . '&t=' . $row['token'] . '&lang=' . $lang->id . '&s=' . $app->source . '&v=' . $version); ?>"
+                       id="resend-link" class="humanid-link-blue-light"
+                       style="display: none;"><?php echo $lang->resend; ?></a>
+                    <!--<a href="<?php /*echo base_url('recovery/new_number') */ ?>" class="humanid-link-blue-light">Recover Existing Account</a>-->
                 </div>
             </div>
         </div>
-    <?php endif;?>
+    <?php endif; ?>
 </form>
