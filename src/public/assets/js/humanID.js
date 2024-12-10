@@ -1,4 +1,21 @@
 const humanid = function () {
+  const getLenByISO = async (iso) => {
+    try {
+        const res = await fetch("/countries_phone_number_length.json");
+        const lenArr = await res.json();
+        
+        for (const country of lenArr) { // Correct iteration for arrays
+            if (country.code === iso.toUpperCase()) {
+                return country.phoneLength;
+            }
+        }
+        console.log("Country Not Found");
+        return null;
+    } catch (e) {
+        console.error("Error fetching phone number length:", e);
+        return null;
+    }
+  };
 
   return {
     countdownFormSubmit: function (duration, display, target) {
@@ -33,14 +50,45 @@ const humanid = function () {
       var phoneDisplay = $('#phoneDisplay');
       dialCode.val(iti.getSelectedCountryData().dialCode);
       input.addEventListener("countrychange", function () {
+        console.log("Data");
+        console.log(iti.getSelectedCountryData().iso2);
+        getLenByISO(iti.getSelectedCountryData().iso2)
+          .then((phoneLength) => {
+            if (phoneLength !== null) {
+              console.log("Phone length for country:", phoneLength);
+            } else {
+              console.log("Country not found");
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching phone length:", error);
+          });
         dialCode.val(iti.getSelectedCountryData().dialCode);
       });
       phoneDisplay.focus();
-      phoneDisplay.keyup(function (e) {
+      phoneDisplay.keyup(async function (e) {
         var valDisplay = this.value.replace(/[^\-0-9]/g, '');
         var valPhone = valDisplay.replace(/[^0-9]/g, '');
         var length = valPhone.length;
         phone.val(valPhone);
+
+        const phoneLength = await getLenByISO(iti.getSelectedCountryData().iso2);
+        console.log(phoneLength);
+        if (phoneLength !== null) {
+          if (typeof phoneLength === "number" && length === phoneLength) {
+            $('.btn-humanid').attr('disabled', false);
+          }
+          else if (typeof phoneLength === "object" && (length >= phoneLength[0]) && (length <= phoneLength[phoneLength.length - 1])) {
+            $('.btn-humanid').attr('disabled', false);
+          }
+          else {
+            $('.btn-humanid').attr('disabled', true);
+          }
+
+        } else {
+          $('.btn-humanid').attr('disabled', true); // Disable
+        }
+  
         if (length > 3 && length <= 7) {
           if (length == 4)
             valDisplay = valPhone.replace(/(\d{3})(\d{1})/, "$1-$2");
