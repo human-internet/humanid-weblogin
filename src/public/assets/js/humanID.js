@@ -50,19 +50,6 @@ const humanid = function () {
       var phoneDisplay = $('#phoneDisplay');
       dialCode.val(iti.getSelectedCountryData().dialCode);
       input.addEventListener("countrychange", function () {
-        console.log("Data");
-        console.log(iti.getSelectedCountryData().iso2);
-        getLenByISO(iti.getSelectedCountryData().iso2)
-          .then((phoneLength) => {
-            if (phoneLength !== null) {
-              console.log("Phone length for country:", phoneLength);
-            } else {
-              console.log("Country not found");
-            }
-          })
-          .catch((error) => {
-            console.error("Error fetching phone length:", error);
-          });
         dialCode.val(iti.getSelectedCountryData().dialCode);
       });
       phoneDisplay.focus();
