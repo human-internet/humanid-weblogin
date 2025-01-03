@@ -48,8 +48,20 @@ const humanid = function () {
       var dialCode = $('#dialcode');
       var phone = $('#phone');
       var phoneDisplay = $('#phoneDisplay');
+      $('.btn-humanid').attr('disabled', true);
       dialCode.val(iti.getSelectedCountryData().dialCode);
       input.addEventListener("countrychange", function () {
+        var valDisplay = this.value.replace(/[^\-0-9]/g, '');
+        var valPhone = valDisplay.replace(/[^0-9]/g, '');
+        var length = valPhone.length;
+        const selectedCountryCode = iti.getSelectedCountryData().iso2;
+        if (selectedCountryCode === "us" && length >= 10) {
+          $('.btn-humanid').attr('disabled', false);
+        } else if (selectedCountryCode != "us" && length >= 6) {
+          $('.btn-humanid').attr('disabled', false);
+        } else {
+          $('.btn-humanid').attr('disabled', true);
+        }
         dialCode.val(iti.getSelectedCountryData().dialCode);
       });
       phoneDisplay.focus();
@@ -57,24 +69,32 @@ const humanid = function () {
         var valDisplay = this.value.replace(/[^\-0-9]/g, '');
         var valPhone = valDisplay.replace(/[^0-9]/g, '');
         var length = valPhone.length;
+
         phone.val(valPhone);
 
-        const phoneLength = await getLenByISO(iti.getSelectedCountryData().iso2);
-        console.log(phoneLength);
-        if (phoneLength !== null) {
-          if (typeof phoneLength === "number" && length === phoneLength) {
-            $('.btn-humanid').attr('disabled', false);
-          }
-          else if (typeof phoneLength === "object" && (length >= phoneLength[0]) && (length <= phoneLength[phoneLength.length - 1])) {
-            $('.btn-humanid').attr('disabled', false);
-          }
-          else {
-            $('.btn-humanid').attr('disabled', true);
-          }
-
+        const selectedCountryCode = iti.getSelectedCountryData().iso2;
+        // Hard Code Temp Solution
+        if (selectedCountryCode === "us" && length >= 10) {
+          $('.btn-humanid').attr('disabled', false);
+        } else if (selectedCountryCode != "us" && length >= 6) {
+          $('.btn-humanid').attr('disabled', false);
         } else {
-          $('.btn-humanid').attr('disabled', true); // Disable
+          $('.btn-humanid').attr('disabled', true);
         }
+
+        // Static File Check Method
+        /*
+        const phoneLength = await getLenByISO(iti.getSelectedCountryData().iso2);
+        if (typeof phoneLength === "number" && length === phoneLength) {
+          $('.btn-humanid').attr('disabled', false);
+        }
+        else if (typeof phoneLength === "object" && (length >= phoneLength[0]) && (length <= phoneLength[phoneLength.length - 1])) {
+          $('.btn-humanid').attr('disabled', false);
+        }
+        else {
+          $('.btn-humanid').attr('disabled', true);
+        }
+        */
   
         if (length > 3 && length <= 7) {
           if (length == 4)
