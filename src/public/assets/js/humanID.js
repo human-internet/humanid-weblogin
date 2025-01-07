@@ -1,21 +1,4 @@
 const humanid = function () {
-  const getLenByISO = async (iso) => {
-    try {
-        const res = await fetch("/countries_phone_number_length.json");
-        const lenArr = await res.json();
-        
-        for (const country of lenArr) { // Correct iteration for arrays
-            if (country.code === iso.toUpperCase()) {
-                return country.phoneLength;
-            }
-        }
-        console.log("Country Not Found");
-        return null;
-    } catch (e) {
-        console.error("Error fetching phone number length:", e);
-        return null;
-    }
-  };
 
   return {
     countdownFormSubmit: function (duration, display, target) {
