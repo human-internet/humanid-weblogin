@@ -1,8 +1,12 @@
 const humanid = function () {
+  // Check if phone length is valid
   const validatePhoneLength = (countryCode, length) => {
     return countryCode === "us" ? length >= 10 : length >= 6;
   }
-
+  // Enable/Disable Send Code button based on country code and input length
+  const toggleSubmitEnable = (iti, length) => {
+    $('.btn-humanid').attr('disabled', !validatePhoneLength(iti.getSelectedCountryData().iso2, length));
+  }
   return {
     countdownFormSubmit: function (duration, display, target) {
       var timeleft = duration;
@@ -41,8 +45,8 @@ const humanid = function () {
         var valDisplay = this.value.replace(/[^\-0-9]/g, '');
         var valPhone = valDisplay.replace(/[^0-9]/g, '');
         var length = valPhone.length;
-        const selectedCountryCode = iti.getSelectedCountryData().iso2;
-        $('.btn-humanid').attr('disabled', !validatePhoneLength(selectedCountryCode, length));
+        
+        toggleSubmitEnable(iti, length);
         dialCode.val(iti.getSelectedCountryData().dialCode);
       });
       phoneDisplay.focus();
@@ -52,24 +56,8 @@ const humanid = function () {
         var length = valPhone.length;
 
         phone.val(valPhone);
+        toggleSubmitEnable(iti, length);
 
-        const selectedCountryCode = iti.getSelectedCountryData().iso2;
-        // Hard Code Temp Solution
-        $('.btn-humanid').attr('disabled', !validatePhoneLength(selectedCountryCode, length));
-
-        // Static File Check Method
-        /*
-        const phoneLength = await getLenByISO(iti.getSelectedCountryData().iso2);
-        if (typeof phoneLength === "number" && length === phoneLength) {
-          $('.btn-humanid').attr('disabled', false);
-        }
-        else if (typeof phoneLength === "object" && (length >= phoneLength[0]) && (length <= phoneLength[phoneLength.length - 1])) {
-          $('.btn-humanid').attr('disabled', false);
-        }
-        else {
-          $('.btn-humanid').attr('disabled', true);
-        }
-        */
         if (length > 3 && length <= 7) {
           if (length == 4)
             valDisplay = valPhone.replace(/(\d{3})(\d{1})/, "$1-$2");
