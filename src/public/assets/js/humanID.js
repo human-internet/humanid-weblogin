@@ -1,4 +1,7 @@
 const humanid = function () {
+  const validatePhoneLength = (countryCode, length) => {
+    return countryCode === "us" ? length >= 10 : length >= 6;
+  }
 
   return {
     countdownFormSubmit: function (duration, display, target) {
@@ -33,18 +36,13 @@ const humanid = function () {
       var phoneDisplay = $('#phoneDisplay');
       $('.btn-humanid').attr('disabled', true);
       dialCode.val(iti.getSelectedCountryData().dialCode);
+
       input.addEventListener("countrychange", function () {
         var valDisplay = this.value.replace(/[^\-0-9]/g, '');
         var valPhone = valDisplay.replace(/[^0-9]/g, '');
         var length = valPhone.length;
         const selectedCountryCode = iti.getSelectedCountryData().iso2;
-        if (selectedCountryCode === "us" && length >= 10) {
-          $('.btn-humanid').attr('disabled', false);
-        } else if (selectedCountryCode != "us" && length >= 6) {
-          $('.btn-humanid').attr('disabled', false);
-        } else {
-          $('.btn-humanid').attr('disabled', true);
-        }
+        $('.btn-humanid').attr('disabled', !validatePhoneLength(selectedCountryCode, length));
         dialCode.val(iti.getSelectedCountryData().dialCode);
       });
       phoneDisplay.focus();
@@ -57,13 +55,7 @@ const humanid = function () {
 
         const selectedCountryCode = iti.getSelectedCountryData().iso2;
         // Hard Code Temp Solution
-        if (selectedCountryCode === "us" && length >= 10) {
-          $('.btn-humanid').attr('disabled', false);
-        } else if (selectedCountryCode != "us" && length >= 6) {
-          $('.btn-humanid').attr('disabled', false);
-        } else {
-          $('.btn-humanid').attr('disabled', true);
-        }
+        $('.btn-humanid').attr('disabled', !validatePhoneLength(selectedCountryCode, length));
 
         // Static File Check Method
         /*
@@ -78,7 +70,6 @@ const humanid = function () {
           $('.btn-humanid').attr('disabled', true);
         }
         */
-  
         if (length > 3 && length <= 7) {
           if (length == 4)
             valDisplay = valPhone.replace(/(\d{3})(\d{1})/, "$1-$2");
