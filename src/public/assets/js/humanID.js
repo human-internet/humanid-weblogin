@@ -1,5 +1,12 @@
 const humanid = function () {
-
+  // Check if phone length is valid
+  const validatePhoneLength = (countryCode, length) => {
+    return countryCode === "us" ? length >= 10 : length >= 6;
+  }
+  // Enable/Disable Send Code button based on country code and input length
+  const toggleSubmitEnable = (iti, length) => {
+    $('.btn-humanid').attr('disabled', !validatePhoneLength(iti.getSelectedCountryData().iso2, length));
+  }
   return {
     countdownFormSubmit: function (duration, display, target) {
       var timeleft = duration;
@@ -31,16 +38,26 @@ const humanid = function () {
       var dialCode = $('#dialcode');
       var phone = $('#phone');
       var phoneDisplay = $('#phoneDisplay');
+      $('.btn-humanid').attr('disabled', true);
       dialCode.val(iti.getSelectedCountryData().dialCode);
+
       input.addEventListener("countrychange", function () {
-        dialCode.val(iti.getSelectedCountryData().dialCode);
-      });
-      phoneDisplay.focus();
-      phoneDisplay.keyup(function (e) {
         var valDisplay = this.value.replace(/[^\-0-9]/g, '');
         var valPhone = valDisplay.replace(/[^0-9]/g, '');
         var length = valPhone.length;
+        
+        toggleSubmitEnable(iti, length);
+        dialCode.val(iti.getSelectedCountryData().dialCode);
+      });
+      phoneDisplay.focus();
+      phoneDisplay.keyup(async function (e) {
+        var valDisplay = this.value.replace(/[^\-0-9]/g, '');
+        var valPhone = valDisplay.replace(/[^0-9]/g, '');
+        var length = valPhone.length;
+
         phone.val(valPhone);
+        toggleSubmitEnable(iti, length);
+
         if (length > 3 && length <= 7) {
           if (length == 4)
             valDisplay = valPhone.replace(/(\d{3})(\d{1})/, "$1-$2");
