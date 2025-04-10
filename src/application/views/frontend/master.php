@@ -29,6 +29,16 @@
         .humanid-input-default{
             font-size:1rem;
         }
+        .humanid-input-error {
+            border-color: #dc3545 !important;
+            background-color: #fff8f8 !important;
+        }
+        .humanid-error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            text-align: left;
+        }
         .humanid-form-placement__default-main {
             max-width: 15.5rem;
         }

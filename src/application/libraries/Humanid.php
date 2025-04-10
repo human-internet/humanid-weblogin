@@ -39,8 +39,22 @@ class Humanid
 
     public function getAppInfo($appId, $source = 'w')
     {
-        $uri = $this->url . "web-login/apps/$appId";
         try {
+            // First, get a valid login URL
+            $loginResponse = $this->client->post($this->url . 'server/users/web-login', [
+                'headers' => [
+                    'client-id' => $this->webLoginClientId,
+                    'client-secret' => $this->webLoginClientSecret,
+                ]
+            ]);
+            $loginData = json_decode($loginResponse->getBody()->getContents());
+            
+            if (!$loginData->success) {
+                return $loginData;
+            }
+
+            // Now get the app info using the generated URL
+            $uri = $this->url . "web-login/apps/$appId";
             $opt = [
                 'headers' => [
                     'client-id' => $this->webLoginClientId,
@@ -52,11 +66,11 @@ class Humanid
             ];
             $response = $this->client->get($uri, $opt);
             $response = $response->getBody()->getContents();
+            return json_decode($response);
         } catch (RequestException $e) {
             $response = $e->getResponse()->getBody()->getContents();
+            return json_decode($response);
         }
-
-        return json_decode($response);
     }
 
     public function app_info($appId, $source = "w")

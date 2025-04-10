@@ -32,7 +32,14 @@ class Login extends BaseController
             // Request OTP
             $response = $this->humanid->userRequestOTP($dialcode, $phone, $webLoginToken, $this->_app->source, $this->lg->id, $requestId);
             if (!$response->success) {
-                $this->handleErrorRequestOtpLogin($response);
+                if ($this->handleErrorRequestOtpLogin($response) === false) {
+                    // Error was handled, continue with rendering the page
+                    $this->data['phone'] = $phone;
+                    $this->data['dialcode'] = $dialcode;
+                    $this->data['app'] = $this->_app;
+                    $this->render();
+                    return;
+                }
             }
             // Save phone and dial code to userdata
             $this->session->set_userdata([
@@ -62,6 +69,7 @@ class Login extends BaseController
         }
 
         $this->data['phone'] = $phone;
+        $this->data['dialcode'] = $dialcode;
         $this->data['app'] = $this->_app;
         $this->scripts('humanid.formLogin("' . $set_number . '", ' . $this->pc->code_js . ');', 'embed');
         $this->render();
@@ -69,35 +77,20 @@ class Login extends BaseController
 
     private function handleErrorRequestOtpLogin($response)
     {
-        $version = $_GET['v'] ?? 'v1';
-        $t = $this->session->userdata('humanId__loginRequestOtpToken');
-        $id = $this->session->userdata('humanId__requestId');
-        $code = $response->code ?? '';
-        $redirectBack = site_url('login?a=' . $this->_app->id . '&t=' . $t . '&lang=' . $this->lg->id . '&priority_country=' . $this->pc->code . "&s=" . $this->_app->source . "&id=" . $id . "&v=" . $version);
-
-        $modal = (object)[
-            'title' => $this->lg->errorPage,
-            'code' => $code,
-            'message' => $response->message ?? '',
-            'url' => $redirectBack
-        ];
-
-        // Common error internal message
-        if ($response->code === self::ERR_INTERNAL) {
-            $modal->message = self::MESSAGE_INTERNAL;
-            $msg = urlencode($modal->message);
-            $modal->url = "{$this->_app->redirectUrlFail}?code={$code}&message={$msg}";
-        }
-
-        if ($response->message === self::JWT_EXPIRED) {
-            $modal->message = $this->lg->error->sessionExpired;
-            $msg = urlencode($modal->message);
-            $modal->url = "{$this->_app->redirectUrlFail}?code={$code}&message={$msg}";
-        }
-
-        $this->session->set_flashdata('modal', $modal);
-        $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
-        redirect(site_url('error?lang=' . $this->lg->id));
+        $errorMessage = $response->message ?? $this->lg->error->tokenExpired;
+        
+        // Set the error message in the view data
+        $this->data['error_message'] = $errorMessage;
+        $this->data['phone_error'] = true; // Flag to indicate phone number error
+        
+        // Preserve the dial code
+        $this->data['dialcode'] = $this->input->post('dialcode', TRUE);
+        
+        // Log the error
+        $this->init_logs(array('error' => $errorMessage));
+        
+        // Return false to indicate error handling is complete
+        return false;
     }
 
     private function _display_phone($phone = 0, $text = " ")
