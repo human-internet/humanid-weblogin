@@ -11,7 +11,7 @@
             <div class="humanid-form-placement__default-main">
                 <div class="humanid-form-group">
                     <input type="tel" id="phoneDisplay" class="humanid-input-default <?php echo isset($phone_error) ? 'humanid-input-error' : ''; ?>" placeholder="812-345-6780" maxlength="17">
-                    <input type="hidden" name="dialcode" id="dialcode" value="<?php echo isset($dialcode) ? $dialcode : ''; ?>">
+                    <input type="hidden" name="dialcode" id="dialcode">
                     <input type="hidden" name="phone" id="phone" value="<?php echo set_value('phone', $phone);?>">
                     <?php if(isset($error_message)): ?>
                         <div class="humanid-error-message"><?php echo $error_message; ?></div>
@@ -38,24 +38,8 @@
 </form>
 
 <script>
-    // Set the phone display value if dialcode and phone are available
     document.addEventListener('DOMContentLoaded', function() {
-        var dialcode = document.getElementById('dialcode').value;
-        var phone = document.getElementById('phone').value;
-        if (dialcode && phone) {
-            var formattedPhone = '+' + dialcode;
-            if (phone.length > 3) {
-                formattedPhone += phone.substring(0, 3) + '-';
-                if (phone.length > 6) {
-                    formattedPhone += phone.substring(3, 6) + '-';
-                    formattedPhone += phone.substring(6);
-                } else {
-                    formattedPhone += phone.substring(3);
-                }
-            } else {
-                formattedPhone += phone;
-            }
-            document.getElementById('phoneDisplay').value = formattedPhone;
-        }
+        // Use the existing humanID.js functionality
+        humanid.formLogin('<?php echo set_value('phone', $phone);?>', ['us', 'gb', 'ca']);
     });
 </script>

@@ -35,7 +35,6 @@ class Login extends BaseController
                 if ($this->handleErrorRequestOtpLogin($response) === false) {
                     // Error was handled, continue with rendering the page
                     $this->data['phone'] = $phone;
-                    $this->data['dialcode'] = $dialcode;
                     $this->data['app'] = $this->_app;
                     $this->render();
                     return;
@@ -69,7 +68,6 @@ class Login extends BaseController
         }
 
         $this->data['phone'] = $phone;
-        $this->data['dialcode'] = $dialcode;
         $this->data['app'] = $this->_app;
         $this->scripts('humanid.formLogin("' . $set_number . '", ' . $this->pc->code_js . ');', 'embed');
         $this->render();
@@ -82,9 +80,6 @@ class Login extends BaseController
         // Set the error message in the view data
         $this->data['error_message'] = $errorMessage;
         $this->data['phone_error'] = true; // Flag to indicate phone number error
-        
-        // Preserve the dial code
-        $this->data['dialcode'] = $this->input->post('dialcode', TRUE);
         
         // Log the error
         $this->init_logs(array('error' => $errorMessage));

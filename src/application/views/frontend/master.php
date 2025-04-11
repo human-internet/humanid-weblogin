@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css');?>">
     <link rel="icon" href="<?php echo base_url('assets/images/favicon.png');?>">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <!-- International Telephone Input CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
     <style>
         .material-symbols-outlined {
             color: white;
@@ -430,5 +432,8 @@
             })
         });
     </script>
+    <script src="<?php echo base_url('assets/js/script.js');?>"></script>
+    <!-- International Telephone Input JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 </body>
 </html>
