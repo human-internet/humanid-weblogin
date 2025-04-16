@@ -39,7 +39,18 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Use the existing humanID.js functionality
+        // Initialize the phone input with the existing humanID.js functionality
         humanid.formLogin('<?php echo set_value('phone', $phone);?>', ['us', 'gb', 'ca']);
+        
+        <?php if(!empty($phone) && isset($error_message)): ?>
+        // After initialization, trigger formatting by simulating user interaction
+        setTimeout(function() {
+            var phoneDisplay = document.getElementById('phoneDisplay');
+            // Simulate a keyup event to trigger the phone formatting
+            var event = new Event('keyup');
+            phoneDisplay.dispatchEvent(event);
+            console.log('Triggered phone formatting');
+        }, 100);
+        <?php endif; ?>
     });
 </script>
