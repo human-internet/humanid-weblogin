@@ -32,13 +32,12 @@ class Login extends BaseController
             // Request OTP
             $response = $this->humanid->userRequestOTP($dialcode, $phone, $webLoginToken, $this->_app->source, $this->lg->id, $requestId);
             if (!$response->success) {
-                if ($this->handleErrorRequestOtpLogin($response) === false) {
-                    // Error was handled, continue with rendering the page
-                    $this->data['phone'] = $phone;
-                    $this->data['app'] = $this->_app;
-                    $this->render();
-                    return;
-                }
+                // Handle error and render the page
+                $this->handleErrorRequestOtpLogin($response);
+                $this->data['phone'] = $phone;
+                $this->data['app'] = $this->_app;
+                $this->render();
+                return;
             }
             // Save phone and dial code to userdata
             $this->session->set_userdata([
@@ -83,9 +82,6 @@ class Login extends BaseController
         
         // Log the error
         $this->init_logs(array('error' => $errorMessage));
-        
-        // Return false to indicate error handling is complete
-        return false;
     }
 
     private function _display_phone($phone = 0, $text = " ")
