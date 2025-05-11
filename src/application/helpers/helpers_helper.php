@@ -14,3 +14,56 @@ if (! function_exists('dd')) {
         die;
     }
 }
+
+if (!function_exists('aes_encrypt_ccm')) {
+    function aes_encrypt_ccm($plaintext, $key, $aad = "") {
+        $ivlen = 12; // recommended IV length for AES-CCM
+        $taglen = 16; // tag length (can be 4, 6, 8, 10, 12, 14, or 16)
+        $iv = random_bytes($ivlen);
+
+        $cipher = 'aes-256-gcm';
+
+        $tag = null;
+        $ciphertext = openssl_encrypt(
+            $plaintext,
+            $cipher,
+            $key,
+            OPENSSL_RAW_DATA,
+            $iv,
+            $tag,
+            $aad,
+            $taglen
+        );
+
+        if ($ciphertext === false) {
+            return false;
+        }
+
+        return base64_encode($iv . $tag . $ciphertext);
+    }
+}
+
+if (!function_exists('aes_decrypt_ccm')) {
+    function aes_decrypt_ccm($encrypted, $key, $aad = '') {
+        $cipher = 'aes-256-ccm';
+        $ivlen = 12;
+        $taglen = 16;
+
+        $data = base64_decode($encrypted);
+        $iv = substr($data, 0, $ivlen);
+        $tag = substr($data, $ivlen, $taglen);
+        $ciphertext = substr($data, $ivlen + $taglen);
+
+        $plaintext = openssl_decrypt(
+            $ciphertext,
+            $cipher,
+            $key,
+            OPENSSL_RAW_DATA,
+            $iv,
+            $tag,
+            $aad
+        );
+
+        return $plaintext;
+    }
+}
