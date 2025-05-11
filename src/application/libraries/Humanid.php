@@ -18,6 +18,7 @@ class Humanid
     private $server_id;
     private $server_secret;
     private $client;
+    private $aes_secret_key;
 
     function __construct()
     {
@@ -30,11 +31,17 @@ class Humanid
         $this->webLoginClientSecret = $humanIdConfig['client_secret'];
         $this->server_id = $humanIdConfig['server_id'];
         $this->server_secret = $humanIdConfig['server_secret'];
+        $this->aes_secret_key = $humanIdConfig['aes_secret_key'];
 
         $this->client = new Client([
             'base_uri' => $this->url,
             'timeout' => 10
         ]);
+    }
+
+    public function getAesSecretKey()
+    {
+        return $this->aes_secret_key;
     }
 
     public function getAppInfo($appId, $source = 'w')
@@ -121,7 +128,7 @@ class Humanid
         return $res;
     }
 
-    public function userRequestOTP($countryCode, $phone, $requestOtpToken, $source, $lang = 'en', $requestId = null)
+    public function userRequestOTP($countryCode, $phone, $requestOtpToken, $source, $ip, $lang = 'en', $requestId = null)
     {
         $url = $this->url. 'web-login/users/request-otp';
         $body = [
@@ -132,6 +139,7 @@ class Humanid
         $param = [
             'lang' => $lang,
             's' => $source,
+            'ip' => $ip
         ];
         // Handle RequestId
         if ($requestId !== null) {

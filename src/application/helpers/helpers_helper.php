@@ -15,9 +15,9 @@ if (! function_exists('dd')) {
     }
 }
 
-if (!function_exists('aes_encrypt_ccm')) {
-    function aes_encrypt_ccm($plaintext, $key, $aad = "") {
-        $ivlen = 12; // recommended IV length for AES-CCM
+if (!function_exists('aes_encrypt_gcm')) {
+    function aes_encrypt_gcm($plaintext, $key, $aad = "") {
+        $ivlen = 12; // recommended IV length for AES-GCM
         $taglen = 16; // tag length (can be 4, 6, 8, 10, 12, 14, or 16)
         $iv = random_bytes($ivlen);
 
@@ -43,9 +43,9 @@ if (!function_exists('aes_encrypt_ccm')) {
     }
 }
 
-if (!function_exists('aes_decrypt_ccm')) {
-    function aes_decrypt_ccm($encrypted, $key, $aad = '') {
-        $cipher = 'aes-256-ccm';
+if (!function_exists('aes_decrypt_gcm')) {
+    function aes_decrypt_gcm($encrypted, $key, $aad = '') {
+        $cipher = 'aes-256-gcm';
         $ivlen = 12;
         $taglen = 16;
 

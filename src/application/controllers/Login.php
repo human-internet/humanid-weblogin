@@ -30,7 +30,10 @@ class Login extends BaseController
 
         if ($this->form_validation->run() == TRUE) {
             // Request OTP
-            $response = $this->humanid->userRequestOTP($dialcode, $phone, $webLoginToken, $this->_app->source, $this->lg->id, $requestId);
+            $ip = $this->input->ip_address();
+            $encryptedIp = aes_encrypt_gcm($ip, hex2bin($this->humanid->getAesSecretKey()));
+            $encodedEncryptedIp = urlencode($encryptedIp);
+            $response = $this->humanid->userRequestOTP($dialcode, $phone, $webLoginToken, $this->_app->source, $encodedEncryptedIp, $this->lg->id, $requestId);
             if (!$response->success) {
                 $this->handleErrorRequestOtpLogin($response);
             }
@@ -96,7 +99,12 @@ class Login extends BaseController
         }
 
         $this->session->set_flashdata('modal', $modal);
-        $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+        if($response->code === self::GENERAL_ERROR) {
+            redirect(site_url('error?lang=' . $this->lg->id . "&errorCode=1"));
+            return;
+        } else {
+            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
+        }
         redirect(site_url('error?lang=' . $this->lg->id));
     }
 
@@ -338,7 +346,10 @@ class Login extends BaseController
         $phone = $session['phone'];
         $dialcode = $session['dialcode'];
         // Request OTP
-        $response = $this->humanid->userRequestOTP($dialcode, $phone, $loginToken, $this->_app->source, $this->lg->id, $requestId);
+        $ip = $this->input->ip_address();
+        $encryptedIp = aes_encrypt_gcm($ip, hex2bin($this->humanid->getAesSecretKey()));
+        $encodedEncryptedIp = urlencode($encryptedIp);
+        $response = $this->humanid->userRequestOTP($dialcode, $phone, $loginToken, $this->_app->source, $encodedEncryptedIp, $this->lg->id, $requestId);
         if (!$response->success) {
             $this->handleErrorRequestOtpLogin($response);
         }

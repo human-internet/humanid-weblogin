@@ -9,4 +9,5 @@ $config['humanid'] = [
     'server_id' => $_ENV['HUMANID_SERVER_ID'] ?? '',
     'server_secret' => $_ENV['HUMANID_SERVER_SECRET'] ?? '',
     'protocol' => $_ENV['PROTOCOL'] ?? 'http',
+    'aes_secret_key' => $_ENV['AES_SECRET_KEY'] ?? '',
 ];
