@@ -39,9 +39,24 @@ class Humanid
         ]);
     }
 
-    public function getAesSecretKey()
+    public function encryptIp($ip)
     {
-        return $this->aes_secret_key;
+        if(empty($this->aes_secret_key)) {
+            throw new Exception('AES Secret Key environment variable must be set');
+        }
+
+        if($ip === false || empty($ip)) {
+            throw new Exception('IP is not set');
+        }
+
+        $encryptedIp = aes_encrypt_gcm($ip, hex2bin($this->aes_secret_key));
+        if($encryptedIp === false) {
+            throw new Exception('Failed to encrypt IP');
+        }
+
+        $encodedEncryptedIp = urlencode($encryptedIp);
+
+        return $encodedEncryptedIp;
     }
 
     public function getAppInfo($appId, $source = 'w')

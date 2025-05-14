@@ -31,8 +31,7 @@ class Login extends BaseController
         if ($this->form_validation->run() == TRUE) {
             // Request OTP
             $ip = $this->input->ip_address();
-            $encryptedIp = aes_encrypt_gcm($ip, hex2bin($this->humanid->getAesSecretKey()));
-            $encodedEncryptedIp = urlencode($encryptedIp);
+            $encodedEncryptedIp = $this->humanid->encryptIp($ip);
             $response = $this->humanid->userRequestOTP($dialcode, $phone, $webLoginToken, $this->_app->source, $encodedEncryptedIp, $this->lg->id, $requestId);
             if (!$response->success) {
                 $this->handleErrorRequestOtpLogin($response);
@@ -347,8 +346,7 @@ class Login extends BaseController
         $dialcode = $session['dialcode'];
         // Request OTP
         $ip = $this->input->ip_address();
-        $encryptedIp = aes_encrypt_gcm($ip, hex2bin($this->humanid->getAesSecretKey()));
-        $encodedEncryptedIp = urlencode($encryptedIp);
+        $encodedEncryptedIp = $this->humanid->encryptIp($ip);
         $response = $this->humanid->userRequestOTP($dialcode, $phone, $loginToken, $this->_app->source, $encodedEncryptedIp, $this->lg->id, $requestId);
         if (!$response->success) {
             $this->handleErrorRequestOtpLogin($response);
