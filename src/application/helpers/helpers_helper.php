@@ -42,28 +42,3 @@ if (!function_exists('aes_encrypt_gcm')) {
         return base64_encode($iv . $tag . $ciphertext);
     }
 }
-
-if (!function_exists('aes_decrypt_gcm')) {
-    function aes_decrypt_gcm($encrypted, $key, $aad = '') {
-        $cipher = 'aes-256-gcm';
-        $ivlen = 12;
-        $taglen = 16;
-
-        $data = base64_decode($encrypted);
-        $iv = substr($data, 0, $ivlen);
-        $tag = substr($data, $ivlen, $taglen);
-        $ciphertext = substr($data, $ivlen + $taglen);
-
-        $plaintext = openssl_decrypt(
-            $ciphertext,
-            $cipher,
-            $key,
-            OPENSSL_RAW_DATA,
-            $iv,
-            $tag,
-            $aad
-        );
-
-        return $plaintext;
-    }
-}
