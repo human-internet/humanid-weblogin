@@ -34,7 +34,12 @@ class Login extends BaseController
             $encodedEncryptedIp = $this->humanid->encryptIp($ip);
             $response = $this->humanid->userRequestOTP($dialcode, $phone, $webLoginToken, $this->_app->source, $encodedEncryptedIp, $this->lg->id, $requestId);
             if (!$response->success) {
+                // Handle error and render the page
                 $this->handleErrorRequestOtpLogin($response);
+                $this->data['phone'] = $phone;
+                $this->data['app'] = $this->_app;
+                $this->render();
+                return;
             }
             // Save phone and dial code to userdata
             $this->session->set_userdata([
@@ -83,6 +88,15 @@ class Login extends BaseController
             'message' => $response->message ?? '',
             'url' => $redirectBack
         ];
+
+        $errorMessage = $response->message ?? $this->lg->error->tokenExpired;
+
+        // Set the error message in the view data
+        $this->data['error_message'] = $errorMessage;
+        $this->data['phone_error'] = true; // Flag to indicate phone number error
+
+        // Log the error
+        $this->init_logs(array('error' => $errorMessage));
 
         // Common error internal message
         if ($response->code === self::ERR_INTERNAL) {
