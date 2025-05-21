@@ -11,6 +11,7 @@ class BaseController extends MY_Controller
     protected const ERR_EMAIL_RECOVERY_NOT_SETUP = 'ERR_34'; // Account Recovery has not been set-up
     protected const ERR_INVALID_EMAIL = 'ERR_35'; // Invalid email for account recovery
     protected const JWT_EXPIRED = 'jwt expired';
+    protected const GENERAL_ERROR = 'GENERAL_ERROR';
 
     protected const ERR_CANCELLED = 'CANCELLED';
     protected const MESSAGE_CANCELLED = 'Log-in is cancelled by User';
