@@ -14,3 +14,31 @@ if (! function_exists('dd')) {
         die;
     }
 }
+
+if (!function_exists('aes_encrypt_gcm')) {
+    function aes_encrypt_gcm($plaintext, $key, $aad = "") {
+        $ivlen = 12; // recommended IV length for AES-GCM
+        $taglen = 16; // tag length (can be 4, 6, 8, 10, 12, 14, or 16)
+        $iv = random_bytes($ivlen);
+
+        $cipher = 'aes-256-gcm';
+
+        $tag = null;
+        $ciphertext = openssl_encrypt(
+            $plaintext,
+            $cipher,
+            $key,
+            OPENSSL_RAW_DATA,
+            $iv,
+            $tag,
+            $aad,
+            $taglen
+        );
+
+        if ($ciphertext === false) {
+            return false;
+        }
+
+        return base64_encode($iv . $tag . $ciphertext);
+    }
+}

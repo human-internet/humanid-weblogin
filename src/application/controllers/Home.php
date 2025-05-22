@@ -12,6 +12,13 @@ class Home extends BaseController
 
     public function error()
     {
+        $errorCode = $this->input->get("errorCode");
+        if($errorCode) {
+            $this->data['error_message'] = "Something went wrong!";
+            $this->render();
+            return;
+        }
+
         $modal = $this->session->flashdata('modal');
         if ($modal) {
             $this->data['modal'] = $modal;
