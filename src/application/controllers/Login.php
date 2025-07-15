@@ -112,12 +112,11 @@ class Login extends BaseController
         }
 
         $this->session->set_flashdata('modal', $modal);
+
         if($response->code === self::GENERAL_ERROR) {
-            redirect(site_url('error?lang=' . $this->lg->id . "&errorCode=1"));
             return;
-        } else {
-            $this->session->set_flashdata('error_message', $this->lg->error->tokenExpired);
         }
+
         redirect(site_url('error?lang=' . $this->lg->id));
     }
 
